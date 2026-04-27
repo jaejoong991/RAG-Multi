@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { Prisma } from '@prisma/client';
 import prisma from '../../config/database';
 import { UnauthorizedError, ValidationError } from '../../shared/errors/AppError';
 import { LoginDto, RegisterDto } from './auth.schema';
@@ -20,7 +21,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(data.password, 12);
 
     // Create tenant and admin user in one transaction
-    return await prisma.$transaction(async (tx) => {
+    return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const tenant = await tx.tenant.create({
         data: { name: data.workspaceName },
       });
