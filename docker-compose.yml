@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: ankane/pgvector:v0.8.0
+    image: ankane/pgvector:latest
     container_name: rag-postgres
     ports:
       - "${DB_PORT:-5432}:5432"

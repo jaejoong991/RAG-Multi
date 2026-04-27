@@ -1,7 +1,44 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Mail, Lock, Eye, Hexagon } from "lucide-react";
+import { Mail, Lock, Eye, Hexagon, Loader2 } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid email or password");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-background-deep text-on-surface">
       {/* Left Half: Branding (60%) */}
@@ -41,7 +78,12 @@ export default function LoginPage() {
             <p className="text-on-surface-variant">Sign in to your account</p>
           </div>
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="p-3 rounded-lg bg-error/10 border border-error/20 text-error text-xs">
+                {error}
+              </div>
+            )}
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">
                 Email Address
@@ -50,6 +92,9 @@ export default function LoginPage() {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors" size={18} />
                 <input 
                   type="email" 
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="name@company.com"
                   className="w-full bg-background-deep border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary-container transition-all"
                 />
@@ -64,6 +109,9 @@ export default function LoginPage() {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors" size={18} />
                 <input 
                   type="password" 
+                  required
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="••••••••"
                   className="w-full bg-background-deep border border-white/10 rounded-lg py-3 pl-10 pr-12 text-white focus:outline-none focus:border-primary-container transition-all"
                 />
@@ -83,10 +131,16 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            <button type="submit" className="w-full primary-gradient text-white font-bold py-4 rounded-lg shadow-xl shadow-primary-container/20 hover:opacity-90 active:scale-[0.98] transition-all">
-              Sign In
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="w-full primary-gradient text-white font-bold py-4 rounded-lg shadow-xl shadow-primary-container/20 hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+            >
+              {loading && <Loader2 className="animate-spin" size={18} />}
+              {loading ? "Signing In..." : "Sign In"}
             </button>
           </form>
+
 
           <div className="relative flex items-center justify-center py-2">
             <div className="absolute inset-0 flex items-center">
@@ -97,7 +151,10 @@ export default function LoginPage() {
             </span>
           </div>
 
-          <button className="w-full border border-white/10 hover:bg-white/5 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-3 transition-all">
+          <button 
+            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            className="w-full border border-white/10 hover:bg-white/5 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-3 transition-all"
+          >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
