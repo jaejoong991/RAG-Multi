@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nexus AI | Playground</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#d2bbff",
+                      "primary-fixed-dim": "#d2bbff",
+                      "surface-container-lowest": "#100d16",
+                      "success-green": "#10B981",
+                      "on-background": "#e8dfee",
+                      "on-secondary-container": "#e6ecff",
+                      "secondary-container": "#0566d9",
+                      "tertiary-container": "#a15100",
+                      "on-primary-container": "#ede0ff",
+                      "inverse-primary": "#732ee4",
+                      "on-secondary-fixed-variant": "#004395",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-error": "#690005",
+                      "tertiary-fixed-dim": "#ffb784",
+                      "on-tertiary-fixed-variant": "#713700",
+                      "surface": "#15121b",
+                      "bg-deep-navy": "#0A0F1E",
+                      "surface-bright": "#3c3742",
+                      "surface-container-low": "#1d1a24",
+                      "tertiary": "#ffb784",
+                      "on-primary-fixed-variant": "#5a00c6",
+                      "surface-container-high": "#2c2833",
+                      "primary-fixed": "#eaddff",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed": "#001a42",
+                      "on-primary": "#3f008e",
+                      "primary": "#d2bbff",
+                      "on-tertiary": "#4f2500",
+                      "inverse-surface": "#e8dfee",
+                      "on-tertiary-fixed": "#301400",
+                      "error-red": "#EF4444",
+                      "on-secondary": "#002e6a",
+                      "surface-variant": "#37333e",
+                      "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                      "primary-container": "#7c3aed",
+                      "surface-dim": "#15121b",
+                      "secondary": "#adc6ff",
+                      "tertiary-fixed": "#ffdcc6",
+                      "on-primary-fixed": "#25005a",
+                      "inverse-on-surface": "#332f39",
+                      "surface-card": "#111827",
+                      "on-surface": "#e8dfee",
+                      "surface-container-highest": "#37333e",
+                      "secondary-fixed": "#d8e2ff",
+                      "on-surface-variant": "#ccc3d8",
+                      "warning-amber": "#F59E0B",
+                      "on-error-container": "#ffdad6",
+                      "surface-container": "#221e28",
+                      "on-tertiary-container": "#ffe0cd",
+                      "border-glass": "rgba(255, 255, 255, 0.06)",
+                      "outline": "#958da1",
+                      "error-container": "#93000a",
+                      "outline-variant": "#4a4455",
+                      "text-muted": "#94A3B8",
+                      "background": "#15121b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "32px",
+                      "header-height": "64px",
+                      "gutter": "24px",
+                      "base": "8px",
+                      "sidebar-width": "260px"
+              },
+              "fontFamily": {
+                      "h1": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "mono": ["Space Grotesk"],
+                      "h3": ["Inter"],
+                      "h2": ["Inter"]
+              },
+              "fontSize": {
+                      "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-bg-deep-navy font-body-md text-on-surface antialiased overflow-hidden">
+<!-- Sidebar Component (Mapped from JSON) -->
+<aside class="fixed left-0 top-0 bottom-0 w-[260px] z-50 bg-[#111827] border-r border-white/5 flex flex-col h-full py-6 px-4 font-inter text-sm">
+<div class="flex items-center gap-3 px-2 mb-10">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div>
+<h2 class="text-lg font-black text-white leading-tight">Nexus Enterprise</h2>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">RAG Platform</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active: Playground -->
+<div class="bg-[#7C3AED]/10 text-white border-l-4 border-[#7C3AED] font-medium flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">chat_bubble</span>
+<span>Playground</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">forum</span>
+<span>Conversations</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">leaderboard</span>
+<span>Analytics</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">settings_suggest</span>
+<span>Bot Settings</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">palette</span>
+<span>Widget</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">code</span>
+<span>Embed</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">group</span>
+<span>Team</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">vpn_key</span>
+<span>API Keys</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">payments</span>
+<span>Billing</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">admin_panel_settings</span>
+<span>Super Admin</span>
+</div>
+</nav>
+<div class="pt-6 border-t border-white/5 space-y-1">
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">description</span>
+<span>Documentation</span>
+</div>
+<div class="text-slate-400 hover:text-slate-200 hover:bg-white/5 flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200">
+<span class="material-symbols-outlined text-lg">contact_support</span>
+<span>Support</span>
+</div>
+</div>
+</aside>
+<!-- Top Bar Component (Mapped from JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 z-40 bg-[#111827]/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 font-inter antialiased shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold tracking-tight text-white">Playground</span>
+<div class="h-4 w-px bg-white/10 mx-2"></div>
+<div class="flex items-center gap-2 px-3 py-1 bg-success-green/10 rounded-full border border-success-green/20">
+<div class="w-2 h-2 rounded-full bg-success-green animate-pulse"></div>
+<span class="text-[11px] font-semibold text-success-green uppercase tracking-wider">Connected</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-400 text-lg">notifications</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-400 text-lg">help</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-400 text-lg">settings</span>
+</div>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-white/10">
+<div class="text-right">
+<p class="text-sm font-semibold text-white">Admin</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-tighter">Enterprise Plan</p>
+</div>
+<img alt="Administrator Avatar" class="w-8 h-8 rounded-full border border-white/10" data-alt="professional studio portrait of a male corporate administrator with clean background and professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBotmSEx4BKntOMBScqUG78bQGNMgRiEKBNQzjrtfmguYtr0tvT_CzlkY2t62o_FXjPUtrrmqiu8dKP7FE1QQBJ4Ga-qtqZR9C8Tt1APWS-p9jgW9TuMnrO6Tq2Qt_7lG1jimyKOai4tDg5coBxRznNEjnRGRqJ5H3XPqj_8i38Ahm0gN0UfCWD9f1IugT9RuKFXwdm-WJjd7080P_-GdwhG4P_Jel1M7ooEVJ3tdRsZB96MVIy38qu4h8750A8HP3-TEcdgWbtt0"/>
+</div>
+</div>
+</header>
+<!-- Main Content Grid -->
+<main class="fixed top-16 right-0 w-[calc(100%-260px)] bottom-0 flex">
+<!-- Left: Chat Interface (65%) -->
+<section class="w-[65%] h-full flex flex-col border-r border-white/5 bg-[#0A0F1E]">
+<!-- Messages Area -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar">
+<!-- System/Bot Message -->
+<div class="flex gap-4 max-w-[85%]">
+<div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] flex-shrink-0 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-white text-base" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-card border border-border-glass rounded-2xl rounded-tl-none p-5 text-on-surface shadow-md">
+<p class="font-body-md text-slate-200 leading-relaxed">
+                                Hello! I'm your Nexus RAG assistant. I've successfully connected to your enterprise knowledge base. You can ask me questions about your documentation or internal data. How can I help you today?
+                            </p>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-4 flex-row-reverse max-w-[85%] ml-auto">
+<div class="w-9 h-9 rounded-lg bg-white/10 flex-shrink-0 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-slate-400 text-base">person</span>
+</div>
+<div class="bg-primary-container rounded-2xl rounded-tr-none p-5 text-white shadow-lg">
+<p class="font-body-md leading-relaxed">
+                            What are the security protocols for the new API v4 endpoints?
+                        </p>
+</div>
+</div>
+<!-- Bot Response with Sources -->
+<div class="flex gap-4 max-w-[85%]">
+<div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] flex-shrink-0 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-white text-base" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-card border border-border-glass rounded-2xl rounded-tl-none p-5 text-on-surface shadow-md">
+<p class="font-body-md text-slate-200 leading-relaxed">
+                                Based on the internal security documentation, the API v4 endpoints implement a Zero-Trust architecture. Key protocols include:
+                            </p>
+<ul class="mt-4 space-y-2 list-disc list-inside text-slate-300">
+<li>Mandatory mTLS for all service-to-service communication.</li>
+<li>OAuth 2.1 authorization with short-lived JWT tokens.</li>
+<li>Per-request anomaly detection and rate limiting.</li>
+</ul>
+<!-- Sources Section -->
+<div class="mt-6 pt-4 border-t border-white/5">
+<p class="text-label-caps text-slate-500 mb-3 uppercase tracking-wider">Sources Found (3)</p>
+<div class="grid grid-cols-1 gap-2">
+<div class="bg-white/5 hover:bg-white/10 transition-colors p-3 rounded-lg border border-white/5 flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-400 text-sm">description</span>
+<span class="text-body-sm text-slate-300">security_protocol_v4_rev2.pdf</span>
+</div>
+<span class="text-[10px] text-slate-500 bg-white/5 px-2 py-0.5 rounded uppercase">Page 14</span>
+</div>
+<div class="bg-white/5 hover:bg-white/10 transition-colors p-3 rounded-lg border border-white/5 flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-400 text-sm">article</span>
+<span class="text-body-sm text-slate-300">internal_auth_docs.md</span>
+</div>
+<span class="text-[10px] text-slate-500 bg-white/5 px-2 py-0.5 rounded uppercase">Section 2</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-6 bg-[#0A0F1E] border-t border-white/5">
+<div class="max-w-4xl mx-auto relative group">
+<div class="absolute inset-0 bg-primary/10 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500"></div>
+<div class="relative flex items-end gap-3 bg-surface-card border border-white/10 rounded-2xl p-3 focus-within:border-primary/50 transition-all shadow-2xl">
+<button class="w-10 h-10 flex items-center justify-center text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface py-2 resize-none placeholder:text-slate-500 custom-scrollbar" placeholder="Message Nexus..." rows="1"></textarea>
+<button class="w-10 h-10 bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<div class="mt-3 flex justify-center items-center gap-6">
+<span class="text-[11px] text-slate-500 uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">bolt</span> GPT-4o Selected
+                        </span>
+<span class="text-[11px] text-slate-500 uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">database</span> RAG Active
+                        </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right: Configuration Panel (35%) -->
+<section class="w-[35%] h-full bg-[#111827] overflow-y-auto p-6 custom-scrollbar space-y-6">
+<!-- Model Settings Card -->
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-h3 font-h3 text-white">Model Configuration</h3>
+<span class="material-symbols-outlined text-slate-500 cursor-pointer">info</span>
+</div>
+<div class="space-y-6">
+<!-- Dropdown -->
+<div>
+<label class="text-label-caps text-slate-400 mb-2 block uppercase tracking-widest">Inference Model</label>
+<div class="w-full bg-bg-deep-navy border border-white/10 rounded-lg p-3 flex items-center justify-between cursor-pointer hover:border-primary/40 transition-colors">
+<div class="flex items-center gap-3">
+<img class="w-5 h-5 rounded-sm" data-alt="minimalist tech logo icon abstract shape colorful gradient" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzoPBDNXlyPB7djbN6mTfIva4mBe6NVC3n3Y1siTQwALhc7nXbMBRlFHaiMjNbkuxEwymPNgAmLwSB6p6i-gGugTgNpgTToIXTLcTwlY0-F-g-XzsH_WIuTlNKwKcD3m-XJHHRoqYP6qi0zE3LgFnb8XJS4ky6W2yUkrJVctv6HhzalYdtefWOi_ZZdJYvzzacnp88BI6XSJc3r7aBkRE2lSUQB7J8l5e-jtlha-saGcZpiuZmhKl8fgvMGx1i4s3afD4XyV3QSrE"/>
+<span class="text-body-sm font-medium">GPT-4o (Omni)</span>
+</div>
+<span class="material-symbols-outlined text-slate-500">expand_more</span>
+</div>
+</div>
+<!-- Temperature Slider -->
+<div>
+<div class="flex justify-between items-center mb-3">
+<label class="text-label-caps text-slate-400 uppercase tracking-widest">Temperature</label>
+<span class="text-mono text-primary font-medium">0.7</span>
+</div>
+<input class="w-full h-1.5 bg-bg-deep-navy rounded-lg appearance-none cursor-pointer accent-primary" max="1" min="0" step="0.1" type="range" value="0.7"/>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] text-slate-600 uppercase">Precise</span>
+<span class="text-[10px] text-slate-600 uppercase">Creative</span>
+</div>
+</div>
+<!-- Max Tokens -->
+<div>
+<div class="flex justify-between items-center mb-3">
+<label class="text-label-caps text-slate-400 uppercase tracking-widest">Max Response Tokens</label>
+<span class="text-mono text-primary font-medium">2048</span>
+</div>
+<input class="w-full h-1.5 bg-bg-deep-navy rounded-lg appearance-none cursor-pointer accent-primary" max="4096" min="256" step="256" type="range" value="2048"/>
+</div>
+</div>
+</div>
+<div class="h-px bg-white/5"></div>
+<!-- System Prompt Card -->
+<div class="space-y-4">
+<label class="text-label-caps text-slate-400 uppercase tracking-widest block">System Persona</label>
+<div class="bg-bg-deep-navy border border-white/10 rounded-lg p-4 group focus-within:border-primary/30 transition-all">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-body-sm text-slate-300 resize-none custom-scrollbar" rows="5">You are an expert technical support agent for Nexus Enterprise. Your primary role is to answer user questions using the provided context from the internal knowledge base. 
+
+Maintain a professional, helpful tone. If the answer is not in the documentation, politely inform the user.</textarea>
+</div>
+</div>
+<div class="h-px bg-white/5"></div>
+<!-- Retrieval Settings Card -->
+<div class="space-y-4">
+<h3 class="text-label-caps text-slate-400 uppercase tracking-widest">Retrieval (RAG) Settings</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-bg-deep-navy rounded-lg border border-white/5">
+<span class="text-body-sm text-slate-300">Semantic Search</span>
+<div class="w-10 h-5 bg-primary/20 rounded-full relative flex items-center px-1">
+<div class="w-3.5 h-3.5 bg-primary rounded-full absolute right-1"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-bg-deep-navy rounded-lg border border-white/5 opacity-50">
+<span class="text-body-sm text-slate-300">Hybrid Search (Alpha)</span>
+<div class="w-10 h-5 bg-white/10 rounded-full relative flex items-center px-1">
+<div class="w-3.5 h-3.5 bg-slate-500 rounded-full absolute left-1"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="text-label-caps text-slate-500 uppercase tracking-widest">Similarity Threshold</label>
+<span class="text-mono text-slate-400">0.82</span>
+</div>
+<input class="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-slate-400" type="range"/>
+</div>
+</div>
+</div>
+<!-- Response Info Card -->
+<div class="mt-8 bg-gradient-to-br from-white/5 to-transparent border border-white/5 rounded-xl p-5">
+<h4 class="text-label-caps text-slate-400 uppercase tracking-widest mb-4">Last Response Stats</h4>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<p class="text-[10px] text-slate-500 uppercase">Latency</p>
+<p class="text-lg font-mono text-white">1.24s</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] text-slate-500 uppercase">Cost (Est.)</p>
+<p class="text-lg font-mono text-white">$0.0034</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] text-slate-500 uppercase">Tokens</p>
+<p class="text-lg font-mono text-white">412</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] text-slate-500 uppercase">Chunks</p>
+<p class="text-lg font-mono text-white">5</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

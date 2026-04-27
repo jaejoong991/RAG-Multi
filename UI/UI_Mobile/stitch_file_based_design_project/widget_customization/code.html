@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#37333e",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-low": "#1d1a24",
+                        "tertiary-fixed": "#ffdcc6",
+                        "background-deep": "#0A0F1E",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#d2bbff",
+                        "outline": "#958da1",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-container-lowest": "#100d16",
+                        "secondary-container": "#0566d9",
+                        "on-secondary-container": "#e6ecff",
+                        "primary": "#d2bbff",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#2c2833",
+                        "warning": "#F59E0B",
+                        "on-surface": "#e8dfee",
+                        "primary-fixed": "#eaddff",
+                        "on-tertiary-container": "#ffe0cd",
+                        "on-tertiary": "#4f2500",
+                        "tertiary-fixed-dim": "#ffb784",
+                        "error": "#EF4444",
+                        "background": "#15121b",
+                        "tertiary": "#ffb784",
+                        "on-tertiary-fixed": "#301400",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                        "outline-variant": "#4a4455",
+                        "surface": "#15121b",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "on-primary-fixed": "#25005a",
+                        "surface-container-highest": "#37333e",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "surface-bright": "#3c3742",
+                        "secondary": "#adc6ff",
+                        "border-glass": "rgba(255, 255, 255, 0.06)",
+                        "inverse-primary": "#732ee4",
+                        "on-background": "#e8dfee",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-secondary-fixed": "#001a42",
+                        "on-primary": "#3f008e",
+                        "on-primary-container": "#ede0ff",
+                        "inverse-on-surface": "#332f39",
+                        "primary-container": "#7c3aed",
+                        "surface-dim": "#15121b",
+                        "sidebar-active": "rgba(124, 58, 237, 0.1)",
+                        "inverse-surface": "#e8dfee",
+                        "surface-tint": "#d2bbff",
+                        "on-surface-variant": "#ccc3d8",
+                        "surface-card": "#111827",
+                        "tertiary-container": "#a15100",
+                        "on-secondary": "#002e6a",
+                        "surface-container": "#221e28",
+                        "on-error": "#690005",
+                        "success": "#10B981"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "gutter": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "code": ["monospace"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(124, 58, 237, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-deep text-on-surface font-body-md overflow-hidden">
+<!-- Navigation Drawer -->
+<aside class="fixed left-0 top-0 bottom-0 z-50 w-64 h-screen border-r border-white/10 bg-[#111827]/80 backdrop-blur-md shadow-2xl font-inter text-sm antialiased flex flex-col">
+<div class="p-6">
+<h1 class="text-xl font-bold bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] bg-clip-text text-transparent">RAGCORE AI</h1>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">dashboard</span> Overview
+            </div>
+<div class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">database</span> Knowledge Base
+            </div>
+<div class="flex items-center gap-3 px-4 py-3 text-white bg-white/5 border-l-4 border-[#7C3AED] cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">smart_toy</span> Chat Widgets
+            </div>
+<div class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">code</span> API &amp; Embeds
+            </div>
+<div class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">group</span> Team Management
+            </div>
+<div class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">payments</span> Billing
+            </div>
+</nav>
+<div class="p-4 mt-auto border-t border-white/10">
+<div class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">settings</span> Settings
+            </div>
+<div class="mt-4 flex items-center gap-3 px-4">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-container to-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-white">person</span>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-semibold">Technical Admin</span>
+<span class="text-xs text-gray-500">Enterprise Tier</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="sticky top-0 right-0 z-40 h-16 w-full flex items-center justify-between px-8 bg-[#0A0F1E]/90 backdrop-blur-xl border-b border-white/5 font-inter text-lg font-semibold tracking-tight">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gray-400 cursor-pointer">menu</span>
+<span class="text-on-surface">Chat Widget Customization</span>
+</div>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-body-md transition-all">
+<span class="material-symbols-outlined text-sm">visibility</span>
+                    Preview Mode
+                </button>
+<button class="px-6 py-2 bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white rounded-lg text-body-md font-semibold hover:opacity-90 active:scale-95 transition-all">
+                    Publish Changes
+                </button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-white/10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="professional male headshot with clean lighting and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbJ2jW6QLz52z_j2roHQMR7oJBt1uB6-l5WAQWDAzhAq1SXwtmQ-RZhh2WrEchu3GgnAU3N1naqERfeXM416_Uyi5PWKCtlO0dWhGuHbvaIpjUIzXaHmzQg4xM2NpGmtWWsQvwYbwy-xwf8eGIt7lYJuTlYfFdRWRuLALTMSAt1fupJ-SuKBiNRzUDrmyCVBihAJsDHzbYh2Ms4ElZxax1uHo1-aPyrd9fm595I-drx6dyZFsOxnLc9AD8alBK5BdLvQBEY8dHcgQ"/>
+</div>
+</div>
+</header>
+<!-- Editor & Preview Grid -->
+<div class="flex-1 grid grid-cols-12 gap-0 overflow-hidden">
+<!-- Left: Settings Sidebar -->
+<div class="col-span-4 border-r border-white/5 bg-surface-container-lowest flex flex-col overflow-y-auto custom-scrollbar">
+<!-- Section: Appearance -->
+<div class="p-6 space-y-6">
+<div>
+<h3 class="font-h3 text-primary-fixed-dim flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-lg">palette</span>
+                            Appearance
+                        </h3>
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="text-label-caps text-outline uppercase">Widget Title</label>
+<input class="w-full bg-background-deep border border-white/10 rounded-lg px-4 py-2 focus:border-primary-container outline-none text-body-md" type="text" value="AI Knowledge Assistant"/>
+</div>
+<div class="space-y-2">
+<label class="text-label-caps text-outline uppercase">Welcome Message</label>
+<textarea class="w-full h-24 bg-background-deep border border-white/10 rounded-lg px-4 py-2 focus:border-primary-container outline-none text-body-md resize-none">Hello! I'm your RAG-powered assistant. How can I help you navigate our documentation today?</textarea>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-label-caps text-outline uppercase">Primary Color</label>
+<div class="flex items-center gap-2 bg-background-deep border border-white/10 rounded-lg p-2">
+<div class="w-6 h-6 rounded bg-[#7C3AED]"></div>
+<span class="text-code text-xs">#7C3AED</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-caps text-outline uppercase">Position</label>
+<select class="w-full bg-background-deep border border-white/10 rounded-lg px-3 py-2 text-body-md outline-none">
+<option>Bottom Right</option>
+<option>Bottom Left</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-white/5">
+<h3 class="font-h3 text-primary-fixed-dim flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-lg">settings_suggest</span>
+                            Behavior
+                        </h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<label class="text-body-md">Auto-open on load</label>
+<div class="w-10 h-5 bg-primary-container rounded-full relative cursor-pointer">
+<div class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-caps text-outline uppercase">Opening Delay (seconds)</label>
+<input class="w-full bg-background-deep border border-white/10 rounded-lg px-4 py-2 focus:border-primary-container outline-none text-body-md" type="number" value="3"/>
+</div>
+<div class="space-y-2">
+<label class="text-label-caps text-outline uppercase">Suggested Questions</label>
+<div class="space-y-2">
+<div class="flex items-center gap-2 bg-white/5 border border-white/5 rounded-lg px-3 py-2">
+<span class="text-xs flex-1">How do I configure the API?</span>
+<span class="material-symbols-outlined text-xs text-error cursor-pointer">close</span>
+</div>
+<div class="flex items-center gap-2 bg-white/5 border border-white/5 rounded-lg px-3 py-2">
+<span class="text-xs flex-1">Explain vector embeddings</span>
+<span class="material-symbols-outlined text-xs text-error cursor-pointer">close</span>
+</div>
+<button class="w-full py-2 border border-dashed border-white/20 rounded-lg text-xs text-outline hover:border-white/40 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Add Suggestion
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-white/5">
+<h3 class="font-h3 text-primary-fixed-dim flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-lg">face</span>
+                            Avatar Style
+                        </h3>
+<div class="grid grid-cols-4 gap-2">
+<div class="aspect-square rounded-lg border-2 border-primary-container bg-surface-container flex items-center justify-center p-1">
+<img class="w-full h-full object-cover rounded-md" data-alt="minimalist robot avatar icon with soft blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA06KNYC8vnGIDwdz2TENrPNkbWub9faQiIkEZMMT50FSRH2NjPp1xmF7-vNBY4io7SHLreeBuFAtGm-ag0yUEY5BO0vRS9pkk0Nbr_jvKMPFVQhHnX2kE9xWrtCd42hXKj1htuetvudT9GY48I-NsGLj_Mq0YlTSSv3-48PD9Ck3RELCM8AciftTn3e45pRF3YUusEVEOfjZ-DJqjwjScGcYReZTJ_8eJhP7z8PgTF_PNWuYRcbd_ZTiELqZusqPWfrbWYEVF1NgM"/>
+</div>
+<div class="aspect-square rounded-lg border border-white/5 bg-surface-container flex items-center justify-center p-1 cursor-pointer opacity-60 hover:opacity-100">
+<img class="w-full h-full object-cover rounded-md" data-alt="friendly customer support woman headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe1hwE16MGHVAiJZxbXL_x1hXcn-aDK37D10IGWw2_gp0yIiTTaatPtbPoUscqth6o_KZK2pzFqUxyMYrtr8BbMLWYgBJqG1Y2tXs6u6hJfNGulIQALI-34iCAuhk5RM_mYJFs50hx7WeSq-DW13BSQePfDIQfwyYR1u-KvLikS1uKMh5pVFAFIFixhrpn7jU__wX1J53fNYwBlD1SkG4Jze2yUBgzgO25IdK0qBX7cFGPP1-tsmW8daB6K4eolr4RSSnMeX823r0"/>
+</div>
+<div class="aspect-square rounded-lg border border-white/5 bg-surface-container flex items-center justify-center cursor-pointer opacity-60 hover:opacity-100">
+<span class="material-symbols-outlined text-2xl">smart_toy</span>
+</div>
+<div class="aspect-square rounded-lg border border-white/5 bg-surface-container flex items-center justify-center cursor-pointer opacity-60 hover:opacity-100">
+<span class="material-symbols-outlined text-2xl">add_a_photo</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Live Preview Canvas -->
+<div class="col-span-8 bg-[#020617] relative p-12 flex flex-col items-center justify-center overflow-hidden">
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-container rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary-container rounded-full blur-[120px]"></div>
+</div>
+<!-- Mock Website Container -->
+<div class="w-full max-w-4xl h-full bg-[#f8fafc] rounded-xl shadow-2xl overflow-hidden relative border border-white/10 flex flex-col">
+<!-- Mock Nav -->
+<div class="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 bg-slate-800 rounded"></div>
+<div class="h-4 w-24 bg-gray-200 rounded"></div>
+</div>
+<div class="flex gap-4">
+<div class="h-4 w-12 bg-gray-100 rounded"></div>
+<div class="h-4 w-12 bg-gray-100 rounded"></div>
+<div class="h-4 w-12 bg-gray-100 rounded"></div>
+</div>
+</div>
+<!-- Mock Hero Content -->
+<div class="flex-1 p-12">
+<div class="max-w-lg space-y-6">
+<div class="h-12 w-3/4 bg-gray-200 rounded-lg"></div>
+<div class="space-y-3">
+<div class="h-4 w-full bg-gray-100 rounded"></div>
+<div class="h-4 w-5/6 bg-gray-100 rounded"></div>
+<div class="h-4 w-4/6 bg-gray-100 rounded"></div>
+</div>
+<div class="flex gap-4 pt-4">
+<div class="h-10 w-32 bg-slate-800 rounded-lg"></div>
+<div class="h-10 w-32 bg-gray-200 rounded-lg"></div>
+</div>
+</div>
+<!-- Mock Grid -->
+<div class="mt-16 grid grid-cols-3 gap-6">
+<div class="h-32 bg-gray-50 rounded-xl border border-gray-100"></div>
+<div class="h-32 bg-gray-50 rounded-xl border border-gray-100"></div>
+<div class="h-32 bg-gray-50 rounded-xl border border-gray-100"></div>
+</div>
+</div>
+<!-- THE CHAT WIDGET PREVIEW (Bottom Right Position) -->
+<div class="absolute bottom-6 right-6 w-80 flex flex-col items-end">
+<!-- Chat Window -->
+<div class="w-80 h-[420px] glass-panel rounded-2xl shadow-2xl overflow-hidden mb-4 flex flex-col border border-white/20">
+<!-- Chat Header -->
+<div class="p-4 bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full border border-white/20 overflow-hidden bg-white/10">
+<img class="w-full h-full object-cover" data-alt="minimalist robot avatar icon with soft blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsRANLY6CS3D7NkDZxAi72TRLnHN5ZMYaECwA70ZnOU0zYPTmYQ8xdRvw1W1QYFRjeIcV4ah_jUtIV9NLvTVLr41wIDnxYIHwUuwDR5BdTNQgVKYUgFifzDbTTpf8NSTvhsBL5Eoi3CiAM90uIG7S9he5wMGCgoUOQWKhKdeQDnAOOGWkwuzQTyQ4lqyfTPKpFUUjJ4AYiMlj_A1vpwWOSo9qtiidGKAeJarnEaR9yaRLvpFjRtiXEJ28qhTWzhZddQ3_ohvgCRp8"/>
+</div>
+<span class="font-semibold text-white text-sm">AI Knowledge Assistant</span>
+</div>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-white/80 text-sm cursor-pointer">minimize</span>
+<span class="material-symbols-outlined text-white/80 text-sm cursor-pointer">close</span>
+</div>
+</div>
+<!-- Chat Messages -->
+<div class="flex-1 p-4 space-y-4 overflow-y-auto custom-scrollbar">
+<div class="flex gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-white">smart_toy</span>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-2xl rounded-tl-none p-3 text-xs text-on-surface-variant leading-relaxed">
+                                        Hello! I'm your RAG-powered assistant. How can I help you navigate our documentation today?
+                                    </div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] text-white rounded-2xl rounded-tr-none p-3 text-xs shadow-lg">
+                                        How do I setup a new index?
+                                    </div>
+</div>
+<div class="flex gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-white">smart_toy</span>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-2xl rounded-tl-none p-3 text-xs text-on-surface-variant leading-relaxed">
+<p class="mb-2">To set up a new index, follow these steps:</p>
+<ol class="list-decimal pl-4 space-y-1">
+<li>Navigate to Knowledge Base</li>
+<li>Click "Create New Collection"</li>
+<li>Upload your PDF or Text files</li>
+</ol>
+</div>
+</div>
+<!-- Suggestions in Widget -->
+<div class="flex flex-wrap gap-2 pt-2">
+<div class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] text-primary-fixed-dim hover:bg-white/10 cursor-pointer transition-colors">
+                                        How do I configure the API?
+                                    </div>
+<div class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] text-primary-fixed-dim hover:bg-white/10 cursor-pointer transition-colors">
+                                        Explain vector embeddings
+                                    </div>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="p-4 border-t border-white/5 bg-[#111827]/50">
+<div class="relative flex items-center">
+<input class="w-full bg-background-deep border border-white/10 rounded-full px-4 py-2 pr-10 text-[11px] outline-none" placeholder="Type your message..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 text-primary-container cursor-pointer">send</span>
+</div>
+<div class="flex items-center justify-center gap-1 mt-2">
+<span class="text-[9px] text-gray-500 uppercase tracking-widest font-semibold">Powered by RAGCORE</span>
+</div>
+</div>
+</div>
+<!-- Floating Button -->
+<div class="w-14 h-14 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] shadow-xl flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-white text-3xl">chat</span>
+</div>
+</div>
+</div>
+<!-- Preview Controls Overlay -->
+<div class="absolute top-12 right-12 flex gap-4">
+<div class="glass-panel p-2 rounded-xl flex items-center gap-1">
+<button class="p-2 bg-white/10 rounded-lg text-white">
+<span class="material-symbols-outlined">desktop_windows</span>
+</button>
+<button class="p-2 hover:bg-white/5 rounded-lg text-gray-400">
+<span class="material-symbols-outlined">smartphone</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Team Management - RAG Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#37333e",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-low": "#1d1a24",
+                        "tertiary-fixed": "#ffdcc6",
+                        "background-deep": "#0A0F1E",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#d2bbff",
+                        "outline": "#958da1",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-container-lowest": "#100d16",
+                        "secondary-container": "#0566d9",
+                        "on-secondary-container": "#e6ecff",
+                        "primary": "#d2bbff",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#2c2833",
+                        "warning": "#F59E0B",
+                        "on-surface": "#e8dfee",
+                        "primary-fixed": "#eaddff",
+                        "on-tertiary-container": "#ffe0cd",
+                        "on-tertiary": "#4f2500",
+                        "tertiary-fixed-dim": "#ffb784",
+                        "error": "#EF4444",
+                        "background": "#15121b",
+                        "tertiary": "#ffb784",
+                        "on-tertiary-fixed": "#301400",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                        "outline-variant": "#4a4455",
+                        "surface": "#15121b",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "on-primary-fixed": "#25005a",
+                        "surface-container-highest": "#37333e",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "surface-bright": "#3c3742",
+                        "secondary": "#adc6ff",
+                        "border-glass": "rgba(255, 255, 255, 0.06)",
+                        "inverse-primary": "#732ee4",
+                        "on-background": "#e8dfee",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-secondary-fixed": "#001a42",
+                        "on-primary": "#3f008e",
+                        "on-primary-container": "#ede0ff",
+                        "inverse-on-surface": "#332f39",
+                        "primary-container": "#7c3aed",
+                        "surface-dim": "#15121b",
+                        "sidebar-active": "rgba(124, 58, 237, 0.1)",
+                        "inverse-surface": "#e8dfee",
+                        "surface-tint": "#d2bbff",
+                        "on-surface-variant": "#ccc3d8",
+                        "surface-card": "#111827",
+                        "tertiary-container": "#a15100",
+                        "on-secondary": "#002e6a",
+                        "surface-container": "#221e28",
+                        "on-error": "#690005",
+                        "success": "#10B981"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "gutter": "16px",
+                        "sidebar-width": "260px",
+                        "header-height": "64px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "code": ["monospace"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-deep text-on-surface font-body-md min-h-screen">
+<!-- Sidebar Component (NavigationDrawer) -->
+<aside class="fixed left-0 top-0 bottom-0 z-50 w-64 h-screen bg-[#111827]/80 backdrop-blur-md border-r border-white/10 shadow-2xl font-inter text-sm antialiased">
+<div class="p-6">
+<span class="text-xl font-bold bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] bg-clip-text text-transparent">RAG ARCHITECT</span>
+</div>
+<nav class="flex-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>Overview
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>Knowledge Base
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>Chat Widgets
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="code">code</span>API &amp; Embeds
+            </a>
+<!-- Active State: Team Management -->
+<a class="flex items-center gap-3 px-4 py-3 text-white bg-white/5 border-l-4 border-[#7C3AED] active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>Team Management
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>Billing
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>Super Admin
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>Settings
+            </a>
+</nav>
+<div class="absolute bottom-0 w-full p-6 border-t border-white/10 bg-[#111827]/40">
+<div class="flex items-center gap-3">
+<img alt="Admin User Avatar" class="w-8 h-8 rounded-full bg-primary-container" data-alt="Close up professional portrait of a technical system administrator with a focused expression in a modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwb2DULTieOUd5paGeAjcjERCWke_XNqH8zHFDUvAcnSwKQw9SEKYefM8er3TTytvyHhz__QukT_2QQLGWeNwMBm65NBBH7jhp9tTYqMhyht1RGLXVuj3x4ExrhnuJk-PDbC4ItchwNLjKRrJtpfvbfirmLbZkDp3DaiHoSRgGksSD75gkMK7Uz0uSu66LbTsSyYLMN7Yd0Ne71SwHJEEKajDJ51y5fd7crOK9lNTuw49VuI2pcSbJFXliaOzYX3zmO6ZLTdSpO-k"/>
+<div class="overflow-hidden">
+<p class="text-white font-semibold truncate">Technical Admin</p>
+<p class="text-xs text-gray-400">Enterprise Tier</p>
+</div>
+</div>
+<div class="mt-4 text-[10px] text-gray-500 uppercase tracking-widest font-bold">v2.4.0</div>
+</div>
+</aside>
+<!-- Header (TopAppBar) -->
+<header class="sticky top-0 right-0 z-40 flex items-center justify-between px-6 ml-64 h-16 w-full bg-[#0A0F1E]/90 backdrop-blur-xl border-b border-white/5 font-inter text-lg font-semibold tracking-tight">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gray-400 cursor-pointer active:opacity-70" data-icon="menu">menu</span>
+<h1 class="text-on-surface">RAG Platform Control Center</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10">
+<div class="w-2 h-2 rounded-full bg-success"></div>
+<span class="text-xs font-medium text-gray-300">System Online</span>
+</div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined text-sm" data-icon="notifications">notifications</span>
+</div>
+<img alt="User Profile" class="w-8 h-8 rounded-full bg-[#7C3AED] border border-white/20" data-alt="Minimalist abstract avatar icon with vibrant purple and blue colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw0YVBVXWhs-vIiffdP0_dNQZz_caDg1qGnIEtBDdc5Rq2F38JtzJi57ASri5ct-VugTeKHeVsA7Q9MalQw4cdTy9bwDW6dMxx2Um7W7_u-JtVAQ1eQ_R_oVbtsEpp_jgMeGD1vVARt9NEWg1VEOVxqGJ9EHoiRUXdxoR1ZCD7Zg8JMyN-m_SEhzLqskQU0K3gkMCmtljZlj-zgroygIAb14NBRRIotT5X5WYgYKsT_BHK0ZYygpx6YFVXGxA-fKfPV5GJaeeuvt0"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 p-gutter max-w-7xl mx-auto">
+<!-- Page Header Section -->
+<div class="flex items-end justify-between mb-8">
+<div>
+<h2 class="font-h2 text-h2 text-white mb-2">Team Management</h2>
+<p class="text-on-surface-variant max-w-2xl">Manage your engineering team access, permissions, and collaborative workflows across the RAG ecosystem.</p>
+</div>
+<button class="bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white px-6 py-2.5 rounded-lg flex items-center gap-2 font-semibold shadow-lg hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+                Invite Member
+            </button>
+</div>
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-12 gap-6 mb-8">
+<div class="col-span-12 md:col-span-4 glass-panel p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="text-label-caps font-label-caps text-gray-400">TOTAL MEMBERS</span>
+<span class="material-symbols-outlined text-[#7C3AED]" data-icon="groups">groups</span>
+</div>
+<div class="text-3xl font-bold text-white">24</div>
+<div class="text-xs text-success mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="trending_up">trending_up</span>
+                    +3 this month
+                </div>
+</div>
+<div class="col-span-12 md:col-span-4 glass-panel p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="text-label-caps font-label-caps text-gray-400">PENDING INVITES</span>
+<span class="material-symbols-outlined text-warning" data-icon="mail">mail</span>
+</div>
+<div class="text-3xl font-bold text-white">08</div>
+<div class="text-xs text-gray-400 mt-2">Awaiting email verification</div>
+</div>
+<div class="col-span-12 md:col-span-4 glass-panel p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="text-label-caps font-label-caps text-gray-400">LICENSE USAGE</span>
+<span class="material-symbols-outlined text-[#3B82F6]" data-icon="data_usage">data_usage</span>
+</div>
+<div class="text-3xl font-bold text-white">82%</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full mt-4">
+<div class="bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] h-1.5 rounded-full" style="width: 82%;"></div>
+</div>
+</div>
+</div>
+<!-- Members Table Card -->
+<div class="glass-panel rounded-xl overflow-hidden mb-24">
+<div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/5">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm" data-icon="search">search</span>
+<input class="w-full bg-black/20 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] outline-none" placeholder="Search members by name or email..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                        Filter
+                    </button>
+</div>
+<span class="text-xs text-gray-500 font-medium">SHOWING 24 MEMBERS</span>
+</div>
+<table class="w-full text-left">
+<thead class="bg-white/5">
+<tr>
+<th class="px-6 py-4 font-label-caps text-label-caps text-gray-400">MEMBER</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-gray-400">ROLE</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-gray-400">STATUS</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-gray-400">LAST ACTIVE</th>
+<th class="px-6 py-4 text-right"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1: Admin -->
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img class="w-9 h-9 rounded-full bg-surface-container-high" data-alt="Portrait of a male software engineer with glasses smiling against a clean tech background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjF8PEn8kBbGHTAP2Ddyc4dBaAi9oLCjBaefIWVh0uWW4LkpvjZVzjp_m_gldWGMfc5AnMQEKYVUUFXuF4gBA4kJ9SgWE5xdv2ZkgAeeU80Y0NEChMb0xipN8lzMzJsxpROHyuqkPo5l0tp4FTFBEwtMLVa5IwCDPBJaSF9o7KunssaoXc0MhTm5eBFDydqZFEPwdvc-PBgcw7HR_jHM91jiN2Mhj-1-7FtbC4KhselzuYaGOSUM9HFpbVKD13YsTFWOGbRH08CYQ"/>
+<div>
+<p class="text-sm font-semibold text-white">Julian Davenport</p>
+<p class="text-xs text-gray-500">j.davenport@enterprise.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider bg-[#7C3AED]/10 text-[#7C3AED] border border-[#7C3AED]/20 uppercase">Admin</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-success"></div>
+<span class="text-xs text-gray-300">Active</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs text-gray-400">2 mins ago</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-white/5 rounded-lg text-gray-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Member -->
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img class="w-9 h-9 rounded-full bg-surface-container-high" data-alt="Portrait of a female product designer with creative lighting in a professional studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBdSw9U6iDtd2Ks7kx-J89AJkRfkKKttGpEXlqtbRjPGYeRYjF47gZITmLa4eIyuIyh_hoakkh_k27-Z-v76EAXAh9zAgw5MxnMLNJ8O6bF5f0t__-KXyVZ1hZNPmWBWO3aDGXDuIHggiNyiCeqcgX29iBZ4tl6p97bdhu6r0gkGPlP0amApZphmcS-ebx4GY_Uu_uotgYNklyhnBukYffV-qzKI-UpnZ49HHxpHc4R-2J9QPwnWUOXak6hzCkJMta1lkfzaHt3GM"/>
+<div>
+<p class="text-sm font-semibold text-white">Sarah Chen</p>
+<p class="text-xs text-gray-500">s.chen@enterprise.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider bg-white/5 text-gray-400 border border-white/10 uppercase">Member</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-success"></div>
+<span class="text-xs text-gray-300">Active</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs text-gray-400">Yesterday, 4:12 PM</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-white/5 rounded-lg text-gray-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Member (Processing) -->
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img class="w-9 h-9 rounded-full bg-surface-container-high" data-alt="Portrait of a male developer in a hoodies working in a modern neon lit home office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO4qd-n1FCj4x7T6jzn-1XuPKvSpHApOPx9arFsPvuytYy5txy5VwE_CW_oEoR7zLPMfwvhlyHsahDV4mIhlPkrCheZ1e61hPTaiSqG6WagIHnU3Ap_ZInlwogth_2dNFqturIFVWVLDPxyy9bDgXQDbKrG8BeZfRaKzzYoFgiwb46ITw2OycgKsaLjJGdErnte23vyQxuv0vOfD28_mNS0eBwzOAISkpWThj3aZUB-3vh8QwBGGV4xGEvrXPF1Q8yHvZ46aKgYIQ"/>
+<div>
+<p class="text-sm font-semibold text-white">Marcus King</p>
+<p class="text-xs text-gray-500">m.king@enterprise.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider bg-white/5 text-gray-400 border border-white/10 uppercase">Member</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-warning animate-pulse"></div>
+<span class="text-xs text-gray-300">Processing</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs text-gray-400">Invited 2h ago</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-white/5 rounded-lg text-gray-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<!-- Modal Overlay (Mockup for Invitation) -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-background-deep/80 backdrop-blur-sm">
+<div class="glass-panel w-full max-w-lg rounded-2xl shadow-3xl overflow-hidden">
+<!-- Modal Header -->
+<div class="p-6 border-b border-white/10 flex items-center justify-between">
+<div>
+<h3 class="text-xl font-bold text-white">Invite Team Member</h3>
+<p class="text-sm text-gray-400 mt-1">Add a new collaborator to your RAG workspace.</p>
+</div>
+<button class="p-2 text-gray-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Content -->
+<div class="p-6 space-y-6">
+<!-- Email Input -->
+<div class="space-y-2">
+<label class="text-label-caps font-label-caps text-gray-400">EMAIL ADDRESS</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" data-icon="mail">mail</span>
+<input class="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] outline-none transition-all" placeholder="colleague@company.com" type="email"/>
+</div>
+</div>
+<!-- Role Selection -->
+<div class="space-y-2">
+<label class="text-label-caps font-label-caps text-gray-400">WORKSPACE ROLE</label>
+<div class="grid grid-cols-2 gap-4">
+<label class="relative cursor-pointer">
+<input checked="" class="peer sr-only" name="role" type="radio"/>
+<div class="p-4 rounded-xl border border-white/10 bg-white/5 peer-checked:border-[#7C3AED] peer-checked:bg-[#7C3AED]/10 transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-[#7C3AED]" data-icon="shield_person">shield_person</span>
+<div class="w-4 h-4 rounded-full border border-white/20 peer-checked:border-[#7C3AED] peer-checked:bg-[#7C3AED] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-white opacity-0 peer-checked:opacity-100"></div>
+</div>
+</div>
+<p class="text-sm font-semibold text-white">Admin</p>
+<p class="text-[11px] text-gray-400 mt-1">Full control over settings and members.</p>
+</div>
+</label>
+<label class="relative cursor-pointer">
+<input class="peer sr-only" name="role" type="radio"/>
+<div class="p-4 rounded-xl border border-white/10 bg-white/5 peer-checked:border-[#7C3AED] peer-checked:bg-[#7C3AED]/10 transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-gray-400" data-icon="person">person</span>
+<div class="w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"></div>
+</div>
+<p class="text-sm font-semibold text-white">Member</p>
+<p class="text-[11px] text-gray-400 mt-1">Can manage bots and knowledge bases.</p>
+</div>
+</label>
+</div>
+</div>
+<!-- Advanced Permissions Toggle -->
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-400" data-icon="key">key</span>
+<div>
+<p class="text-sm font-medium text-white">API Access Permissions</p>
+<p class="text-xs text-gray-500">Allow this user to manage API keys.</p>
+</div>
+</div>
+<button class="w-10 h-5 rounded-full bg-white/10 relative transition-colors">
+<div class="absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-gray-500"></div>
+</button>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 bg-white/5 flex items-center justify-end gap-3">
+<button class="px-5 py-2 text-sm font-semibold text-gray-400 hover:text-white transition-colors">Cancel</button>
+<button class="bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white px-6 py-2 rounded-lg font-semibold shadow-lg hover:brightness-110 active:scale-95 transition-all">
+                    Send Invitation
+                </button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | RAG OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#ffe0cd",
+                      "on-tertiary-fixed": "#301400",
+                      "error": "#ffb4ab",
+                      "on-error": "#690005",
+                      "surface-dim": "#15121b",
+                      "surface-container-low": "#1d1a24",
+                      "outline": "#958da1",
+                      "error-container": "#93000a",
+                      "success-green": "#10B981",
+                      "tertiary-fixed-dim": "#ffb784",
+                      "error-red": "#EF4444",
+                      "on-primary-container": "#ede0ff",
+                      "surface-bright": "#3c3742",
+                      "on-background": "#e8dfee",
+                      "on-tertiary-fixed-variant": "#713700",
+                      "on-error-container": "#ffdad6",
+                      "inverse-primary": "#732ee4",
+                      "secondary-container": "#0566d9",
+                      "secondary": "#adc6ff",
+                      "inverse-surface": "#e8dfee",
+                      "tertiary": "#ffb784",
+                      "tertiary-container": "#a15100",
+                      "surface-variant": "#37333e",
+                      "primary": "#d2bbff",
+                      "on-surface": "#e8dfee",
+                      "warning-amber": "#F59E0B",
+                      "surface-container-highest": "#37333e",
+                      "primary-container": "#7c3aed",
+                      "tertiary-fixed": "#ffdcc6",
+                      "on-secondary": "#002e6a",
+                      "surface-container": "#221e28",
+                      "on-primary": "#3f008e",
+                      "on-primary-fixed-variant": "#5a00c6",
+                      "surface-tint": "#d2bbff",
+                      "surface-container-high": "#2c2833",
+                      "primary-fixed-dim": "#d2bbff",
+                      "on-secondary-container": "#e6ecff",
+                      "on-secondary-fixed-variant": "#004395",
+                      "on-tertiary": "#4f2500",
+                      "outline-variant": "#4a4455",
+                      "surface-container-lowest": "#100d16",
+                      "on-primary-fixed": "#25005a",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-surface-variant": "#ccc3d8",
+                      "secondary-fixed": "#d8e2ff",
+                      "background": "#15121b",
+                      "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                      "inverse-on-surface": "#332f39",
+                      "border-glass": "rgba(255, 255, 255, 0.06)",
+                      "bg-deep-navy": "#0A0F1E",
+                      "primary-fixed": "#eaddff",
+                      "text-muted": "#94A3B8",
+                      "surface": "#15121b",
+                      "on-secondary-fixed": "#001a42",
+                      "surface-card": "#111827"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sidebar-width": "260px",
+                      "container-padding": "32px",
+                      "header-height": "64px",
+                      "gutter": "24px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "h3": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "h1": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "h2": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "mono": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-login-gradient {
+            background: linear-gradient(135deg, #0A0F1E 0%, #1E1B4B 100%);
+        }
+        .glass-border {
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .accent-btn-gradient {
+            background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary/30 min-h-screen">
+<main class="flex min-h-screen w-full flex-col md:flex-row overflow-hidden">
+<!-- LEFT HALF: Brand Identity (60%) -->
+<section class="relative hidden md:flex md:w-3/5 bg-login-gradient p-16 flex-col justify-between items-start overflow-hidden">
+<!-- Background Decorative Elements -->
+<div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="absolute bottom-[-5%] left-[-5%] w-[300px] h-[300px] bg-secondary-container/10 blur-[100px] rounded-full pointer-events-none"></div>
+<!-- Logo Cluster -->
+<div class="z-10 flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl accent-btn-gradient flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-3xl" data-weight="fill">hexagon</span>
+</div>
+<div class="flex flex-col">
+<h1 class="font-h1 text-white tracking-tight leading-none">RAG Platform</h1>
+<span class="font-label-caps text-primary tracking-widest mt-1">ENTERPRISE AI</span>
+</div>
+</div>
+<!-- Hero Text Content -->
+<div class="z-10 max-w-xl">
+<h2 class="font-h1 text-[44px] leading-[1.1] text-white mb-6">
+                    Enterprise AI Management <br/><span class="text-primary/80">at Global Scale.</span>
+</h2>
+<p class="font-body-lg text-text-muted mb-8 leading-relaxed">
+                    Deploy, monitor, and optimize your retrieval-augmented generation pipelines with military-grade security and sub-millisecond latency.
+                </p>
+<!-- Feature Pills -->
+<div class="flex flex-wrap gap-3">
+<div class="flex items-center gap-2 px-4 py-2 rounded-full glass-border bg-white/5 backdrop-blur-sm">
+<span class="material-symbols-outlined text-success-green text-sm">check_circle</span>
+<span class="font-label-caps text-white">Multi-tenant</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 rounded-full glass-border bg-white/5 backdrop-blur-sm">
+<span class="material-symbols-outlined text-success-green text-sm">check_circle</span>
+<span class="font-label-caps text-white">SOC2 Compliant</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 rounded-full glass-border bg-white/5 backdrop-blur-sm">
+<span class="material-symbols-outlined text-success-green text-sm">check_circle</span>
+<span class="font-label-caps text-white">Low Latency</span>
+</div>
+</div>
+</div>
+<!-- Visual Asset -->
+<div class="z-10 w-full mt-12 glass-border rounded-xl bg-surface-card/40 backdrop-blur-md p-6 relative group overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-error-red/40"></div>
+<div class="w-3 h-3 rounded-full bg-warning-amber/40"></div>
+<div class="w-3 h-3 rounded-full bg-success-green/40"></div>
+</div>
+<span class="font-mono text-[10px] text-text-muted uppercase tracking-widest">System Monitor v2.4</span>
+</div>
+<div class="h-32 w-full flex items-end gap-1 px-2">
+<!-- Faux Bar Chart for "Performance" visualization -->
+<div class="flex-1 bg-primary/20 rounded-t-sm h-1/2"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm h-3/4"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-2/3"></div>
+<div class="flex-1 bg-primary/50 rounded-t-sm h-5/6"></div>
+<div class="flex-1 bg-primary/60 rounded-t-sm h-full"></div>
+<div class="flex-1 bg-primary/50 rounded-t-sm h-3/4"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-1/2"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm h-2/3"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-4/5"></div>
+<div class="flex-1 bg-primary/50 rounded-t-sm h-1/2"></div>
+</div>
+<img alt="abstract network visualization" class="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-overlay" data-alt="abstract digital visualization of complex data networks and glowing nodes in deep blue and purple cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmZeZM84nUlxE7Tf_PyXl9lI3k_Dl0KWhb8MZzpI5zbtI6tzn9dMLMDj6Oj5NNdnNHRfzCs-L1FuzlMSsXNtpzO5ZN8nn0Wv4c-Mq68fDNfmms_VdypLFA4O_YAG2qIFYtR7FxB8cTZyvgOflfnL_-_6yK5AeqnGrh98Ql2V_tyUKuZydUWrezL3gzZa3F2xEOQE16z22rvkdtl5Ehp190DAIvGZDQ1nRFuGdS9257ztJmt9NHYGJp0aqnuy96D4223bXzNIoGTSc"/>
+</div>
+</section>
+<!-- RIGHT HALF: Sign-in Form (40%) -->
+<section class="w-full md:w-2/5 bg-surface-card p-8 md:p-16 lg:p-24 flex flex-col justify-center items-center relative">
+<!-- Mobile Header (Visible only on small screens) -->
+<div class="flex md:hidden items-center gap-3 mb-12 self-start">
+<div class="w-10 h-10 rounded-lg accent-btn-gradient flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-2xl" data-weight="fill">hexagon</span>
+</div>
+<h1 class="font-h2 text-white">RAG OS</h1>
+</div>
+<div class="w-full max-w-sm">
+<div class="mb-10">
+<h2 class="font-h1 text-white mb-2">Welcome back</h2>
+<p class="font-body-md text-text-muted">Enter your credentials to access your dashboard.</p>
+</div>
+<!-- Form -->
+<form class="space-y-6">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="font-label-caps text-on-surface-variant block" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-[20px]">mail</span>
+<input class="w-full h-12 bg-background glass-border rounded-xl pl-12 pr-4 text-white placeholder:text-outline/40 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all font-body-md" id="email" name="email" placeholder="name@enterprise.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-on-surface-variant block" for="password">Password</label>
+<a class="text-body-sm text-primary hover:text-primary-fixed transition-colors" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-[20px]">lock</span>
+<input class="w-full h-12 bg-background glass-border rounded-xl pl-12 pr-4 text-white placeholder:text-outline/40 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all font-body-md" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center gap-3">
+<input class="w-5 h-5 rounded bg-background border-glass text-primary-container focus:ring-primary/50 focus:ring-offset-background cursor-pointer" id="remember" name="remember" type="checkbox"/>
+<label class="text-body-sm text-on-surface-variant cursor-pointer" for="remember">Remember me for 30 days</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full h-12 rounded-xl accent-btn-gradient text-white font-h3 flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-primary/10" type="submit">
+                        Sign In
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="my-8 flex items-center gap-4">
+<div class="h-[1px] flex-1 bg-border-glass"></div>
+<span class="font-label-caps text-outline/50 uppercase">or continue with</span>
+<div class="h-[1px] flex-1 bg-border-glass"></div>
+</div>
+<!-- Social Sign In -->
+<button class="w-full h-12 rounded-xl glass-border bg-background flex items-center justify-center gap-3 text-white font-body-md hover:bg-white/5 transition-all active:scale-[0.98]" type="button">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"></path>
+</svg>
+                    Sign in with Google
+                </button>
+<!-- Footer Link -->
+<p class="mt-10 text-center text-body-sm text-text-muted">
+                    Don't have an account? 
+                    <a class="text-primary font-semibold hover:underline" href="#">Request enterprise access</a>
+</p>
+</div>
+<!-- Floating Decorative Accents for Login section -->
+<div class="absolute bottom-4 right-8 flex gap-4 opacity-40">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-text-muted">verified_user</span>
+<span class="text-[10px] text-text-muted uppercase tracking-tighter">Encrypted</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-text-muted">language</span>
+<span class="text-[10px] text-text-muted uppercase tracking-tighter">EU-West-1</span>
+</div>
+</div>
+</section>
+</main>
+</body></html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .accent-gradient-text {
+            background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .code-block {
+            background: #0A0F1E;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#d2bbff",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-container-lowest": "#100d16",
+                        "success-green": "#10B981",
+                        "on-background": "#e8dfee",
+                        "on-secondary-container": "#e6ecff",
+                        "secondary-container": "#0566d9",
+                        "tertiary-container": "#a15100",
+                        "on-primary-container": "#ede0ff",
+                        "inverse-primary": "#732ee4",
+                        "on-secondary-fixed-variant": "#004395",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#ffb784",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "surface": "#15121b",
+                        "bg-deep-navy": "#0A0F1E",
+                        "surface-bright": "#3c3742",
+                        "surface-container-low": "#1d1a24",
+                        "tertiary": "#ffb784",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "surface-container-high": "#2c2833",
+                        "primary-fixed": "#eaddff",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#001a42",
+                        "on-primary": "#3f008e",
+                        "primary": "#d2bbff",
+                        "on-tertiary": "#4f2500",
+                        "inverse-surface": "#e8dfee",
+                        "on-tertiary-fixed": "#301400",
+                        "error-red": "#EF4444",
+                        "on-secondary": "#002e6a",
+                        "surface-variant": "#37333e",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                        "primary-container": "#7c3aed",
+                        "surface-dim": "#15121b",
+                        "secondary": "#adc6ff",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-primary-fixed": "#25005a",
+                        "inverse-on-surface": "#332f39",
+                        "surface-card": "#111827",
+                        "on-surface": "#e8dfee",
+                        "surface-container-highest": "#37333e",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-surface-variant": "#ccc3d8",
+                        "warning-amber": "#F59E0B",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#221e28",
+                        "on-tertiary-container": "#ffe0cd",
+                        "border-glass": "rgba(255, 255, 255, 0.06)",
+                        "outline": "#958da1",
+                        "error-container": "#93000a",
+                        "outline-variant": "#4a4455",
+                        "text-muted": "#94A3B8",
+                        "background": "#15121b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"], "label-caps": ["Inter"], "body-md": ["Inter"], "body-sm": ["Inter"], "body-lg": ["Inter"], "mono": ["Space Grotesk"], "h3": ["Inter"], "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg-deep-navy text-on-surface font-body-md selection:bg-primary-container selection:text-white">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 bottom-0 w-[260px] z-50 bg-[#111827] border-r border-white/5 flex flex-col h-full py-6 px-4 font-inter text-sm">
+<div class="flex items-center gap-3 px-2 mb-10">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div>
+<div class="text-lg font-black text-white leading-none">Nexus Enterprise</div>
+<div class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">RAG Platform</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="px-2 py-3 text-slate-500 text-[11px] font-bold uppercase tracking-wider">Main Workspace</div>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">chat_bubble</span>
+<span>Playground</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">forum</span>
+<span>Conversations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">leaderboard</span>
+<span>Analytics</span>
+</a>
+<div class="pt-6 px-2 py-3 text-slate-500 text-[11px] font-bold uppercase tracking-wider">Configuration</div>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">settings_suggest</span>
+<span>Bot Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">palette</span>
+<span>Widget</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-[#7C3AED]/10 text-white border-l-4 border-[#7C3AED] font-medium transition-all duration-200 rounded-r-lg group" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">code</span>
+<span>Embed</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">vpn_key</span>
+<span>API Keys</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">description</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 z-40 bg-[#111827]/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 shadow-sm font-inter antialiased">
+<div class="flex items-center gap-4">
+<div class="text-white font-semibold">Embed Code</div>
+<div class="h-4 w-[1px] bg-white/10 mx-2"></div>
+<div class="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10">
+<div class="w-2 h-2 rounded-full bg-success-green animate-pulse"></div>
+<span class="text-[12px] font-medium text-slate-300">Production Bot ID: NX-992-BETA</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-slate-400">
+<span class="material-symbols-outlined cursor-pointer hover:text-white transition-colors">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-white transition-colors">help</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-white transition-colors">settings</span>
+</div>
+<div class="flex items-center gap-3 pl-6 border-l border-white/10">
+<div class="text-right">
+<div class="text-sm font-semibold text-white">Admin User</div>
+<div class="text-[11px] text-slate-500 font-medium">Enterprise Plan</div>
+</div>
+<img alt="Administrator Avatar" class="w-8 h-8 rounded-full border border-white/10 object-cover" data-alt="Professional administrator headshot with sharp suit and neutral background, studio lighting for corporate profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7jrNkZKoaJqGj4mKtP6SNXZj6Rwo9xK5Mj0of9QKG9sWlLxzt7n6WImm8r19C5ZhjE1-XSCNe66Ew7CQm8pX0wKI63npfeum69_xj0gQDuVkQLtMzvWjmlftImczzfZ2ICCP4GYyPmRVqRsUZDYFyocy5NEjG8t5InfFe4uaynS7ZuWQX2DB8OSiuNO8OHVVI0m077H1_ahpY__n5S2-9RB5VI0rZPec2UHs5aBtxMAJ4s-yTmYagll1-7245HxENfO5iaN3C0Lc"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="ml-[260px] pt-16 min-h-screen p-8">
+<!-- Horizontal Stepper -->
+<div class="max-w-5xl mx-auto mb-10">
+<div class="relative flex justify-between items-center px-12">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-white/5 -translate-y-1/2 z-0"></div>
+<!-- Step 1 -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center shadow-[0_0_15px_rgba(124,58,237,0.3)]">
+<span class="material-symbols-outlined text-xl">content_copy</span>
+</div>
+<span class="mt-2 text-sm font-semibold text-white">Copy Code</span>
+</div>
+<!-- Progress Line Active -->
+<div class="absolute top-1/2 left-[50px] w-[calc(50%-50px)] h-[2px] bg-gradient-to-r from-primary-container to-white/5 -translate-y-1/2 z-0"></div>
+<!-- Step 2 -->
+<div class="relative z-10 flex flex-col items-center opacity-60">
+<div class="w-10 h-10 rounded-full bg-surface-card border-2 border-white/20 text-slate-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">data_object</span>
+</div>
+<span class="mt-2 text-sm font-semibold text-slate-400">Paste in &lt;head&gt;</span>
+</div>
+<!-- Step 3 -->
+<div class="relative z-10 flex flex-col items-center opacity-60">
+<div class="w-10 h-10 rounded-full bg-surface-card border-2 border-white/20 text-slate-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">verified</span>
+</div>
+<span class="mt-2 text-sm font-semibold text-slate-400">Verify Status</span>
+</div>
+</div>
+</div>
+<div class="max-w-5xl mx-auto grid grid-cols-12 gap-8">
+<!-- Left Column: Installation -->
+<div class="col-span-8 space-y-8">
+<!-- Main Embed Card -->
+<div class="glass-panel rounded-2xl p-6">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed-dim">integration_instructions</span>
+<h2 class="text-h3 font-h3 text-white">Widget Snippet</h2>
+</div>
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1.5 text-body-sm font-semibold rounded-md bg-white/10 text-white">HTML</button>
+<button class="px-4 py-1.5 text-body-sm font-semibold rounded-md text-slate-400 hover:text-white transition-colors">React</button>
+<button class="px-4 py-1.5 text-body-sm font-semibold rounded-md text-slate-400 hover:text-white transition-colors">Vue</button>
+</div>
+</div>
+<p class="text-body-md text-slate-400 mb-6 leading-relaxed">
+                        Copy and paste the following code block directly into your website's <code class="bg-white/5 px-1.5 py-0.5 rounded text-primary">&lt;head&gt;</code> section. This will initialize the Nexus AI agent on all pages.
+                    </p>
+<div class="relative group">
+<div class="absolute -top-3 -right-3">
+<button class="bg-primary-container hover:bg-primary-fixed-dim text-white p-3 rounded-xl shadow-xl transition-all duration-200 active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-xl">content_copy</span>
+<span class="text-sm font-bold pr-1">Copy Script</span>
+</button>
+</div>
+<div class="code-block rounded-xl p-6 font-mono text-[13px] text-slate-300 overflow-x-auto leading-relaxed border border-white/10">
+<pre><code><span class="text-[#7C3AED]">&lt;!-- Nexus AI Widget --&gt;</span>
+&lt;<span class="text-[#3B82F6]">script</span>&gt;
+  window.nexusConfig = {
+    botId: <span class="text-success-green">"NX-992-BETA"</span>,
+    theme: <span class="text-success-green">"dark"</span>,
+    position: <span class="text-success-green">"right-bottom"</span>,
+    autoOpen: <span class="text-warning-amber">false</span>
+  };
+&lt;/<span class="text-[#3B82F6]">script</span>&gt;
+&lt;<span class="text-[#3B82F6]">script</span> <span class="text-primary-fixed-dim">async src</span>=<span class="text-success-green">"https://cdn.nexus-ai.io/widget.v2.js"</span>&gt;&lt;/<span class="text-[#3B82F6]">script</span>&gt;</code></pre>
+</div>
+</div>
+<div class="mt-6 flex items-start gap-3 p-4 bg-primary/5 rounded-xl border border-primary/10">
+<span class="material-symbols-outlined text-primary-fixed-dim">info</span>
+<div class="text-body-sm text-slate-300">
+                            Looking for a specific domain lockdown? You can restrict where this widget appears in the <strong>Domain Security</strong> settings.
+                        </div>
+</div>
+</div>
+<!-- Test Installation -->
+<div class="glass-panel rounded-2xl p-6">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-success-green">check_circle</span>
+<h2 class="text-h3 font-h3 text-white">Test Installation</h2>
+</div>
+<div class="flex gap-4 items-center">
+<div class="flex-1">
+<input class="w-full bg-surface-container-low border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all" placeholder="https://yourwebsite.com" type="text"/>
+</div>
+<button class="bg-surface-card border border-white/10 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/5 transition-all">
+                            Verify Connection
+                        </button>
+</div>
+<div class="mt-4 flex items-center gap-2 text-slate-500">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="text-xs uppercase font-bold tracking-widest">Last verified: Never</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Actions -->
+<div class="col-span-4 space-y-8">
+<!-- API Key Management -->
+<div class="glass-panel rounded-2xl p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-h3 font-h3 text-white">API Keys</h3>
+<span class="material-symbols-outlined text-slate-500">vpn_key</span>
+</div>
+<div class="space-y-4">
+<div class="p-3 bg-white/5 rounded-xl border border-white/5">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-bold text-slate-500 uppercase">Public Key</span>
+<span class="px-2 py-0.5 bg-success-green/10 text-success-green text-[10px] rounded font-bold uppercase">Active</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-mono text-xs text-slate-300">pk_live_****************92x</span>
+<span class="material-symbols-outlined text-lg text-slate-500 cursor-pointer hover:text-white">visibility</span>
+</div>
+</div>
+<div class="p-3 bg-white/5 rounded-xl border border-white/5">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-bold text-slate-500 uppercase">Secret Key</span>
+<span class="px-2 py-0.5 bg-warning-amber/10 text-warning-amber text-[10px] rounded font-bold uppercase">System</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-mono text-xs text-slate-500">sk_live_****************92x</span>
+<span class="material-symbols-outlined text-lg text-slate-500 cursor-pointer hover:text-white">visibility</span>
+</div>
+</div>
+<button class="w-full py-2.5 rounded-xl border border-white/10 text-slate-300 text-sm font-semibold hover:bg-white/5 transition-colors">
+                            Manage All Keys
+                        </button>
+</div>
+</div>
+<!-- Helpful Links -->
+<div class="glass-panel rounded-2xl overflow-hidden">
+<div class="aspect-video relative bg-slate-800">
+<img alt="Workspace Documentation" class="w-full h-full object-cover opacity-50" data-alt="Modern high-tech workspace with multiple glowing monitors displaying complex code and data visualizations, futuristic office ambiance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbq7Onmvro8a2D0y2aoiNQLfwyoJdezOJvKtTZ2edi2cIBGfCnsMMCRz6lIEuOf_0-TDioGw4gQYUXDuL2QjS3WxGzzLn4ImjhPXu-VoauUj1MHv2ykRyFfTQrZP5u-4NQyTSfVxE5Yjm9xin70X4q_t7LGZ7Px7vQMkpMlXwCMhyB4cmmzrF4eu3Fz7N_KQI7Q6ABMSrDFgsFZTXWmjIOPpfCFMNRIkMMZrYsS6745_aS1ExY56ixi-rJquPOxXtutcjSmq23Bzg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#111827] to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<h4 class="text-white font-bold">Watch Installation Guide</h4>
+<p class="text-xs text-slate-400">Step-by-step video for WordPress &amp; Shopify</p>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-12 h-12 rounded-full bg-primary-container text-white flex items-center justify-center cursor-pointer hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-4 space-y-3">
+<a class="flex items-center justify-between text-body-sm text-slate-300 hover:text-primary transition-colors group" href="#">
+<span>API Reference Documentation</span>
+<span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+<a class="flex items-center justify-between text-body-sm text-slate-300 hover:text-primary transition-colors group" href="#">
+<span>Third-party SDKs (Node, Python)</span>
+<span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+<a class="flex items-center justify-between text-body-sm text-slate-300 hover:text-primary transition-colors group" href="#">
+<span>Troubleshooting Common Issues</span>
+<span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Support Ticket -->
+<div class="rounded-2xl p-6 bg-gradient-to-br from-[#7C3AED]/20 to-[#3B82F6]/20 border border-white/10">
+<h3 class="text-white font-bold mb-2">Need help with installation?</h3>
+<p class="text-xs text-slate-400 mb-4 leading-relaxed">Our engineering team can jump on a quick call to help you integrate the widget into your specific stack.</p>
+<button class="w-full bg-white text-[#111827] py-2 rounded-xl text-sm font-bold hover:bg-slate-200 transition-colors">
+                        Book Integration Call
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

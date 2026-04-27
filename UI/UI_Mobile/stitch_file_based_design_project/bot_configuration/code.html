@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bot Configuration Settings - AI Knowledge Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#002e6a",
+                    "on-tertiary-fixed": "#301400",
+                    "warning": "#F59E0B",
+                    "success": "#10B981",
+                    "surface-dim": "#15121b",
+                    "primary": "#d2bbff",
+                    "surface-container-low": "#1d1a24",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-fixed": "#25005a",
+                    "surface-container-lowest": "#100d16",
+                    "inverse-on-surface": "#332f39",
+                    "background-deep": "#0A0F1E",
+                    "on-tertiary": "#4f2500",
+                    "on-primary-container": "#ede0ff",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-secondary-fixed": "#001a42",
+                    "surface-bright": "#3c3742",
+                    "tertiary": "#ffb784",
+                    "on-tertiary-container": "#ffe0cd",
+                    "surface": "#15121b",
+                    "surface-card": "#111827",
+                    "primary-container": "#7c3aed",
+                    "primary-fixed-dim": "#d2bbff",
+                    "on-background": "#e8dfee",
+                    "secondary-container": "#0566d9",
+                    "error-container": "#93000a",
+                    "border-glass": "rgba(255, 255, 255, 0.06)",
+                    "error": "#EF4444",
+                    "surface-container-highest": "#37333e",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "on-surface": "#e8dfee",
+                    "sidebar-active": "rgba(124, 58, 237, 0.1)",
+                    "primary-fixed": "#eaddff",
+                    "surface-tint": "#d2bbff",
+                    "on-surface-variant": "#ccc3d8",
+                    "tertiary-fixed-dim": "#ffb784",
+                    "surface-variant": "#37333e",
+                    "outline": "#958da1",
+                    "on-primary": "#3f008e",
+                    "on-secondary-container": "#e6ecff",
+                    "tertiary-fixed": "#ffdcc6",
+                    "inverse-surface": "#e8dfee",
+                    "inverse-primary": "#732ee4",
+                    "surface-container": "#221e28",
+                    "secondary-fixed": "#d8e2ff",
+                    "background": "#15121b",
+                    "secondary": "#adc6ff",
+                    "outline-variant": "#4a4455",
+                    "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                    "surface-container-high": "#2c2833",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-error": "#690005",
+                    "tertiary-container": "#a15100",
+                    "on-tertiary-fixed-variant": "#713700"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "sidebar-width": "260px",
+                    "base": "8px",
+                    "header-height": "64px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "h1": ["Inter"],
+                    "h2": ["Inter"],
+                    "body-md": ["Inter"],
+                    "h3": ["Inter"],
+                    "code": ["monospace"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-deep text-on-surface font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#0A0F1E] dark:bg-[#0A0F1E] border-b border-white/10 shadow-none">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-slate-400 hover:bg-white/5 transition-all duration-200 ease-in-out p-2 rounded-lg">menu</button>
+<span class="text-xl font-bold tracking-tighter text-white bg-clip-text bg-gradient-to-r from-violet-500 to-blue-500">AI Knowledge Manager</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-slate-400 hover:bg-white/5 p-2 rounded-lg">search</button>
+<div class="h-8 w-8 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 border border-white/20 flex items-center justify-center overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A futuristic minimalist 3D avatar profile picture of a tech professional with soft blue rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwboMqeWeNZNpt9p_epww0298nynrFlanJH6FfKdZh3hCdE6YahEV9fA4Q5K14wJsLZf0ETABylCFJTy5RBzXxZypF-omMueYxwZ4D3lB1R25qJbl4xOLhzNwWxBbpB2o0l6Ex9mxoMyZ_5986Gsjg__zVKShDUrvIc2IskLYu6A0RsMRIGLE_Mhia1Cf3feGOOyArz-o3X0gi4jEwnnpJqfL3biJQTMfWes79QMINYGKtoxbkSrMndSy14J9S-4Fv-EPDt7bWv9E"/>
+</div>
+</div>
+</header>
+<!-- NavigationDrawer (Desktop Only) -->
+<aside class="hidden md:flex flex-col py-8 gap-2 fixed left-0 h-full w-64 bg-[#111827] dark:bg-[#111827] border-r border-white/5 shadow-2xl z-40 pt-20">
+<div class="px-6 mb-8">
+<h2 class="font-sans text-xs uppercase font-semibold tracking-widest text-slate-500">KNOWLEDGE OS</h2>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-sans text-xs uppercase font-semibold tracking-widest">Conversations</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 border-l-4 border-violet-600 bg-violet-500/10 text-white active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-sans text-xs uppercase font-semibold tracking-widest">Bots</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-sans text-xs uppercase font-semibold tracking-widest">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-sans text-xs uppercase font-semibold tracking-widest">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 md:pl-64 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="mb-8">
+<div class="flex items-center gap-2 text-violet-400 mb-2">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="font-label-caps text-label-caps uppercase">Back to Fleet</span>
+</div>
+<h1 class="font-h1 text-h1 text-white">Research Assistant Configuration</h1>
+<p class="text-slate-400 mt-2 font-body-md">Refine model behavior, retrieval precision, and response parameters for the technical knowledge base.</p>
+</div>
+<div class="grid grid-cols-12 gap-6">
+<!-- Left Column: AI Model & System Prompt -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<!-- AI Model Configuration -->
+<section class="glass-panel p-6 rounded-xl">
+<div class="flex items-center gap-2 mb-6 pb-4 border-b border-white/5">
+<span class="material-symbols-outlined text-violet-400">psychology</span>
+<h3 class="font-h3 text-h3 text-white">AI Model</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-slate-400 uppercase">Provider</label>
+<div class="relative">
+<select class="w-full bg-[#0A0F1E] border border-white/10 rounded-lg px-4 py-3 text-white appearance-none focus:border-violet-600 focus:ring-1 focus:ring-violet-600 outline-none transition-all">
+<option>OpenAI</option>
+<option>Anthropic</option>
+<option>Google Gemini</option>
+<option>Meta Llama 3</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3.5 text-slate-500 pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-slate-400 uppercase">Model</label>
+<div class="relative">
+<select class="w-full bg-[#0A0F1E] border border-white/10 rounded-lg px-4 py-3 text-white appearance-none focus:border-violet-600 focus:ring-1 focus:ring-violet-600 outline-none transition-all">
+<option>GPT-4o (Omni)</option>
+<option>GPT-4 Turbo</option>
+<option>GPT-3.5 Turbo</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3.5 text-slate-500 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-slate-400 uppercase">Temperature</label>
+<span class="text-violet-400 font-code text-code">0.7</span>
+</div>
+<input class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-violet-500" max="1" min="0" step="0.1" type="range" value="0.7"/>
+<div class="flex justify-between text-[10px] text-slate-500 font-medium uppercase tracking-tighter">
+<span>Precise</span>
+<span>Balanced</span>
+<span>Creative</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-slate-400 uppercase">Max Tokens</label>
+<input class="w-full bg-[#0A0F1E] border border-white/10 rounded-lg px-4 py-3 text-white focus:border-violet-600 focus:ring-1 focus:ring-violet-600 outline-none transition-all" type="number" value="4096"/>
+</div>
+</div>
+</section>
+<!-- System Prompt -->
+<section class="glass-panel p-6 rounded-xl">
+<div class="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-violet-400">terminal</span>
+<h3 class="font-h3 text-h3 text-white">System Prompt</h3>
+</div>
+<span class="text-slate-500 font-code text-code bg-white/5 px-2 py-1 rounded">1,248 / 4,000 characters</span>
+</div>
+<textarea class="w-full min-h-[280px] bg-[#0A0F1E] border border-white/10 rounded-lg p-4 text-slate-200 font-code text-code focus:border-violet-600 focus:ring-1 focus:ring-violet-600 outline-none transition-all resize-none leading-relaxed" placeholder="Enter instructions for the bot here...">You are a senior technical research assistant specialized in distributed systems and cloud infrastructure. 
+
+Your objective is to provide high-fidelity, evidence-based answers using ONLY the provided documentation context. If the answer is not in the context, clearly state that you do not have that specific information.
+
+Guidelines:
+1. Always cite sources in the [Source Name, Page X] format.
+2. Use technical terminology accurately.
+3. Prioritize concise, bulleted explanations over long paragraphs.
+4. If a user asks for code, provide production-ready snippets with comments.
+
+Your persona is professional, efficient, and strictly objective.</textarea>
+</section>
+</div>
+<!-- Right Column: Retrieval & Behavior -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<!-- Retrieval Settings -->
+<section class="glass-panel p-6 rounded-xl">
+<div class="flex items-center gap-2 mb-6 pb-4 border-b border-white/5">
+<span class="material-symbols-outlined text-violet-400">database</span>
+<h3 class="font-h3 text-h3 text-white">Retrieval</h3>
+</div>
+<div class="space-y-8">
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-slate-400 uppercase">Top K Results</label>
+<span class="text-violet-400 font-code text-code">5</span>
+</div>
+<input class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-violet-500" max="20" min="1" type="range" value="5"/>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-slate-400 uppercase">Similarity Threshold</label>
+<span class="text-violet-400 font-code text-code">0.82</span>
+</div>
+<input class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-violet-500" max="1" min="0" step="0.01" type="range" value="0.82"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-slate-400 uppercase text-[10px]">Chunk Size</label>
+<select class="bg-[#0A0F1E] border border-white/10 rounded-lg px-3 py-2 text-xs text-white outline-none focus:border-violet-600 transition-all">
+<option>512 tokens</option>
+<option selected="">1024 tokens</option>
+<option>2048 tokens</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-slate-400 uppercase text-[10px]">Overlap</label>
+<select class="bg-[#0A0F1E] border border-white/10 rounded-lg px-3 py-2 text-xs text-white outline-none focus:border-violet-600 transition-all">
+<option>10%</option>
+<option selected="">15%</option>
+<option>20%</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- Response Behavior -->
+<section class="glass-panel p-6 rounded-xl">
+<div class="flex items-center gap-2 mb-6 pb-4 border-b border-white/5">
+<span class="material-symbols-outlined text-violet-400">settings_suggest</span>
+<h3 class="font-h3 text-h3 text-white">Behavior</h3>
+</div>
+<div class="space-y-5">
+<!-- Toggle Item -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-white text-sm font-medium">Source citations</span>
+<span class="text-slate-500 text-xs">Require links to original docs</span>
+</div>
+<button class="w-11 h-6 bg-violet-600 rounded-full flex items-center px-1 transition-all duration-300">
+<div class="w-4 h-4 bg-white rounded-full translate-x-5"></div>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-white text-sm font-medium">Fallback knowledge</span>
+<span class="text-slate-500 text-xs">Use model's internal training</span>
+</div>
+<button class="w-11 h-6 bg-white/10 rounded-full flex items-center px-1 transition-all duration-300">
+<div class="w-4 h-4 bg-slate-400 rounded-full"></div>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-white text-sm font-medium">Multi-turn memory</span>
+<span class="text-slate-500 text-xs">Maintain context history</span>
+</div>
+<button class="w-11 h-6 bg-violet-600 rounded-full flex items-center px-1 transition-all duration-300">
+<div class="w-4 h-4 bg-white rounded-full translate-x-5"></div>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-white text-sm font-medium">Streaming</span>
+<span class="text-slate-500 text-xs">Real-time token generation</span>
+</div>
+<button class="w-11 h-6 bg-violet-600 rounded-full flex items-center px-1 transition-all duration-300">
+<div class="w-4 h-4 bg-white rounded-full translate-x-5"></div>
+</button>
+</div>
+</div>
+</section>
+<!-- Visualization Card (Bento Style) -->
+<div class="h-full bg-gradient-to-br from-violet-600/20 to-blue-600/10 border border-white/10 rounded-xl p-6 flex flex-col items-center justify-center text-center relative overflow-hidden group">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+<div class="relative z-10">
+<span class="material-symbols-outlined text-[48px] text-violet-400 mb-4 group-hover:scale-110 transition-transform duration-300">auto_awesome</span>
+<h4 class="text-white font-semibold mb-2">Ready for deployment</h4>
+<p class="text-slate-400 text-xs px-4">This configuration is optimized for technical documentation accuracy.</p>
+</div>
+<div class="absolute -bottom-10 -right-10 w-32 h-32 bg-violet-500/20 blur-3xl rounded-full"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 md:left-64 right-0 glass-panel border-t border-white/10 py-4 px-8 z-50 flex justify-between items-center">
+<div class="hidden sm:flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-success"></div>
+<span class="text-slate-400 text-xs font-medium uppercase tracking-widest">Configuration Syncing</span>
+</div>
+<div class="flex items-center gap-4 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-6 py-2.5 text-slate-300 font-semibold hover:text-white transition-colors">Discard</button>
+<button class="flex-1 sm:flex-none px-8 py-2.5 bg-gradient-to-r from-violet-600 to-blue-600 text-white font-bold rounded-lg shadow-lg shadow-violet-900/20 hover:shadow-violet-900/40 active:scale-95 transition-all">Save Changes</button>
+</div>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 md:hidden bg-[#111827]/80 backdrop-blur-md border-t border-white/10 rounded-t-2xl shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-slate-500 p-2" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-sans text-[10px] font-medium uppercase">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-violet-600/20 text-violet-400 rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">robot_2</span>
+<span class="font-sans text-[10px] font-medium uppercase">Bots</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 p-2" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-sans text-[10px] font-medium uppercase">Data</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 p-2" href="#">
+<span class="material-symbols-outlined">tune</span>
+<span class="font-sans text-[10px] font-medium uppercase">System</span>
+</a>
+</nav>
+</body></html>

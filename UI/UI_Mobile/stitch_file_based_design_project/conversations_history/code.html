@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Knowledge Manager - Conversations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#002e6a",
+                    "on-tertiary-fixed": "#301400",
+                    "warning": "#F59E0B",
+                    "success": "#10B981",
+                    "surface-dim": "#15121b",
+                    "primary": "#d2bbff",
+                    "surface-container-low": "#1d1a24",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-fixed": "#25005a",
+                    "surface-container-lowest": "#100d16",
+                    "inverse-on-surface": "#332f39",
+                    "background-deep": "#0A0F1E",
+                    "on-tertiary": "#4f2500",
+                    "on-primary-container": "#ede0ff",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-secondary-fixed": "#001a42",
+                    "surface-bright": "#3c3742",
+                    "tertiary": "#ffb784",
+                    "on-tertiary-container": "#ffe0cd",
+                    "surface": "#15121b",
+                    "surface-card": "#111827",
+                    "primary-container": "#7c3aed",
+                    "primary-fixed-dim": "#d2bbff",
+                    "on-background": "#e8dfee",
+                    "secondary-container": "#0566d9",
+                    "error-container": "#93000a",
+                    "border-glass": "rgba(255, 255, 255, 0.06)",
+                    "error": "#EF4444",
+                    "surface-container-highest": "#37333e",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "on-surface": "#e8dfee",
+                    "sidebar-active": "rgba(124, 58, 237, 0.1)",
+                    "primary-fixed": "#eaddff",
+                    "surface-tint": "#d2bbff",
+                    "on-surface-variant": "#ccc3d8",
+                    "tertiary-fixed-dim": "#ffb784",
+                    "surface-variant": "#37333e",
+                    "outline": "#958da1",
+                    "on-primary": "#3f008e",
+                    "on-secondary-container": "#e6ecff",
+                    "tertiary-fixed": "#ffdcc6",
+                    "inverse-surface": "#e8dfee",
+                    "inverse-primary": "#732ee4",
+                    "surface-container": "#221e28",
+                    "secondary-fixed": "#d8e2ff",
+                    "background": "#15121b",
+                    "secondary": "#adc6ff",
+                    "outline-variant": "#4a4455",
+                    "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                    "surface-container-high": "#2c2833",
+                    "on-secondary-fixed-variant": "#004395",
+                    "on-error": "#690005",
+                    "tertiary-container": "#a15100",
+                    "on-tertiary-fixed-variant": "#713700"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "sidebar-width": "260px",
+                    "base": "8px",
+                    "header-height": "64px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "h1": ["Inter"],
+                    "h2": ["Inter"],
+                    "body-md": ["Inter"],
+                    "h3": ["Inter"],
+                    "code": ["monospace"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-deep text-on-surface font-body-md selection:bg-primary-container selection:text-white">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#0A0F1E] dark:bg-[#0A0F1E] border-b border-white/10 transition-all duration-200 ease-in-out">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-slate-400 hover:bg-white/5 p-2 rounded-lg transition-all" data-icon="menu">menu</button>
+<h1 class="text-xl font-bold tracking-tighter text-white bg-clip-text bg-gradient-to-r from-violet-500 to-blue-500">AI Knowledge Manager</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex gap-6 mr-6">
+<span class="font-sans text-sm font-medium tracking-tight text-white cursor-pointer">Conversations</span>
+<span class="font-sans text-sm font-medium tracking-tight text-slate-400 hover:bg-white/5 cursor-pointer">Documentation</span>
+</div>
+<img alt="Avatar" class="w-8 h-8 rounded-full border border-white/10" data-alt="close-up of a professional user avatar silhouette against a soft violet glowing digital background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqQby-hNLZbHbkvTbbb-HrBXbqSEGvbdPcT72x8eLz5f540f7ezQlHfLOEPKV7Qp6gRMvv6xcg-xOTaZHudIPmu529IiWTKmLjdGf9I1FDr9xUl90vkjA8AUAyMWPaaTtr-Tkc0f2zUHYkz2pD9qHoTc9XgnAJ9G_XwAygxda5hXW7TxvrbQygTCJNxnhyQZMrL4o6Rw2EW4269A9XfyCYiG2TJvailRyUekJf5XXLduds0gQD53aFjwQ1AY6HgCwevTZCWOsXymU"/>
+</div>
+</header>
+<!-- NavigationDrawer (Sidebar) -->
+<aside class="fixed left-0 h-full w-64 bg-[#111827] dark:bg-[#111827] border-r border-white/5 shadow-2xl flex flex-col py-8 gap-2 mt-16 hidden md:flex">
+<div class="px-6 mb-6">
+<h2 class="font-sans text-xs uppercase font-semibold tracking-widest text-slate-500">KNOWLEDGE OS</h2>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-6 py-3 border-l-4 border-violet-600 bg-violet-500/10 text-white transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-sans text-xs uppercase font-semibold tracking-widest">Conversations</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-sans text-xs uppercase font-semibold tracking-widest">Bots</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-sans text-xs uppercase font-semibold tracking-widest">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors mt-auto" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-sans text-xs uppercase font-semibold tracking-widest">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="md:pl-64 pt-16 h-screen flex flex-col overflow-hidden bg-background-deep">
+<div class="flex h-full flex-col lg:flex-row overflow-hidden">
+<!-- LIST VIEW (Left Column) -->
+<section class="w-full lg:w-[400px] border-r border-white/5 flex flex-col glass-panel">
+<div class="p-4 space-y-4 border-b border-white/5 bg-background-deep/30">
+<!-- Search Bar -->
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-[18px]">search</span>
+<input class="w-full bg-[#0A0F1E] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-body-md focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-slate-600" placeholder="Search conversations..." type="text"/>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto pb-1">
+<button class="px-4 py-1.5 rounded-full bg-primary-container text-white text-label-caps whitespace-nowrap">All</button>
+<button class="px-4 py-1.5 rounded-full border border-white/10 text-slate-400 hover:bg-white/5 text-label-caps whitespace-nowrap">Today</button>
+<button class="px-4 py-1.5 rounded-full border border-white/10 text-slate-400 hover:bg-white/5 text-label-caps whitespace-nowrap">This Week</button>
+</div>
+</div>
+<!-- Conversations List -->
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Active Card -->
+<div class="p-4 border-l-4 border-violet-600 bg-violet-500/10 cursor-pointer group hover:bg-violet-500/15 transition-all">
+<div class="flex justify-between items-start mb-1">
+<span class="font-code text-violet-400 text-xs">SES_7842_A9</span>
+<span class="text-slate-500 text-[10px]">14:20 PM</span>
+</div>
+<p class="text-slate-200 text-body-md line-clamp-2 mb-3">How can I integrate the vector database with my existing S3 buckets for real-time indexing?</p>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-slate-500" data-icon="forum">forum</span>
+<span class="text-slate-500 text-xs">12 messages</span>
+</div>
+<span class="bg-violet-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md">NEW</span>
+</div>
+</div>
+<!-- Inactive Card 1 -->
+<div class="p-4 border-l-4 border-transparent border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all group">
+<div class="flex justify-between items-start mb-1">
+<span class="font-code text-slate-400 text-xs">SES_3310_X2</span>
+<span class="text-slate-500 text-[10px]">Today, 09:15 AM</span>
+</div>
+<p class="text-slate-400 text-body-md line-clamp-2 mb-3">What are the latency expectations for the new gpt-4-turbo model deployments?</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-slate-500" data-icon="forum">forum</span>
+<span class="text-slate-500 text-xs">4 messages</span>
+</div>
+</div>
+<!-- Inactive Card 2 -->
+<div class="p-4 border-l-4 border-transparent border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all group">
+<div class="flex justify-between items-start mb-1">
+<span class="font-code text-slate-400 text-xs">SES_1294_C4</span>
+<span class="text-slate-500 text-[10px]">Yesterday</span>
+</div>
+<p class="text-slate-400 text-body-md line-clamp-2 mb-3">Exporting analytics data to BigQuery using the standard connector...</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-slate-500" data-icon="forum">forum</span>
+<span class="text-slate-500 text-xs">8 messages</span>
+</div>
+</div>
+<!-- Inactive Card 3 -->
+<div class="p-4 border-l-4 border-transparent border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all group">
+<div class="flex justify-between items-start mb-1">
+<span class="font-code text-slate-400 text-xs">SES_9901_Z5</span>
+<span class="text-slate-500 text-[10px]">Oct 24</span>
+</div>
+<p class="text-slate-400 text-body-md line-clamp-2 mb-3">Troubleshooting API timeout errors on high volume requests during batch processing.</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-slate-500" data-icon="forum">forum</span>
+<span class="text-slate-500 text-xs">24 messages</span>
+</div>
+</div>
+</div>
+</section>
+<!-- DETAIL VIEW (Main Content) -->
+<section class="flex-1 flex flex-col relative bg-[#0A0F1E]">
+<!-- Detail Header -->
+<div class="p-6 border-b border-white/10 flex flex-wrap justify-between items-center gap-4 bg-[#111827]/30 backdrop-blur-md">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h2 class="font-h2 text-white">SES_7842_A9</h2>
+<span class="px-2 py-0.5 rounded border border-success/30 bg-success/10 text-success text-[10px] font-bold">ACTIVE</span>
+</div>
+<div class="flex items-center gap-4 text-slate-500 text-xs">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span> Oct 25, 2023 • 14:20:12</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="timer">timer</span> Duration: 4m 12s</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-white/10 text-slate-400 hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Chat Thread -->
+<div class="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+<!-- User Message -->
+<div class="flex flex-col items-end max-w-2xl ml-auto">
+<div class="px-5 py-3 rounded-2xl rounded-tr-none border border-white/10 bg-transparent text-white text-body-md shadow-lg">
+                            How can I integrate the vector database with my existing S3 buckets for real-time indexing?
+                        </div>
+<span class="mt-2 text-[10px] text-slate-500 font-medium">USER • 14:20:12</span>
+</div>
+<!-- Bot Message -->
+<div class="flex flex-col items-start max-w-2xl">
+<div class="px-5 py-4 rounded-2xl rounded-tl-none bg-[#111827] border border-white/5 shadow-xl text-on-surface text-body-md relative">
+<p class="mb-4">To integrate your vector database with Amazon S3 for real-time indexing, you should follow these three primary steps:</p>
+<ol class="list-decimal pl-5 space-y-2 mb-4 text-slate-300">
+<li>Configure an <strong class="text-violet-400">S3 Event Notification</strong> to trigger on all `ObjectCreated` events.</li>
+<li>Point the notification to a <strong class="text-violet-400">Lambda Function</strong> that handles the document extraction and embedding.</li>
+<li>Upsert the generated vectors into your Knowledge OS namespace using the `/v1/upsert` endpoint.</li>
+</ol>
+<!-- Sources -->
+<div class="mt-4 pt-4 border-t border-white/5">
+<span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold block mb-2">Sources Found:</span>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-1.5 px-2 py-1 bg-background-deep rounded border border-white/5 text-[11px] text-slate-400">
+<span class="material-symbols-outlined text-[14px]" data-icon="description">description</span> aws-s3-connector.pdf
+                                    </div>
+<div class="flex items-center gap-1.5 px-2 py-1 bg-background-deep rounded border border-white/5 text-[11px] text-slate-400">
+<span class="material-symbols-outlined text-[14px]" data-icon="link">link</span> docs.knowledge-os.ai/s3-integration
+                                    </div>
+</div>
+</div>
+<!-- Bot Metadata Overlay-like styling -->
+<div class="mt-4 flex gap-4 text-[10px] text-slate-500 font-mono bg-white/5 p-2 rounded-lg">
+<span>LATENCY: 1.42s</span>
+<span>TOKENS: 412</span>
+<span>COST: $0.0082</span>
+</div>
+</div>
+<span class="mt-2 text-[10px] text-slate-500 font-medium">ASSISTANT • 14:20:14</span>
+</div>
+<!-- User Message 2 -->
+<div class="flex flex-col items-end max-w-2xl ml-auto">
+<div class="px-5 py-3 rounded-2xl rounded-tr-none border border-white/10 bg-transparent text-white text-body-md shadow-lg">
+                            Is there a limit on the file size for real-time indexing via this method?
+                        </div>
+<span class="mt-2 text-[10px] text-slate-500 font-medium">USER • 14:21:05</span>
+</div>
+<!-- Bot Message 2 -->
+<div class="flex flex-col items-start max-w-2xl">
+<div class="px-5 py-4 rounded-2xl rounded-tl-none bg-[#111827] border border-white/5 shadow-xl text-on-surface text-body-md">
+<p>The file size limit is primarily dictated by the memory limits of your Lambda function (up to 10GB) and the maximum payload size of the Knowledge OS ingestion API (currently 50MB per request). For larger files, we recommend pre-processing and chunking them before sending them to the indexing service.</p>
+<div class="mt-4 flex gap-4 text-[10px] text-slate-500 font-mono bg-white/5 p-2 rounded-lg">
+<span>LATENCY: 0.88s</span>
+<span>TOKENS: 156</span>
+<span>COST: $0.0031</span>
+</div>
+</div>
+<span class="mt-2 text-[10px] text-slate-500 font-medium">ASSISTANT • 14:21:06</span>
+</div>
+</div>
+<!-- Detail Footer Actions -->
+<div class="p-6 border-t border-white/10 flex justify-between items-center bg-[#0A0F1E]">
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-lg border border-white/10 text-slate-300 hover:bg-white/5 flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+<span class="text-xs font-semibold uppercase tracking-wider">Export</span>
+</button>
+<button class="px-4 py-2 rounded-lg border border-white/10 text-error hover:bg-error/10 flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+<span class="text-xs font-semibold uppercase tracking-wider">Delete</span>
+</button>
+</div>
+<div class="flex items-center gap-2 text-slate-500 italic text-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified_user">verified_user</span>
+                        Encrypted end-to-end
+                    </div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 md:hidden bg-[#111827]/80 backdrop-blur-md border-t border-white/10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] rounded-t-2xl">
+<a class="flex flex-col items-center justify-center bg-violet-600/20 text-violet-400 rounded-xl px-3 py-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-sans text-[10px] font-medium">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 active:bg-white/10 py-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="robot_2">robot_2</span>
+<span class="font-sans text-[10px] font-medium">Bots</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 active:bg-white/10 py-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-sans text-[10px] font-medium">Data</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 active:bg-white/10 py-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+<span class="font-sans text-[10px] font-medium">System</span>
+</a>
+</nav>
+</body></html>

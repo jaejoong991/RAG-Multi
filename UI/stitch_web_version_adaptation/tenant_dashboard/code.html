@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RAG OS - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#ffe0cd",
+                        "on-tertiary-fixed": "#301400",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "surface-dim": "#15121b",
+                        "surface-container-low": "#1d1a24",
+                        "outline": "#958da1",
+                        "error-container": "#93000a",
+                        "success-green": "#10B981",
+                        "tertiary-fixed-dim": "#ffb784",
+                        "error-red": "#EF4444",
+                        "on-primary-container": "#ede0ff",
+                        "surface-bright": "#3c3742",
+                        "on-background": "#e8dfee",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#732ee4",
+                        "secondary-container": "#0566d9",
+                        "secondary": "#adc6ff",
+                        "inverse-surface": "#e8dfee",
+                        "tertiary": "#ffb784",
+                        "tertiary-container": "#a15100",
+                        "surface-variant": "#37333e",
+                        "primary": "#d2bbff",
+                        "on-surface": "#e8dfee",
+                        "warning-amber": "#F59E0B",
+                        "surface-container-highest": "#37333e",
+                        "primary-container": "#7c3aed",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-secondary": "#002e6a",
+                        "surface-container": "#221e28",
+                        "on-primary": "#3f008e",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "surface-tint": "#d2bbff",
+                        "surface-container-high": "#2c2833",
+                        "primary-fixed-dim": "#d2bbff",
+                        "on-secondary-container": "#e6ecff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-tertiary": "#4f2500",
+                        "outline-variant": "#4a4455",
+                        "surface-container-lowest": "#100d16",
+                        "on-primary-fixed": "#25005a",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-surface-variant": "#ccc3d8",
+                        "secondary-fixed": "#d8e2ff",
+                        "background": "#15121b",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                        "inverse-on-surface": "#332f39",
+                        "border-glass": "rgba(255, 255, 255, 0.06)",
+                        "bg-deep-navy": "#0A0F1E",
+                        "primary-fixed": "#eaddff",
+                        "text-muted": "#94A3B8",
+                        "surface": "#15121b",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-card": "#111827"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "container-padding": "32px",
+                        "header-height": "64px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h1": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "mono": ["Space Grotesk"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-border { border: 1px solid rgba(255, 255, 255, 0.06); }
+        .accent-gradient-bg { background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%); }
+        .text-gradient { background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="bg-bg-deep-navy text-on-background font-body-md overflow-x-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-[260px] border-r bg-[#111827] border-white/5 shadow-2xl shadow-black/40 flex flex-col py-6 z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg accent-gradient-bg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-lg">rocket_launch</span>
+</div>
+<div>
+<h1 class="text-xl font-black bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">RAG OS</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Enterprise AI</p>
+</div>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full accent-gradient-bg text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-violet-500/20">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="font-label-caps text-sm">New Agent</span>
+</button>
+</div>
+<nav class="flex-1 space-y-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-violet-500/10 text-violet-400 border-l-2 border-violet-500 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-inter text-sm font-medium tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="font-inter text-sm font-medium tracking-tight">Knowledge Base</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+<span class="font-inter text-sm font-medium tracking-tight">Playground</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-inter text-sm font-medium tracking-tight">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-inter text-sm font-medium tracking-tight">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-3 pt-6 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span class="font-inter text-xs font-medium tracking-tight">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="menu_book">menu_book</span>
+<span class="font-inter text-xs font-medium tracking-tight">Documentation</span>
+</a>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 h-16 z-40 bg-[#111827]/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-8 w-[calc(100%-260px)] ml-[260px]">
+<div class="flex items-center gap-6 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+<input class="w-full bg-background/50 border border-white/10 rounded-lg py-1.5 pl-10 pr-4 text-sm focus:outline-none focus:border-violet-500/50 transition-all" placeholder="Search knowledge, agents, or logs..." type="text"/>
+</div>
+<nav class="flex items-center gap-6">
+<a class="text-slate-400 hover:text-white transition-colors text-sm font-medium" href="#">Models</a>
+<a class="text-slate-400 hover:text-white transition-colors text-sm font-medium" href="#">Deployments</a>
+<a class="text-slate-400 hover:text-white transition-colors text-sm font-medium" href="#">Billing</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-400">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<div class="h-8 w-[1px] bg-white/5 mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<div class="text-right">
+<p class="text-xs font-bold text-white leading-none">Alex Rivera</p>
+<p class="text-[10px] text-slate-500 mt-1 uppercase tracking-tighter">Pro Plan</p>
+</div>
+<img class="w-9 h-9 rounded-full border border-white/10 object-cover" data-alt="professional portrait of a technical product manager with short hair and glasses in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb4CXdEyuvxorIWiXiFCPXd_b2Pbv0t9VMCBt9FwYECdiU0XOS0KMWuwwSUfsPv0WROQr3dvrM9etZ3A2ogyDeIOhqhEWoxzuiYPbh0BOwxaqY8e8JPWrIv0Lb8W8Ul-mZ4iA2tcjEXcqfs1jobzkSoYU5nAKWfPCx9oEvjpQufoi2cUlluqrjm-bVKr8tJijCP-Ml6zyl7-Vf0OVUHmmW8qs_T8_3CmKiKNBe1Z19MwjzEtM1HrcTM3Y09DdX9PfRHOlPS4FVIE0"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-16 min-h-screen p-8 bg-surface-container-lowest">
+<div class="max-w-[1400px] mx-auto space-y-8">
+<!-- Header Section -->
+<div class="flex items-end justify-between">
+<div>
+<h2 class="font-h1 text-h1 text-white">System Overview</h2>
+<p class="font-body-md text-text-muted mt-1">Real-time performance across all agent deployments.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-card glass-border text-sm font-medium text-white hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                        Last 24 Hours
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-card glass-border text-sm font-medium text-white hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export
+                    </button>
+</div>
+</div>
+<!-- TOP ROW: Stat Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Total Queries -->
+<div class="bg-surface-card p-6 rounded-xl glass-border relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-violet-400">query_stats</span>
+</div>
+<p class="font-label-caps text-text-muted uppercase mb-2">Total Queries</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-h2 text-h2 text-white">142,892</h3>
+<span class="text-success-green text-xs font-bold">+12.4%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-violet-500 w-[70%]"></div>
+</div>
+</div>
+<!-- Documents -->
+<div class="bg-surface-card p-6 rounded-xl glass-border relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-blue-400">description</span>
+</div>
+<p class="font-label-caps text-text-muted uppercase mb-2">Documents Indexed</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-h2 text-h2 text-white">8,421</h3>
+<span class="text-success-green text-xs font-bold">+245</span>
+</div>
+<div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-blue-500 w-[45%]"></div>
+</div>
+</div>
+<!-- Conversations -->
+<div class="bg-surface-card p-6 rounded-xl glass-border relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-emerald-400">forum</span>
+</div>
+<p class="font-label-caps text-text-muted uppercase mb-2">Active Chats</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-h2 text-h2 text-white">2,105</h3>
+<span class="text-success-green text-xs font-bold">+5.2%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[62%]"></div>
+</div>
+</div>
+<!-- Token Usage -->
+<div class="bg-surface-card p-6 rounded-xl glass-border relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-amber-400">generating_tokens</span>
+</div>
+<p class="font-label-caps text-text-muted uppercase mb-2">Token Usage</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-h2 text-h2 text-white">4.2M</h3>
+<span class="text-warning-amber text-xs font-bold">84% cap</span>
+</div>
+<div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500 w-[84%]"></div>
+</div>
+</div>
+</div>
+<!-- MIDDLE ROW: Volume Chart & Questions -->
+<div class="grid grid-cols-1 lg:grid-cols-10 gap-6">
+<!-- Area Chart -->
+<div class="lg:col-span-6 bg-surface-card rounded-xl glass-border p-6 flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="font-h3 text-h3 text-white">Query Volume</h3>
+<p class="text-sm text-text-muted">Inference requests per hour</p>
+</div>
+<div class="flex items-center gap-4 text-xs font-medium text-slate-400">
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-violet-500"></div>
+                                Current
+                            </div>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-white/20"></div>
+                                Forecast
+                            </div>
+</div>
+</div>
+<div class="flex-1 flex items-end gap-2 px-2 min-h-[220px]">
+<!-- Simple visual bar chart placeholder representing area -->
+<div class="flex-1 bg-violet-500/20 h-[40%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[55%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[75%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[65%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[85%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[95%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[80%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[60%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[45%] rounded-t-sm relative group">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<div class="flex-1 bg-violet-500/20 h-[35%] rounded-t-sm relative group border-r border-dashed border-white/20">
+<div class="absolute bottom-0 left-0 w-full bg-violet-500 h-1/2 rounded-t-sm group-hover:bg-violet-400 transition-colors"></div>
+</div>
+<!-- Forecast items -->
+<div class="flex-1 bg-white/5 h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-white/5 h-[45%] rounded-t-sm"></div>
+</div>
+<div class="flex justify-between mt-4 px-2 text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+<span>08:00</span>
+<span>12:00</span>
+<span>16:00</span>
+<span>20:00</span>
+<span>00:00</span>
+</div>
+</div>
+<!-- Top Questions -->
+<div class="lg:col-span-4 bg-surface-card rounded-xl glass-border p-6">
+<h3 class="font-h3 text-h3 text-white mb-6">Top Questions</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-all cursor-pointer">
+<div class="w-8 h-8 rounded bg-violet-500/10 flex items-center justify-center shrink-0">
+<span class="text-xs font-bold text-violet-400">1</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-white line-clamp-1">How do I configure SSO with Azure AD?</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">Setup</span>
+<span class="text-[10px] text-slate-500">1.2k hits</span>
+</div>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-all cursor-pointer">
+<div class="w-8 h-8 rounded bg-violet-500/10 flex items-center justify-center shrink-0">
+<span class="text-xs font-bold text-violet-400">2</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-white line-clamp-1">What are the storage limits for Knowledge Bases?</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">Pricing</span>
+<span class="text-[10px] text-slate-500">940 hits</span>
+</div>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-all cursor-pointer">
+<div class="w-8 h-8 rounded bg-violet-500/10 flex items-center justify-center shrink-0">
+<span class="text-xs font-bold text-violet-400">3</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-white line-clamp-1">Can I use custom embeddings with Llama 3?</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">Technical</span>
+<span class="text-[10px] text-slate-500">812 hits</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-2 py-2 text-xs font-bold text-violet-400 hover:text-violet-300 transition-colors uppercase tracking-widest">
+                            View All Queries
+                        </button>
+</div>
+</div>
+</div>
+<!-- BOTTOM ROW: Table & Status -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Recent Conversations Table -->
+<div class="lg:col-span-8 bg-surface-card rounded-xl glass-border overflow-hidden">
+<div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+<h3 class="font-h3 text-h3 text-white">Recent Conversations</h3>
+<span class="material-symbols-outlined text-slate-500 cursor-pointer">more_horiz</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-white/2">
+<th class="font-label-caps text-slate-500 px-6 py-4 uppercase">User Identity</th>
+<th class="font-label-caps text-slate-500 px-6 py-4 uppercase">Agent</th>
+<th class="font-label-caps text-slate-500 px-6 py-4 uppercase">Tokens</th>
+<th class="font-label-caps text-slate-500 px-6 py-4 uppercase">Status</th>
+<th class="font-label-caps text-slate-500 px-6 py-4 uppercase">Time</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/2 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-violet-900/40 flex items-center justify-center text-[10px] font-bold text-violet-300">JD</div>
+<p class="text-sm font-medium text-white">James Dalton</p>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Support-V2</td>
+<td class="px-6 py-4 text-sm font-mono text-slate-400">1,402</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-success-green"></div>
+<span class="text-xs text-success-green">Completed</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">2m ago</td>
+</tr>
+<tr class="hover:bg-white/2 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-900/40 flex items-center justify-center text-[10px] font-bold text-blue-300">MK</div>
+<p class="text-sm font-medium text-white">Marie Kondo</p>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Docs-Bot</td>
+<td class="px-6 py-4 text-sm font-mono text-slate-400">854</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-warning-amber"></div>
+<span class="text-xs text-warning-amber">Processing</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">5m ago</td>
+</tr>
+<tr class="hover:bg-white/2 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-400">?</div>
+<p class="text-sm font-medium text-white">Anonymous User</p>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Internal-RAG</td>
+<td class="px-6 py-4 text-sm font-mono text-slate-400">2,110</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-success-green"></div>
+<span class="text-xs text-success-green">Completed</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">14m ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- System Status -->
+<div class="lg:col-span-4 bg-surface-card rounded-xl glass-border p-6 flex flex-col">
+<h3 class="font-h3 text-h3 text-white mb-6">System Status</h3>
+<div class="space-y-5 flex-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success-green text-sm">check_circle</span>
+<span class="text-sm font-medium text-slate-200">API Gateway</span>
+</div>
+<span class="text-[10px] font-mono text-success-green bg-success-green/10 px-2 py-0.5 rounded">99.9%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success-green text-sm">check_circle</span>
+<span class="text-sm font-medium text-slate-200">Vector Engine</span>
+</div>
+<span class="text-[10px] font-mono text-success-green bg-success-green/10 px-2 py-0.5 rounded">100%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-warning-amber text-sm">error</span>
+<span class="text-sm font-medium text-slate-200">Embedding Node A</span>
+</div>
+<span class="text-[10px] font-mono text-warning-amber bg-warning-amber/10 px-2 py-0.5 rounded">Latency</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success-green text-sm">check_circle</span>
+<span class="text-sm font-medium text-slate-200">Worker Cluster</span>
+</div>
+<span class="text-[10px] font-mono text-success-green bg-success-green/10 px-2 py-0.5 rounded">Active</span>
+</div>
+</div>
+<div class="mt-6 pt-6 border-t border-white/5">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold text-slate-500 uppercase">Cloud Resource Usage</span>
+<span class="text-[10px] font-mono text-slate-300">12/32 vCPUs</span>
+</div>
+<div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full accent-gradient-bg w-[37.5%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

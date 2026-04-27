@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RAG Platform Control Center - Super Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#37333e",
+                    "secondary-fixed": "#d8e2ff",
+                    "surface-container-low": "#1d1a24",
+                    "tertiary-fixed": "#ffdcc6",
+                    "background-deep": "#0A0F1E",
+                    "error-container": "#93000a",
+                    "primary-fixed-dim": "#d2bbff",
+                    "outline": "#958da1",
+                    "on-secondary-fixed-variant": "#004395",
+                    "surface-container-lowest": "#100d16",
+                    "secondary-container": "#0566d9",
+                    "on-secondary-container": "#e6ecff",
+                    "primary": "#d2bbff",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-high": "#2c2833",
+                    "warning": "#F59E0B",
+                    "on-surface": "#e8dfee",
+                    "primary-fixed": "#eaddff",
+                    "on-tertiary-container": "#ffe0cd",
+                    "on-tertiary": "#4f2500",
+                    "tertiary-fixed-dim": "#ffb784",
+                    "error": "#EF4444",
+                    "background": "#15121b",
+                    "tertiary": "#ffb784",
+                    "on-tertiary-fixed": "#301400",
+                    "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                    "outline-variant": "#4a4455",
+                    "surface": "#15121b",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-primary-fixed": "#25005a",
+                    "surface-container-highest": "#37333e",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "surface-bright": "#3c3742",
+                    "secondary": "#adc6ff",
+                    "border-glass": "rgba(255, 255, 255, 0.06)",
+                    "inverse-primary": "#732ee4",
+                    "on-background": "#e8dfee",
+                    "on-tertiary-fixed-variant": "#713700",
+                    "on-secondary-fixed": "#001a42",
+                    "on-primary": "#3f008e",
+                    "on-primary-container": "#ede0ff",
+                    "inverse-on-surface": "#332f39",
+                    "primary-container": "#7c3aed",
+                    "surface-dim": "#15121b",
+                    "sidebar-active": "rgba(124, 58, 237, 0.1)",
+                    "inverse-surface": "#e8dfee",
+                    "surface-tint": "#d2bbff",
+                    "on-surface-variant": "#ccc3d8",
+                    "surface-card": "#111827",
+                    "tertiary-container": "#a15100",
+                    "on-secondary": "#002e6a",
+                    "surface-container": "#221e28",
+                    "on-error": "#690005",
+                    "success": "#10B981"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "gutter": "16px",
+                    "sidebar-width": "260px",
+                    "header-height": "64px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "code": ["monospace"],
+                    "h3": ["Inter"],
+                    "h1": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "h2": ["Inter"]
+            },
+            "fontSize": {
+                    "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .sidebar-gradient-border {
+            border-left: 4px solid #7C3AED;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-deep text-on-surface font-body-md min-h-screen">
+<!-- NavigationDrawer (Shared Component) -->
+<aside class="fixed left-0 top-0 bottom-0 z-50 w-64 bg-[#111827]/80 backdrop-blur-md border-r border-white/10 shadow-2xl font-inter text-sm antialiased">
+<div class="p-6">
+<span class="text-xl font-bold bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] bg-clip-text text-transparent">RAGControl</span>
+</div>
+<nav class="mt-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Overview
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">database</span>
+                Knowledge Base
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+                Chat Widgets
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">code</span>
+                API &amp; Embeds
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+                Team Management
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+                Billing
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-white bg-white/5 border-l-4 border-[#7C3AED]" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+                Super Admin
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="absolute bottom-0 left-0 w-full p-6 border-t border-white/10">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center text-white font-bold">
+                    TA
+                </div>
+<div>
+<p class="text-white font-semibold">Technical Admin</p>
+<p class="text-xs text-gray-400">Enterprise Tier</p>
+</div>
+</div>
+<p class="mt-4 text-[10px] text-gray-500 font-code uppercase tracking-wider">v2.4.0</p>
+</div>
+</aside>
+<div class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar (Shared Component) -->
+<header class="sticky top-0 right-0 z-40 flex items-center justify-between px-6 h-16 w-full bg-[#0A0F1E]/90 backdrop-blur-xl border-b border-white/5">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gray-400 cursor-pointer hover:bg-white/5 p-2 rounded-lg">menu</span>
+<h1 class="font-inter text-lg font-semibold tracking-tight text-on-surface">Super Admin Platform Analytics</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-gray-400 hover:bg-white/5 p-2 rounded-lg">search</button>
+<button class="material-symbols-outlined text-gray-400 hover:bg-white/5 p-2 rounded-lg">notifications</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-white/10">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a professional male tech administrator in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBerCbep1NjWxFiB_vzW7qjTiQnhva476ursv7fVqwZvTiGR_tIpnQNmVhRctUV56zj1yaGCxaABgGQm9z7tK2Fwa2w2RXjDRzzhK3kHzDHQtOD5LRdWfsDdEud7RHXNkXy4NI8HgOYhpKwupdakTBz5lJdmxpchfFx70qLBYwbolwRvv5yfGoh4sNxbnT9ewAa_0KwL0XF2nPBmuZ_xSXqNLNu-QPF4iOD6ikTEsJuw3DXrBv20e9UK_nzKqL1stVPTWq_Ahxbvws"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="p-8 space-y-6">
+<!-- Key Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Metric Card: Active Tenants -->
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">domain</span>
+</div>
+<span class="text-success text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +12.5%
+                        </span>
+</div>
+<p class="text-label-caps text-on-surface-variant mb-1 uppercase">Active Tenants</p>
+<h3 class="font-h1 text-white">1,284</h3>
+<div class="mt-4 w-full bg-white/5 h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[78%]"></div>
+</div>
+</div>
+<!-- Metric Card: Total Queries -->
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-secondary">database</span>
+</div>
+<span class="text-success text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +24.1%
+                        </span>
+</div>
+<p class="text-label-caps text-on-surface-variant mb-1 uppercase">Total RAG Queries</p>
+<h3 class="font-h1 text-white">8.42M</h3>
+<div class="mt-4 w-full bg-white/5 h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[62%]"></div>
+</div>
+</div>
+<!-- Metric Card: System Uptime -->
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-tertiary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-tertiary">bolt</span>
+</div>
+<span class="text-success text-xs font-bold">STABLE</span>
+</div>
+<p class="text-label-caps text-on-surface-variant mb-1 uppercase">System Uptime</p>
+<h3 class="font-h1 text-white">99.998%</h3>
+<div class="mt-4 w-full bg-white/5 h-1 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[99.9%]"></div>
+</div>
+</div>
+<!-- Metric Card: MRR -->
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-success/10 rounded-lg">
+<span class="material-symbols-outlined text-success">payments</span>
+</div>
+<span class="text-success text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +8.2%
+                        </span>
+</div>
+<p class="text-label-caps text-on-surface-variant mb-1 uppercase">Monthly Recurring Revenue</p>
+<h3 class="font-h1 text-white">$412.5k</h3>
+<div class="mt-4 w-full bg-white/5 h-1 rounded-full overflow-hidden">
+<div class="bg-success h-full w-[45%]"></div>
+</div>
+</div>
+</div>
+<!-- Analytics Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Revenue Growth Chart (Asymmetric Span) -->
+<div class="lg:col-span-8 glass-panel rounded-xl flex flex-col">
+<div class="p-6 border-b border-white/5 flex justify-between items-center">
+<div>
+<h2 class="text-body-lg font-semibold text-white">Revenue Growth Velocity</h2>
+<p class="text-xs text-gray-500">Projected vs Actual performance (Last 12 months)</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs bg-white/5 rounded-full text-white border border-white/10">12M</button>
+<button class="px-3 py-1 text-xs text-gray-400">6M</button>
+<button class="px-3 py-1 text-xs text-gray-400">3M</button>
+</div>
+</div>
+<div class="flex-grow p-6 flex flex-col justify-end min-h-[300px]">
+<!-- Visual Representation of a Line Chart -->
+<div class="relative w-full h-48 flex items-end gap-2 px-2">
+<div class="absolute inset-0 flex flex-col justify-between border-l border-b border-white/10 pointer-events-none">
+<div class="w-full border-t border-white/5"></div>
+<div class="w-full border-t border-white/5"></div>
+<div class="w-full border-t border-white/5"></div>
+</div>
+<!-- Bars simulating a complex graph -->
+<div class="flex-grow flex items-end justify-between gap-4 h-full relative">
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary h-[40%] rounded-t-sm opacity-80"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary h-[55%] rounded-t-sm opacity-80"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary h-[48%] rounded-t-sm opacity-80"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary h-[70%] rounded-t-sm opacity-80"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary h-[85%] rounded-t-sm opacity-80"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary h-[78%] rounded-t-sm opacity-80"></div>
+<div class="w-full bg-gradient-to-t from-primary/20 to-primary h-[92%] rounded-t-sm opacity-80"></div>
+<!-- Current Value Indicator -->
+<div class="absolute top-[8%] right-[4%] flex flex-col items-center">
+<div class="bg-primary text-on-primary-container px-2 py-1 rounded text-[10px] font-bold mb-1 shadow-lg">New Peak</div>
+<div class="w-2 h-2 bg-white rounded-full border-2 border-primary"></div>
+</div>
+</div>
+</div>
+<div class="flex justify-between mt-4 px-2 text-[10px] text-gray-500 font-code">
+<span>JAN</span><span>MAR</span><span>MAY</span><span>JUL</span><span>SEP</span><span>NOV</span>
+</div>
+</div>
+</div>
+<!-- Tenant Distribution (Donut Simulation) -->
+<div class="lg:col-span-4 glass-panel rounded-xl flex flex-col">
+<div class="p-6 border-b border-white/5">
+<h2 class="text-body-lg font-semibold text-white">Tenant Tier Distribution</h2>
+<p class="text-xs text-gray-500">Revenue contribution per segment</p>
+</div>
+<div class="flex-grow flex flex-col items-center justify-center p-6">
+<!-- Custom CSS "Donut" Chart -->
+<div class="relative w-40 h-40 rounded-full flex items-center justify-center border-[20px] border-secondary-container/20">
+<div class="absolute inset-0 rounded-full border-[20px] border-transparent border-t-primary border-r-secondary rotate-45"></div>
+<div class="text-center">
+<p class="text-h2 text-white">1.2k</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-widest">Total</p>
+</div>
+</div>
+<div class="mt-8 w-full space-y-3">
+<div class="flex justify-between items-center text-xs">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-gray-300">Enterprise</span>
+</div>
+<span class="text-white font-semibold">58%</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-gray-300">Growth</span>
+</div>
+<span class="text-white font-semibold">32%</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-white/20"></div>
+<span class="text-gray-300">Startup</span>
+</div>
+<span class="text-white font-semibold">10%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Health Overview Table -->
+<div class="glass-panel rounded-xl overflow-hidden">
+<div class="p-6 border-b border-white/5 flex justify-between items-center">
+<h2 class="text-body-lg font-semibold text-white">Critical Tenant Health</h2>
+<button class="text-primary text-xs font-semibold flex items-center gap-1 hover:underline">
+                        View Full Report <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-white/5">
+<th class="px-6 py-4 text-label-caps text-gray-400 uppercase">Tenant Name</th>
+<th class="px-6 py-4 text-label-caps text-gray-400 uppercase">Status</th>
+<th class="px-6 py-4 text-label-caps text-gray-400 uppercase">Latency (p95)</th>
+<th class="px-6 py-4 text-label-caps text-gray-400 uppercase">Storage</th>
+<th class="px-6 py-4 text-label-caps text-gray-400 uppercase">Alerts</th>
+<th class="px-6 py-4 text-label-caps text-gray-400 uppercase">Region</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">V</div>
+<div>
+<p class="text-sm font-medium text-white">Velocity Global</p>
+<p class="text-[10px] text-gray-500">ID: TN-9821-X</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span> Healthy
+                                    </span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-300">124ms</td>
+<td class="px-6 py-4 text-sm text-gray-300">1.2 TB / 2.0 TB</td>
+<td class="px-6 py-4 text-sm text-gray-300">0</td>
+<td class="px-6 py-4 text-sm text-gray-300">us-east-1</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-secondary-container/20 flex items-center justify-center text-secondary font-bold text-xs">A</div>
+<div>
+<p class="text-sm font-medium text-white">Acme Research</p>
+<p class="text-[10px] text-gray-500">ID: TN-0211-C</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-warning/10 text-warning text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-warning"></span> Warning
+                                    </span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-300">842ms</td>
+<td class="px-6 py-4 text-sm text-gray-300">890 GB / 1.0 TB</td>
+<td class="px-6 py-4 text-sm text-warning">High Latency</td>
+<td class="px-6 py-4 text-sm text-gray-300">eu-central-1</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-tertiary-container/20 flex items-center justify-center text-tertiary font-bold text-xs">N</div>
+<div>
+<p class="text-sm font-medium text-white">NexGen Corp</p>
+<p class="text-[10px] text-gray-500">ID: TN-5562-F</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span> Healthy
+                                    </span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-300">45ms</td>
+<td class="px-6 py-4 text-sm text-gray-300">234 GB / 500 GB</td>
+<td class="px-6 py-4 text-sm text-gray-300">0</td>
+<td class="px-6 py-4 text-sm text-gray-300">ap-southeast-1</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-error-container/20 flex items-center justify-center text-error font-bold text-xs">S</div>
+<div>
+<p class="text-sm font-medium text-white">Stark Industries</p>
+<p class="text-[10px] text-gray-500">ID: TN-1100-M</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-error/10 text-error text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Offline
+                                    </span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-300">N/A</td>
+<td class="px-6 py-4 text-sm text-gray-300">4.5 TB / 10.0 TB</td>
+<td class="px-6 py-4 text-sm text-error">DB Connection Lost</td>
+<td class="px-6 py-4 text-sm text-gray-300">us-west-2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Quick Action Cards (Bento style small) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass-panel p-6 rounded-xl border-l-4 border-primary">
+<h4 class="text-white font-semibold mb-2">Platform Announcements</h4>
+<p class="text-xs text-gray-400 mb-4">Broadcast maintenance windows or feature updates to all active tenants.</p>
+<button class="bg-primary text-on-primary font-bold text-xs px-4 py-2 rounded-lg active:scale-95 transition-transform">Create Broadcast</button>
+</div>
+<div class="glass-panel p-6 rounded-xl border-l-4 border-secondary">
+<h4 class="text-white font-semibold mb-2">Infrastructure Monitor</h4>
+<p class="text-xs text-gray-400 mb-4">Real-time load balancing and GPU cluster performance tracking.</p>
+<button class="border border-white/10 text-white font-bold text-xs px-4 py-2 rounded-lg active:scale-95 transition-transform">Open Grafana</button>
+</div>
+<div class="glass-panel p-6 rounded-xl border-l-4 border-success">
+<h4 class="text-white font-semibold mb-2">Audit Log Access</h4>
+<p class="text-xs text-gray-400 mb-4">Trace every API request and administrative change across the environment.</p>
+<button class="border border-white/10 text-white font-bold text-xs px-4 py-2 rounded-lg active:scale-95 transition-transform">Download Logs</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+enum Plan {
+  FREE
+  PRO
+  BUSINESS
+  ENTERPRISE
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum DocStatus {
+  UPLOADING
+  PROCESSING
+  INDEXED
+  FAILED
+}
+
+model Tenant {
+  id            String         @id @default(uuid())
+  name          String
+  plan          Plan           @default(FREE)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  users         User[]
+  apiKeys       ApiKey[]
+  documents     Document[]
+  conversations Conversation[]
+  usageLogs     UsageLog[]
+
+  @@map("tenants")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String?
+  name      String?
+  role      Role     @default(MEMBER)
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tenantId])
+  @@map("users")
+}
+
+model ApiKey {
+  id        String    @id @default(uuid())
+  name      String
+  key       String    @unique
+  tenantId  String
+  tenant    Tenant    @relation(fields: [tenantId], references: [id])
+  createdAt DateTime  @default(now())
+  lastUsed  DateTime?
+  revokedAt DateTime?
+
+  @@index([tenantId])
+  @@map("api_keys")
+}
+
+model Document {
+  id        String    @id @default(uuid())
+  name      String
+  type      String
+  size      Int
+  url       String
+  status    DocStatus @default(UPLOADING)
+  tenantId  String
+  tenant    Tenant    @relation(fields: [tenantId], references: [id])
+  chunks    Chunk[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([tenantId])
+  @@map("documents")
+}
+
+model Chunk {
+  id         String                     @id @default(uuid())
+  content    String
+  metadata   Json?
+  embedding  Unsupported("vector(1536)")?
+  documentId String
+  document   Document                   @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  createdAt  DateTime                   @default(now())
+
+  @@index([documentId])
+  @@map("document_chunks")
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  externalId String?   @unique // For widget/external tracking
+  tenantId  String
+  tenant    Tenant    @relation(fields: [tenantId], references: [id])
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([tenantId])
+  @@map("conversations")
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  role           String // "user" | "assistant"
+  content        String
+  tokens         Int?
+  cost           Decimal?     @db.Decimal(10, 5)
+  latency        Int? // ms
+  metadata       Json?
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId])
+  @@map("messages")
+}
+
+model UsageLog {
+  id        String   @id @default(uuid())
+  type      String // "query" | "embedding"
+  tokens    Int
+  cost      Decimal  @db.Decimal(10, 5)
+  model     String
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@index([tenantId])
+  @@map("usage_logs")
+}

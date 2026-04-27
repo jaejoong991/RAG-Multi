@@ -1,0 +1,31 @@
+{
+  "name": "@rag-multi/rag-engine",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint src/**/*.ts"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.2.0",
+    "@langchain/openai": "^0.1.0",
+    "@langchain/google-genai": "^0.0.10",
+    "@langchain/anthropic": "^0.1.0",
+    "@langchain/community": "^0.2.0",
+    "zod": "^3.23.8",
+    "pino": "^9.1.0",
+    "pino-pretty": "^11.1.0",
+    "@prisma/client": "^5.14.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "typescript": "^5.4.5",
+    "ts-node-dev": "^2.0.0",
+    "prisma": "^5.14.0",
+    "eslint": "^9.3.0"
+  }
+}

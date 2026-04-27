@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#d2bbff",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-container-lowest": "#100d16",
+                        "success-green": "#10B981",
+                        "on-background": "#e8dfee",
+                        "on-secondary-container": "#e6ecff",
+                        "secondary-container": "#0566d9",
+                        "tertiary-container": "#a15100",
+                        "on-primary-container": "#ede0ff",
+                        "inverse-primary": "#732ee4",
+                        "on-secondary-fixed-variant": "#004395",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#ffb784",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "surface": "#15121b",
+                        "bg-deep-navy": "#0A0F1E",
+                        "surface-bright": "#3c3742",
+                        "surface-container-low": "#1d1a24",
+                        "tertiary": "#ffb784",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "surface-container-high": "#2c2833",
+                        "primary-fixed": "#eaddff",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#001a42",
+                        "on-primary": "#3f008e",
+                        "primary": "#d2bbff",
+                        "on-tertiary": "#4f2500",
+                        "inverse-surface": "#e8dfee",
+                        "on-tertiary-fixed": "#301400",
+                        "error-red": "#EF4444",
+                        "on-secondary": "#002e6a",
+                        "surface-variant": "#37333e",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                        "primary-container": "#7c3aed",
+                        "surface-dim": "#15121b",
+                        "secondary": "#adc6ff",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-primary-fixed": "#25005a",
+                        "inverse-on-surface": "#332f39",
+                        "surface-card": "#111827",
+                        "on-surface": "#e8dfee",
+                        "surface-container-highest": "#37333e",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-surface-variant": "#ccc3d8",
+                        "warning-amber": "#F59E0B",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#221e28",
+                        "on-tertiary-container": "#ffe0cd",
+                        "border-glass": "rgba(255, 255, 255, 0.06)",
+                        "outline": "#958da1",
+                        "error-container": "#93000a",
+                        "outline-variant": "#4a4455",
+                        "text-muted": "#94A3B8",
+                        "background": "#15121b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono": ["Space Grotesk"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .gradient-border-active {
+            position: relative;
+        }
+        .gradient-border-active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25%;
+            height: 50%;
+            width: 4px;
+            background: linear-gradient(180deg, #7C3AED 0%, #3B82F6 100%);
+            border-radius: 0 4px 4px 0;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            border-radius: 2px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #7C3AED;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-bg-deep-navy font-body-md text-on-surface antialiased overflow-x-hidden">
+<!-- SideNavBar Shell -->
+<nav class="fixed left-0 top-0 bottom-0 w-[260px] z-50 bg-[#111827] border-r border-white/5 flex flex-col h-full py-6 px-4 font-inter text-sm no-shadow">
+<div class="flex items-center gap-3 px-2 mb-10">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] flex items-center justify-center shadow-lg shadow-primary-container/20">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div>
+<h2 class="text-lg font-black text-white leading-tight">Nexus Enterprise</h2>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">RAG Platform</p>
+</div>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+<span>Playground</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+<span>Conversations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">leaderboard</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-[#7C3AED]/10 text-white border-l-4 border-[#7C3AED] font-medium transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">settings_suggest</span>
+<span>Bot Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">palette</span>
+<span>Widget</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">code</span>
+<span>Embed</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+<span>API Keys</span>
+</a>
+</div>
+<div class="mt-auto pt-6 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-200 hover:bg-white/5 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-200 hover:bg-white/5 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 z-40 bg-[#111827]/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 font-inter antialiased shadow-sm">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-white/5 rounded-full px-4 py-1.5 border border-white/10">
+<span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 text-white placeholder-slate-500 w-64" placeholder="Search configuration..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-5">
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-lg transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-lg transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-lg transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="h-8 w-px bg-white/10 mx-1"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<div class="text-right">
+<p class="text-sm font-semibold text-white">Admin User</p>
+<p class="text-[10px] text-primary leading-none">Nexus Enterprise</p>
+</div>
+<img alt="Administrator Avatar" class="w-10 h-10 rounded-lg border border-white/10 object-cover" data-alt="Professional studio portrait of a male technical administrator with neutral expression and clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgCj2-50_qme7M4P0VaTAk6cPBCaFNwfVKDsO9G4OBMnQhV6UINc1tYdU61A_ai-QbrObeCaThJcRtpVt43nWeOhMy9TVfJEEnP1Z_84g_H9YWycPFqhKh_44VmnRWc_0Z8BsdtMFnvC9MoOebSi62OfdUgbp7yewdtAHu5vYvi89e-KtrKjsykvDJwdYdFQyZ13hfaUJtxyNfFTbNCIvIhBXsuPrj62GvTUKFPUDRhsbrj2_cl3_6M455r4UorhGpouxBOA5ox1c"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-24 px-container-padding pb-12 min-h-screen">
+<!-- Header Section -->
+<div class="flex items-end justify-between mb-8">
+<div>
+<nav class="flex items-center gap-2 text-label-caps text-slate-500 mb-2 uppercase tracking-widest">
+<span>Dashboard</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-primary-fixed-dim">Bot Settings</span>
+</nav>
+<h1 class="font-h1 text-h1 text-white">Bot Configuration</h1>
+<p class="text-body-md text-slate-400 mt-1">Configure advanced RAG parameters and model behaviors for Nexus AI.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-5 py-2.5 rounded-lg border border-border-glass text-white font-medium hover:bg-white/5 transition-all active:scale-95">
+                    Discard Changes
+                </button>
+<button class="px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] text-white font-bold shadow-lg shadow-primary-container/20 hover:opacity-90 transition-all active:scale-95">
+                    Save Configuration
+                </button>
+</div>
+</div>
+<!-- Settings Grid -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Card 1: AI Model Selection (Span 8) -->
+<section class="col-span-12 lg:col-span-8 glass-panel rounded-xl p-6">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">psychology</span>
+<h3 class="font-h3 text-h3 text-white">AI Model Provider</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Provider 1 -->
+<label class="relative cursor-pointer group">
+<input checked="" class="peer sr-only" name="model_provider" type="radio"/>
+<div class="h-full p-4 rounded-xl border border-white/5 bg-white/5 peer-checked:border-primary-container peer-checked:bg-primary-container/10 transition-all group-hover:border-white/20">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-white">auto_awesome</span>
+</div>
+<span class="material-symbols-outlined text-primary-container opacity-0 peer-checked:opacity-100">check_circle</span>
+</div>
+<p class="font-bold text-white">GPT-4o</p>
+<p class="text-xs text-slate-400 mt-1">Highest reasoning &amp; multimodal capabilities</p>
+</div>
+</label>
+<!-- Provider 2 -->
+<label class="relative cursor-pointer group">
+<input class="peer sr-only" name="model_provider" type="radio"/>
+<div class="h-full p-4 rounded-xl border border-white/5 bg-white/5 peer-checked:border-primary-container peer-checked:bg-primary-container/10 transition-all group-hover:border-white/20">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-white">science</span>
+</div>
+<span class="material-symbols-outlined text-primary-container opacity-0 peer-checked:opacity-100">check_circle</span>
+</div>
+<p class="font-bold text-white">Claude 3.5 Sonnet</p>
+<p class="text-xs text-slate-400 mt-1">Best-in-class coding &amp; nuanced writing</p>
+</div>
+</label>
+<!-- Provider 3 -->
+<label class="relative cursor-pointer group">
+<input class="peer sr-only" name="model_provider" type="radio"/>
+<div class="h-full p-4 rounded-xl border border-white/5 bg-white/5 peer-checked:border-primary-container peer-checked:bg-primary-container/10 transition-all group-hover:border-white/20">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-white">memory</span>
+</div>
+<span class="material-symbols-outlined text-primary-container opacity-0 peer-checked:opacity-100">check_circle</span>
+</div>
+<p class="font-bold text-white">Llama 3.1 70B</p>
+<p class="text-xs text-slate-400 mt-1">Open-weights performance for enterprise</p>
+</div>
+</label>
+</div>
+</section>
+<!-- Card 4: Response Behavior (Span 4) -->
+<section class="col-span-12 lg:col-span-4 glass-panel rounded-xl p-6">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="font-h3 text-h3 text-white">Response Behavior</h3>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+<div>
+<p class="text-body-md font-semibold text-white">Stream Output</p>
+<p class="text-[11px] text-slate-500">Enable real-time token streaming</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+<div>
+<p class="text-body-md font-semibold text-white">Citations Required</p>
+<p class="text-[11px] text-slate-500">Only answer if sources are found</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+<div>
+<p class="text-body-md font-semibold text-white">Web Search</p>
+<p class="text-[11px] text-slate-500">Supplement knowledge with live web</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Card 2: System Prompt (Span 8) -->
+<section class="col-span-12 lg:col-span-8 glass-panel rounded-xl p-6">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<h3 class="font-h3 text-h3 text-white">System Prompt</h3>
+</div>
+<span class="text-xs font-mono text-slate-500">2,450 / 8,000 characters</span>
+</div>
+<div class="relative group">
+<textarea class="w-full h-64 bg-bg-deep-navy/50 border border-white/10 rounded-xl p-4 font-mono text-body-sm text-slate-300 focus:ring-1 focus:ring-primary-container focus:border-primary-container transition-all outline-none" placeholder="Enter instructions for the AI behavior...">You are Nexus AI, a highly technical and professional enterprise assistant. Your core objective is to provide accurate, data-driven responses based exclusively on the provided documentation corpus. 
+
+Guidelines:
+1. Always cite sources using [Source Name] notation.
+2. If the answer is not in the context, state clearly that you do not have that information.
+3. Use a professional, concise, and helpful tone.
+4. For technical queries, provide code examples when appropriate.</textarea>
+<div class="absolute bottom-4 right-4 flex gap-2">
+<button class="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 border border-white/5 transition-all">
+<span class="material-symbols-outlined text-sm">history</span>
+</button>
+<button class="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 border border-white/5 transition-all">
+<span class="material-symbols-outlined text-sm">auto_fix</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Card 3: Retrieval Settings (Span 4) -->
+<section class="col-span-12 lg:col-span-4 glass-panel rounded-xl p-6">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">layers</span>
+<h3 class="font-h3 text-h3 text-white">Retrieval Engine</h3>
+</div>
+<div class="space-y-8">
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<label class="text-sm font-semibold text-white">Temperature</label>
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary-fixed-dim font-mono text-xs">0.4</span>
+</div>
+<input class="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer" max="1" min="0" step="0.1" type="range" value="0.4"/>
+<p class="text-[11px] text-slate-500 italic">Lower for facts, higher for creativity.</p>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<label class="text-sm font-semibold text-white">Top-K Snippets</label>
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary-fixed-dim font-mono text-xs">5</span>
+</div>
+<input class="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer" max="20" min="1" step="1" type="range" value="5"/>
+<p class="text-[11px] text-slate-500 italic">Number of context pieces retrieved.</p>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<label class="text-sm font-semibold text-white">Similarity Threshold</label>
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary-fixed-dim font-mono text-xs">0.82</span>
+</div>
+<input class="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer" max="1" min="0" step="0.01" type="range" value="0.82"/>
+<p class="text-[11px] text-slate-500 italic">Minimum vector score for inclusion.</p>
+</div>
+<div class="pt-4 border-t border-white/5">
+<button class="w-full py-2.5 rounded-lg border border-primary/30 text-primary-fixed-dim text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-[18px]">open_run</span>
+                            Run Retrieval Test
+                        </button>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Help -->
+<div class="mt-12 p-6 glass-panel rounded-2xl flex items-center gap-6 overflow-hidden relative">
+<div class="absolute top-0 right-0 w-64 h-full opacity-10 pointer-events-none">
+<img alt="Decorative background" class="w-full h-full object-cover" data-alt="abstract flowing blue and purple liquid metal curves with glowing edges and soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5xgMA23LphgyMe2YTqL7QC0Dcyt48xk3JW0C0qHG1ZB8zxh-8bgBnY7DAUPSLme5am3B0LRhfCcmA4g1VF7uB6CjTeuro0uD6FLhicpT30HDCjk6MsbQQ2aU2vrQtw-yV5JmsOb8mBJbWAO1sb7QZLnBAmeFo6lEXDDxzbQMioaoEEwVNqRBU14lWLHjM4_DuI2-kOVbqQXppliR_UmRB2SMz87Zkv_o0AnnmNr5ST_RIIGjAFVJ_CbZDiuQQfGz3viLNW6IAeYQ"/>
+</div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[28px]">lightbulb</span>
+</div>
+<div class="flex-1">
+<h4 class="text-lg font-bold text-white">Need help tuning your bot?</h4>
+<p class="text-slate-400 text-sm">Explore our <a class="text-primary hover:underline font-semibold" href="#">Prompt Engineering Guide</a> or schedule a <a class="text-primary hover:underline font-semibold" href="#">Live Training Session</a> with our AI architects to optimize performance.</p>
+</div>
+<button class="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg font-semibold transition-all shrink-0">
+                View Tutorials
+            </button>
+</div>
+</main>
+</body></html>

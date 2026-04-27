@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nexus AI | Conversations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#d2bbff",
+                      "primary-fixed-dim": "#d2bbff",
+                      "surface-container-lowest": "#100d16",
+                      "success-green": "#10B981",
+                      "on-background": "#e8dfee",
+                      "on-secondary-container": "#e6ecff",
+                      "secondary-container": "#0566d9",
+                      "tertiary-container": "#a15100",
+                      "on-primary-container": "#ede0ff",
+                      "inverse-primary": "#732ee4",
+                      "on-secondary-fixed-variant": "#004395",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-error": "#690005",
+                      "tertiary-fixed-dim": "#ffb784",
+                      "on-tertiary-fixed-variant": "#713700",
+                      "surface": "#15121b",
+                      "bg-deep-navy": "#0A0F1E",
+                      "surface-bright": "#3c3742",
+                      "surface-container-low": "#1d1a24",
+                      "tertiary": "#ffb784",
+                      "on-primary-fixed-variant": "#5a00c6",
+                      "surface-container-high": "#2c2833",
+                      "primary-fixed": "#eaddff",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed": "#001a42",
+                      "on-primary": "#3f008e",
+                      "primary": "#d2bbff",
+                      "on-tertiary": "#4f2500",
+                      "inverse-surface": "#e8dfee",
+                      "on-tertiary-fixed": "#301400",
+                      "error-red": "#EF4444",
+                      "on-secondary": "#002e6a",
+                      "surface-variant": "#37333e",
+                      "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                      "primary-container": "#7c3aed",
+                      "surface-dim": "#15121b",
+                      "secondary": "#adc6ff",
+                      "tertiary-fixed": "#ffdcc6",
+                      "on-primary-fixed": "#25005a",
+                      "inverse-on-surface": "#332f39",
+                      "surface-card": "#111827",
+                      "on-surface": "#e8dfee",
+                      "surface-container-highest": "#37333e",
+                      "secondary-fixed": "#d8e2ff",
+                      "on-surface-variant": "#ccc3d8",
+                      "warning-amber": "#F59E0B",
+                      "on-error-container": "#ffdad6",
+                      "surface-container": "#221e28",
+                      "on-tertiary-container": "#ffe0cd",
+                      "border-glass": "rgba(255, 255, 255, 0.06)",
+                      "outline": "#958da1",
+                      "error-container": "#93000a",
+                      "outline-variant": "#4a4455",
+                      "text-muted": "#94A3B8",
+                      "background": "#15121b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "32px",
+                      "header-height": "64px",
+                      "gutter": "24px",
+                      "base": "8px",
+                      "sidebar-width": "260px"
+              },
+              "fontFamily": {
+                      "h1": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "mono": ["Space Grotesk"],
+                      "h3": ["Inter"],
+                      "h2": ["Inter"]
+              },
+              "fontSize": {
+                      "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-bg-deep-navy text-on-surface font-body-md selection:bg-primary-container selection:text-white">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="fixed left-0 top-0 bottom-0 w-[260px] z-50 bg-[#111827] border-r border-white/5 flex flex-col h-full py-6 px-4 font-inter text-sm">
+<div class="flex items-center gap-3 px-2 mb-8">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+</div>
+<div>
+<h2 class="text-lg font-black text-white leading-tight">Nexus Enterprise</h2>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">RAG Platform</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Navigation Items Mapping -->
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+<span>Playground</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer bg-[#7C3AED]/10 text-white border-l-4 border-[#7C3AED] font-medium">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+<span>Conversations</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">leaderboard</span>
+<span>Analytics</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">settings_suggest</span>
+<span>Bot Settings</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">palette</span>
+<span>Widget</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">code</span>
+<span>Embed</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>Team</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+<span>API Keys</span>
+</div>
+</nav>
+<div class="pt-6 mt-6 border-t border-white/5 space-y-1">
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span>Documentation</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+<span>Support</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[260px] flex flex-col h-screen">
+<!-- TopAppBar (Authority: JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 z-40 bg-[#111827]/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 font-inter antialiased shadow-sm">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-white/5 border border-white/10 rounded-lg py-1.5 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#7C3AED]" placeholder="Search conversations..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-400 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-400 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-px bg-white/10 mx-1"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right">
+<p class="text-sm font-semibold text-white">Admin User</p>
+<p class="text-[11px] text-slate-500">Enterprise Plan</p>
+</div>
+<img alt="Administrator Avatar" class="w-10 h-10 rounded-full border border-white/10" data-alt="professional portrait of a middle-aged tech administrator with a neutral background, soft corporate lighting, sharp focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdm83I9kboGJDmtKNJfk2jpAXvffiTT3aYGcAajxSaikn4H32jAPwaotnHeEmCgf8XXfRVOGGG84eI6vNHZxmmp8Oc7p17j8v0zEjwoGd_-uU1NkJOLx23ds151iIXPcjPp9wYJS0ahLq7PL4ClTfwJWwHkW87KGqmwHHahAFCs3oryiCYXZLKKRcSkCUgRvKLwh5IocGZi26qH2QmB2mnFhhIHvgdj5WUtqANuDwmc3fFlMoWwX_DYEF1QdR7QWX574J6eAjposo"/>
+</div>
+</div>
+</header>
+<!-- Conversations Split View -->
+<section class="mt-16 flex-1 flex overflow-hidden">
+<!-- Left Panel: Conversation List (35%) -->
+<div class="w-[35%] flex flex-col border-r border-white/5 bg-bg-deep-navy">
+<!-- Filters -->
+<div class="p-4 space-y-4">
+<div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
+<button class="px-4 py-1.5 rounded-full bg-[#7C3AED] text-white text-body-sm font-medium whitespace-nowrap">All</button>
+<button class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-400 text-body-sm hover:bg-white/10 transition-colors whitespace-nowrap">Successful</button>
+<button class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-400 text-body-sm hover:bg-white/10 transition-colors whitespace-nowrap">Flagged</button>
+<button class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-400 text-body-sm hover:bg-white/10 transition-colors whitespace-nowrap">Low Confidence</button>
+</div>
+</div>
+<!-- Conversation List -->
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Active List Item -->
+<div class="p-4 bg-white/5 border-l-4 border-[#7C3AED] cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<span class="text-body-sm font-semibold text-white">#9421 - Billing Inquiry</span>
+<span class="text-[11px] text-slate-500">2 min ago</span>
+</div>
+<p class="text-body-sm text-slate-400 line-clamp-1">How do I upgrade my enterprise tier for more tokens...</p>
+<div class="flex gap-2 mt-3">
+<span class="flex items-center gap-1 text-[10px] bg-success-green/10 text-success-green px-2 py-0.5 rounded border border-success-green/20">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                Resolved
+                            </span>
+<span class="text-[10px] bg-white/5 text-slate-400 px-2 py-0.5 rounded border border-white/10">3 sources</span>
+</div>
+</div>
+<!-- Inactive List Items -->
+<div class="p-4 border-b border-white/5 hover:bg-white/5 cursor-pointer transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="text-body-sm font-semibold text-white">#9418 - API Error 503</span>
+<span class="text-[11px] text-slate-500">45 min ago</span>
+</div>
+<p class="text-body-sm text-slate-400 line-clamp-1">The request to the /v1/embeddings endpoint is failing with...</p>
+<div class="flex gap-2 mt-3">
+<span class="flex items-center gap-1 text-[10px] bg-warning-amber/10 text-warning-amber px-2 py-0.5 rounded border border-warning-amber/20">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+                                Flagged
+                            </span>
+<span class="text-[10px] bg-white/5 text-slate-400 px-2 py-0.5 rounded border border-white/10">1 source</span>
+</div>
+</div>
+<div class="p-4 border-b border-white/5 hover:bg-white/5 cursor-pointer transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="text-body-sm font-semibold text-white">#9415 - Integration Support</span>
+<span class="text-[11px] text-slate-500">2 hours ago</span>
+</div>
+<p class="text-body-sm text-slate-400 line-clamp-1">I need help connecting the Nexus Widget to my React app...</p>
+<div class="flex gap-2 mt-3">
+<span class="flex items-center gap-1 text-[10px] bg-success-green/10 text-success-green px-2 py-0.5 rounded border border-success-green/20">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                Resolved
+                            </span>
+<span class="text-[10px] bg-white/5 text-slate-400 px-2 py-0.5 rounded border border-white/10">5 sources</span>
+</div>
+</div>
+<div class="p-4 border-b border-white/5 hover:bg-white/5 cursor-pointer transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="text-body-sm font-semibold text-white">#9402 - General Greeting</span>
+<span class="text-[11px] text-slate-500">Yesterday</span>
+</div>
+<p class="text-body-sm text-slate-400 line-clamp-1">Hello, what can you do for my business analytics?</p>
+<div class="flex gap-2 mt-3">
+<span class="flex items-center gap-1 text-[10px] bg-white/5 text-slate-500 px-2 py-0.5 rounded border border-white/10">
+                                Idle
+                            </span>
+</div>
+</div>
+<div class="p-4 border-b border-white/5 hover:bg-white/5 cursor-pointer transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="text-body-sm font-semibold text-white">#9388 - Knowledge Base Sync</span>
+<span class="text-[11px] text-slate-500">Oct 24, 2023</span>
+</div>
+<p class="text-body-sm text-slate-400 line-clamp-1">The PDF ingestion seems to be skipping some complex tables...</p>
+<div class="flex gap-2 mt-3">
+<span class="flex items-center gap-1 text-[10px] bg-error-red/10 text-error-red px-2 py-0.5 rounded border border-error-red/20">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">error</span>
+                                Failed
+                            </span>
+<span class="text-[10px] bg-white/5 text-slate-400 px-2 py-0.5 rounded border border-white/10">2 sources</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel: Conversation Detail (65%) -->
+<div class="w-[65%] flex flex-col bg-surface relative">
+<!-- Detail Header -->
+<div class="h-14 px-6 border-b border-white/5 flex items-center justify-between glass-panel">
+<div class="flex items-center gap-3">
+<span class="text-body-md font-bold text-white">Conversation #9421</span>
+<span class="text-[11px] text-slate-500 font-mono">UID: nx-882-az-90</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-success-green"></div>
+<span class="text-[12px] text-slate-400">User: active_now</span>
+</div>
+</div>
+</div>
+<!-- Chat Thread -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
+<!-- User Message -->
+<div class="flex flex-col items-end gap-2 max-w-[85%] ml-auto">
+<div class="bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] text-white px-5 py-3 rounded-2xl rounded-tr-none shadow-lg">
+<p class="text-body-md">How do I upgrade my enterprise tier for more tokens? I'm currently on the Pro plan but we're hitting limits on our customer support bot.</p>
+</div>
+<div class="flex items-center gap-3 text-[11px] text-slate-500 px-1">
+<span>Sent 14:02 PM</span>
+<span>Client ID: user_0912</span>
+</div>
+</div>
+<!-- Bot Message -->
+<div class="flex flex-col items-start gap-4 max-w-[90%]">
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-card border border-white/10 text-on-surface px-5 py-4 rounded-2xl rounded-tl-none shadow-sm">
+<p class="text-body-md leading-relaxed">To upgrade your tier for higher token limits, you can navigate to the <span class="text-primary font-semibold">Billing</span> section in your dashboard. Under the 'Subscription' tab, you'll see options to scale your 'Nexus Enterprise' tokens. 
+
+                                    If you require a custom throughput for high-volume support bots, I recommend contacting our sales team directly for an Enterprise Plus agreement.</p>
+<!-- Source Tags -->
+<div class="mt-4 pt-4 border-t border-white/5">
+<p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Sources Referenced</p>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 px-2 py-1 bg-white/5 border border-white/10 rounded-md hover:bg-white/10 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-slate-400 text-[14px]">description</span>
+<span class="text-[11px] text-slate-400 group-hover:text-white">pricing-tiers.pdf</span>
+</div>
+<div class="flex items-center gap-2 px-2 py-1 bg-white/5 border border-white/10 rounded-md hover:bg-white/10 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-slate-400 text-[14px]">link</span>
+<span class="text-[11px] text-slate-400 group-hover:text-white">nexus.ai/docs/billing</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-5 text-[11px] text-slate-500 px-1">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">bolt</span> Model: Nexus-RAG-v4</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">timer</span> Latency: 420ms</span>
+<span class="flex items-center gap-1 text-success-green"><span class="material-symbols-outlined text-[14px]">verified</span> Conf: 0.98</span>
+</div>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex flex-col items-end gap-2 max-w-[85%] ml-auto">
+<div class="bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] text-white px-5 py-3 rounded-2xl rounded-tr-none shadow-lg">
+<p class="text-body-md">Does the upgrade take effect immediately?</p>
+</div>
+<div class="flex items-center gap-3 text-[11px] text-slate-500 px-1">
+<span>Sent 14:04 PM</span>
+</div>
+</div>
+<!-- Bot Message -->
+<div class="flex flex-col items-start gap-4 max-w-[90%]">
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-card border border-white/10 text-on-surface px-5 py-4 rounded-2xl rounded-tl-none shadow-sm">
+<p class="text-body-md leading-relaxed">Yes, billing upgrades are applied instantly to your account. Your token quota will be refreshed within 30-60 seconds of a successful transaction.</p>
+<div class="mt-4 pt-4 border-t border-white/5">
+<p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Sources Referenced</p>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 px-2 py-1 bg-white/5 border border-white/10 rounded-md hover:bg-white/10 cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-slate-400 text-[14px]">description</span>
+<span class="text-[11px] text-slate-400 group-hover:text-white">terms-of-service.pdf</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-5 text-[11px] text-slate-500 px-1">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">bolt</span> Model: Nexus-RAG-v4</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">timer</span> Latency: 310ms</span>
+<span class="flex items-center gap-1 text-success-green"><span class="material-symbols-outlined text-[14px]">verified</span> Conf: 0.99</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Bar: Export/Delete Actions -->
+<div class="h-16 px-6 border-t border-white/5 flex items-center justify-between glass-panel">
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-slate-300 hover:bg-white/10 transition-all text-body-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Export Log
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-slate-300 hover:bg-white/10 transition-all text-body-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">share</span>
+                            Share Link
+                        </button>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 text-error-red hover:bg-error-red/10 rounded-lg transition-all text-body-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+                            Purge Conversation
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB: Help / Context -->
+<button class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#3B82F6] flex items-center justify-center text-white shadow-2xl hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-[28px]">help_center</span>
+</button>
+</body></html>

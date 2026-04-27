@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-variant": "#37333e",
+                "secondary-fixed": "#d8e2ff",
+                "surface-container-low": "#1d1a24",
+                "tertiary-fixed": "#ffdcc6",
+                "background-deep": "#0A0F1E",
+                "error-container": "#93000a",
+                "primary-fixed-dim": "#d2bbff",
+                "outline": "#958da1",
+                "on-secondary-fixed-variant": "#004395",
+                "surface-container-lowest": "#100d16",
+                "secondary-container": "#0566d9",
+                "on-secondary-container": "#e6ecff",
+                "primary": "#d2bbff",
+                "on-error-container": "#ffdad6",
+                "surface-container-high": "#2c2833",
+                "warning": "#F59E0B",
+                "on-surface": "#e8dfee",
+                "primary-fixed": "#eaddff",
+                "on-tertiary-container": "#ffe0cd",
+                "on-tertiary": "#4f2500",
+                "tertiary-fixed-dim": "#ffb784",
+                "error": "#EF4444",
+                "background": "#15121b",
+                "tertiary": "#ffb784",
+                "on-tertiary-fixed": "#301400",
+                "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                "outline-variant": "#4a4455",
+                "surface": "#15121b",
+                "on-primary-fixed-variant": "#5a00c6",
+                "on-primary-fixed": "#25005a",
+                "surface-container-highest": "#37333e",
+                "secondary-fixed-dim": "#adc6ff",
+                "surface-bright": "#3c3742",
+                "secondary": "#adc6ff",
+                "border-glass": "rgba(255, 255, 255, 0.06)",
+                "inverse-primary": "#732ee4",
+                "on-background": "#e8dfee",
+                "on-tertiary-fixed-variant": "#713700",
+                "on-secondary-fixed": "#001a42",
+                "on-primary": "#3f008e",
+                "on-primary-container": "#ede0ff",
+                "inverse-on-surface": "#332f39",
+                "primary-container": "#7c3aed",
+                "surface-dim": "#15121b",
+                "sidebar-active": "rgba(124, 58, 237, 0.1)",
+                "inverse-surface": "#e8dfee",
+                "surface-tint": "#d2bbff",
+                "on-surface-variant": "#ccc3d8",
+                "surface-card": "#111827",
+                "tertiary-container": "#a15100",
+                "on-secondary": "#002e6a",
+                "surface-container": "#221e28",
+                "on-error": "#690005",
+                "success": "#10B981"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "base": "8px",
+                "gutter": "16px",
+                "sidebar-width": "260px",
+                "header-height": "64px",
+                "container-padding": "24px"
+            },
+            "fontFamily": {
+                "code": ["monospace"],
+                "h3": ["Inter"],
+                "h1": ["Inter"],
+                "body-md": ["Inter"],
+                "label-caps": ["Inter"],
+                "body-lg": ["Inter"],
+                "h2": ["Inter"]
+            },
+            "fontSize": {
+                "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .accent-gradient-bg {
+            background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%);
+        }
+        body {
+            background-color: #0A0F1E;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface antialiased overflow-x-hidden">
+<!-- NavigationDrawer Shell -->
+<aside class="fixed left-0 top-0 bottom-0 z-50 w-64 h-screen border-r border-white/10 bg-[#111827]/80 backdrop-blur-md shadow-2xl flex flex-col font-inter text-sm antialiased">
+<div class="p-6">
+<span class="text-xl font-bold bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] bg-clip-text text-transparent">RAG Platform</span>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 rounded-lg active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 rounded-lg active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span>Knowledge Base</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 rounded-lg active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span>Chat Widgets</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 rounded-lg active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span>API &amp; Embeds</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 rounded-lg active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Team Management</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 rounded-lg active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Billing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white bg-white/5 border-l-4 border-[#7C3AED] active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span>Super Admin</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors hover:bg-white/5 rounded-lg active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto p-6 border-t border-white/10">
+<div class="flex items-center gap-3">
+<img alt="Admin User Avatar" class="w-10 h-10 rounded-full border border-white/10" data-alt="Close up portrait of a professional technical administrator with a neutral expression against a soft-lit dark studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqaXzSFMDK7XudDFCsdjJ-3j1ua9X1WIloxwodijAk4k1RclqN6nTqRElCA09fHPgQMlCp0m-QpVwakdnOmOJoCn_NjJ9n-yW6kR_thzysGSHTY6D0dXfnlTsf-UMLIXyJmgH_Hh6hHHeTM2EnsreFFvOqd_thKjEZ4FXK9xo_1cK9iFrfURzTElf2Pj9lWE6UMCqe_5SSNoysANM3TnU6-3XNC1VZfWR4b83TD3HaQwUu-ZYalKFAQ1x5fstGY5mG0X-OdxRqUbQ"/>
+<div class="overflow-hidden">
+<p class="font-bold text-white truncate">Technical Admin</p>
+<p class="text-xs text-gray-400">Enterprise Tier</p>
+</div>
+</div>
+<p class="mt-4 text-[10px] text-gray-500 uppercase tracking-widest font-semibold">v2.4.0</p>
+</div>
+</aside>
+<!-- Main Canvas Area -->
+<main class="ml-64 min-h-screen bg-background-deep flex flex-col">
+<!-- TopAppBar -->
+<header class="sticky top-0 right-0 z-40 h-16 w-full border-b border-white/5 bg-[#0A0F1E]/90 backdrop-blur-xl flex items-center justify-between px-8">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gray-400 cursor-pointer hover:bg-white/5 p-2 rounded-lg" data-icon="menu">menu</span>
+<h1 class="font-inter text-lg font-semibold tracking-tight text-[#7C3AED]">RAG Platform Control Center</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-gray-400 hover:bg-white/5 p-2 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-sm">Quick Search</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-[#7C3AED] flex items-center justify-center cursor-pointer active:opacity-70">
+<span class="text-white text-xs font-bold">UA</span>
+</div>
+</div>
+</header>
+<!-- Content Body -->
+<div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
+<!-- Page Header -->
+<div class="flex items-end justify-between">
+<div>
+<h2 class="font-h1 text-h1 text-white">Tenant Management</h2>
+<p class="text-on-surface-variant font-body-lg">Oversee system-wide organizations and infrastructure load.</p>
+</div>
+<button class="accent-gradient-bg text-white px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-lg hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    Provision Tenant
+                </button>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div class="glass-panel p-6 rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="text-label-caps text-on-surface-variant">TOTAL TENANTS</span>
+<span class="material-symbols-outlined text-[#7C3AED]" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-h2 font-h2 text-white">1,284</span>
+<span class="text-success text-xs font-bold flex items-center">+12% <span class="material-symbols-outlined text-[12px]" data-icon="arrow_upward">arrow_upward</span></span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-4 overflow-hidden">
+<div class="h-full w-[70%] accent-gradient-bg"></div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="text-label-caps text-on-surface-variant">MONTHLY REVENUE</span>
+<span class="material-symbols-outlined text-[#3B82F6]" data-icon="payments">payments</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-h2 font-h2 text-white">$42,910</span>
+<span class="text-success text-xs font-bold flex items-center">+5.4% <span class="material-symbols-outlined text-[12px]" data-icon="arrow_upward">arrow_upward</span></span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-4 overflow-hidden">
+<div class="h-full w-[45%] bg-[#3B82F6]"></div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="text-label-caps text-on-surface-variant">TOTAL QUERIES (24H)</span>
+<span class="material-symbols-outlined text-tertiary" data-icon="query_stats">query_stats</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-h2 font-h2 text-white">842.1k</span>
+<span class="text-error text-xs font-bold flex items-center">-2.1% <span class="material-symbols-outlined text-[12px]" data-icon="arrow_downward">arrow_downward</span></span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-4 overflow-hidden">
+<div class="h-full w-[85%] bg-tertiary"></div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl flex flex-col gap-2 bg-[#7C3AED]/10 border-[#7C3AED]/20">
+<div class="flex items-center justify-between">
+<span class="text-label-caps text-[#7C3AED]">INFRASTRUCTURE LOAD</span>
+<span class="material-symbols-outlined text-[#7C3AED]" data-icon="speed">speed</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-h2 font-h2 text-white">64%</span>
+<span class="text-on-surface-variant text-xs font-bold">Optimal</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-4 overflow-hidden">
+<div class="h-full w-[64%] accent-gradient-bg"></div>
+</div>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="glass-panel p-4 rounded-xl flex flex-wrap items-center gap-4">
+<div class="flex-1 min-w-[300px] relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm" data-icon="search">search</span>
+<input class="w-full bg-[#0A0F1E] border border-white/10 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-[#7C3AED] focus:border-[#7C3AED] outline-none transition-all" placeholder="Search by tenant name, ID, or domain..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<select class="bg-[#0A0F1E] border border-white/10 rounded-lg py-2 px-4 text-sm text-on-surface outline-none focus:ring-1 focus:ring-[#7C3AED]">
+<option>All Status</option>
+<option>Active</option>
+<option>Provisioning</option>
+<option>Suspended</option>
+</select>
+<select class="bg-[#0A0F1E] border border-white/10 rounded-lg py-2 px-4 text-sm text-on-surface outline-none focus:ring-1 focus:ring-[#7C3AED]">
+<option>All Plans</option>
+<option>Enterprise</option>
+<option>Professional</option>
+<option>Basic</option>
+</select>
+<button class="flex items-center gap-2 border border-white/10 rounded-lg py-2 px-4 text-sm hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                        More Filters
+                    </button>
+<button class="p-2 border border-white/10 rounded-lg hover:bg-white/5">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+</button>
+</div>
+</div>
+<!-- Tenants Table -->
+<div class="glass-panel rounded-xl overflow-hidden">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-white/5 text-label-caps text-on-surface-variant border-b border-white/10 text-left">
+<th class="px-6 py-4 font-semibold uppercase tracking-wider">Tenant</th>
+<th class="px-6 py-4 font-semibold uppercase tracking-wider">Plan</th>
+<th class="px-6 py-4 font-semibold uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 font-semibold uppercase tracking-wider">Usage (Tokens)</th>
+<th class="px-6 py-4 font-semibold uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-[#7C3AED]/50 transition-colors">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-[#7C3AED]" data-icon="hub">hub</span>
+</div>
+<div>
+<p class="font-bold text-white">Acme Corp</p>
+<p class="text-xs text-on-surface-variant">acme-global.rag.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-[#7C3AED]/10 text-[#7C3AED] text-[10px] px-2.5 py-1 rounded-full font-bold border border-[#7C3AED]/20">ENTERPRISE</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+<span class="text-sm font-medium text-on-surface">Active</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="space-y-1.5">
+<div class="flex justify-between text-[11px] font-semibold text-on-surface-variant">
+<span>2.4M / 5M</span>
+<span>48%</span>
+</div>
+<div class="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-[48%] bg-success rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-[#7C3AED]/50 transition-colors">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-[#7C3AED]" data-icon="cloud">cloud</span>
+</div>
+<div>
+<p class="font-bold text-white">Nebula Tech</p>
+<p class="text-xs text-on-surface-variant">nebula.rag.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-[#3B82F6]/10 text-[#3B82F6] text-[10px] px-2.5 py-1 rounded-full font-bold border border-[#3B82F6]/20">PRO</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-warning"></span>
+<span class="text-sm font-medium text-on-surface">Provisioning</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="space-y-1.5 opacity-50">
+<div class="flex justify-between text-[11px] font-semibold text-on-surface-variant">
+<span>0 / 1M</span>
+<span>0%</span>
+</div>
+<div class="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-0 bg-blue-500 rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-[#7C3AED]/50 transition-colors">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-[#7C3AED]" data-icon="terminal">terminal</span>
+</div>
+<div>
+<p class="font-bold text-white">DevLabs</p>
+<p class="text-xs text-on-surface-variant">devlabs-staging.rag.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-gray-500/10 text-gray-400 text-[10px] px-2.5 py-1 rounded-full font-bold border border-white/10">FREE</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span class="text-sm font-medium text-on-surface">Suspended</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="space-y-1.5">
+<div class="flex justify-between text-[11px] font-semibold text-error">
+<span>102k / 100k</span>
+<span>Over Limit</span>
+</div>
+<div class="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-full bg-error rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-[#7C3AED]/50 transition-colors">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-[#7C3AED]" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<div>
+<p class="font-bold text-white">Fast-AI</p>
+<p class="text-xs text-on-surface-variant">fast-ai.rag.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-[#7C3AED]/10 text-[#7C3AED] text-[10px] px-2.5 py-1 rounded-full font-bold border border-[#7C3AED]/20">ENTERPRISE</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+<span class="text-sm font-medium text-on-surface">Active</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="space-y-1.5">
+<div class="flex justify-between text-[11px] font-semibold text-on-surface-variant">
+<span>4.1M / 5M</span>
+<span>82%</span>
+</div>
+<div class="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-[82%] bg-warning rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-6 py-4 flex items-center justify-between border-t border-white/5 bg-white/5">
+<p class="text-xs text-on-surface-variant">Showing 4 of 1,284 tenants</p>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded bg-[#0A0F1E] border border-white/10 text-xs text-gray-400 hover:text-white">Previous</button>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded bg-[#7C3AED] text-white text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded hover:bg-white/5 text-gray-400 text-xs font-bold">2</button>
+<button class="w-8 h-8 rounded hover:bg-white/5 text-gray-400 text-xs font-bold">3</button>
+<span class="px-1 text-gray-600">...</span>
+<button class="w-8 h-8 rounded hover:bg-white/5 text-gray-400 text-xs font-bold">321</button>
+</div>
+<button class="px-3 py-1.5 rounded bg-[#0A0F1E] border border-white/10 text-xs text-gray-400 hover:text-white">Next</button>
+</div>
+</div>
+</div>
+<!-- Health Snapshot Bento Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-12">
+<div class="glass-panel p-6 rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-success/20 text-6xl rotate-12" data-icon="check_circle">check_circle</span>
+</div>
+<h3 class="text-h3 text-white mb-4">Infrastructure Health</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-[#7C3AED]" data-icon="storage">storage</span>
+<span class="text-sm font-medium">Vector Database</span>
+</div>
+<span class="text-xs font-bold text-success bg-success/10 px-2 py-0.5 rounded border border-success/20">Operational</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-[#3B82F6]" data-icon="language">language</span>
+<span class="text-sm font-medium">LLM Gateway</span>
+</div>
+<span class="text-xs font-bold text-success bg-success/10 px-2 py-0.5 rounded border border-success/20">Operational</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="sync">sync</span>
+<span class="text-sm font-medium">Embedding Pipeline</span>
+</div>
+<span class="text-xs font-bold text-warning bg-warning/10 px-2 py-0.5 rounded border border-warning/20">Degraded (Latent)</span>
+</div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl relative overflow-hidden">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-h3 text-white">Recent Activities</h3>
+<p class="text-xs text-on-surface-variant">System logs from the last 15 minutes</p>
+</div>
+<button class="text-xs text-[#7C3AED] font-bold hover:underline">View All Logs</button>
+</div>
+<div class="space-y-4">
+<div class="flex gap-4 items-start">
+<div class="w-1.5 h-1.5 rounded-full bg-[#7C3AED] mt-1.5 shadow-[0_0_8px_#7C3AED]"></div>
+<div>
+<p class="text-sm text-on-surface"><span class="font-bold text-white">Acme Corp</span> scale up to <span class="text-[#7C3AED]">Enterprise Tier</span></p>
+<p class="text-[10px] text-on-surface-variant">2 mins ago • Billing Update</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-1.5 h-1.5 rounded-full bg-success mt-1.5"></div>
+<div>
+<p class="text-sm text-on-surface"><span class="font-bold text-white">New Tenant</span> provisioned: <span class="text-on-surface-variant">Horizon AI</span></p>
+<p class="text-[10px] text-on-surface-variant">8 mins ago • System Action</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-1.5 h-1.5 rounded-full bg-error mt-1.5"></div>
+<div>
+<p class="text-sm text-on-surface"><span class="font-bold text-white">Critical Alert:</span> High latency in us-east-1 index</p>
+<p class="text-[10px] text-on-surface-variant">14 mins ago • Infrastructure</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

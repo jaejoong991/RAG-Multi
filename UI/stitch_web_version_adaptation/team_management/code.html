@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Team Management | Nexus AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#d2bbff",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-container-lowest": "#100d16",
+                        "success-green": "#10B981",
+                        "on-background": "#e8dfee",
+                        "on-secondary-container": "#e6ecff",
+                        "secondary-container": "#0566d9",
+                        "tertiary-container": "#a15100",
+                        "on-primary-container": "#ede0ff",
+                        "inverse-primary": "#732ee4",
+                        "on-secondary-fixed-variant": "#004395",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#ffb784",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "surface": "#15121b",
+                        "bg-deep-navy": "#0A0F1E",
+                        "surface-bright": "#3c3742",
+                        "surface-container-low": "#1d1a24",
+                        "tertiary": "#ffb784",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "surface-container-high": "#2c2833",
+                        "primary-fixed": "#eaddff",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#001a42",
+                        "on-primary": "#3f008e",
+                        "primary": "#d2bbff",
+                        "on-tertiary": "#4f2500",
+                        "inverse-surface": "#e8dfee",
+                        "on-tertiary-fixed": "#301400",
+                        "error-red": "#EF4444",
+                        "on-secondary": "#002e6a",
+                        "surface-variant": "#37333e",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                        "primary-container": "#7c3aed",
+                        "surface-dim": "#15121b",
+                        "secondary": "#adc6ff",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-primary-fixed": "#25005a",
+                        "inverse-on-surface": "#332f39",
+                        "surface-card": "#111827",
+                        "on-surface": "#e8dfee",
+                        "surface-container-highest": "#37333e",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-surface-variant": "#ccc3d8",
+                        "warning-amber": "#F59E0B",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#221e28",
+                        "on-tertiary-container": "#ffe0cd",
+                        "border-glass": "rgba(255, 255, 255, 0.06)",
+                        "outline": "#958da1",
+                        "error-container": "#93000a",
+                        "outline-variant": "#4a4455",
+                        "text-muted": "#94A3B8",
+                        "background": "#15121b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "32px",
+                        "header-height": "64px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "sidebar-width": "260px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono": ["Space Grotesk"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .gradient-btn {
+            background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-bg-deep-navy text-on-background font-body-md overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 bottom-0 w-[260px] z-50 bg-[#111827] border-r border-white/5 flex flex-col h-full py-6 px-4 font-inter text-sm no-shadow">
+<div class="mb-8 px-2">
+<h1 class="text-lg font-black text-white">Nexus Enterprise</h1>
+<p class="text-xs text-slate-400">RAG Platform</p>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">chat_bubble</span> Playground
+            </div>
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">forum</span> Conversations
+            </div>
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">leaderboard</span> Analytics
+            </div>
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">settings_suggest</span> Bot Settings
+            </div>
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">palette</span> Widget
+            </div>
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">code</span> Embed
+            </div>
+<div class="bg-[#7C3AED]/10 text-white border-l-4 border-[#7C3AED] font-medium cursor-pointer flex items-center px-3 py-2.5 rounded-r-lg transition-all duration-200">
+<span class="material-symbols-outlined mr-3">group</span> Team
+            </div>
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">vpn_key</span> API Keys
+            </div>
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">payments</span> Billing
+            </div>
+<div class="text-slate-400 text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">admin_panel_settings</span> Super Admin
+            </div>
+</nav>
+<div class="mt-auto space-y-1 pt-6 border-t border-white/5">
+<div class="text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">description</span> Documentation
+            </div>
+<div class="text-slate-400 hover:text-slate-200 cursor-pointer flex items-center px-3 py-2.5 rounded-lg hover:bg-white/5">
+<span class="material-symbols-outlined mr-3">contact_support</span> Support
+            </div>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 z-40 bg-[#111827]/80 backdrop-blur-xl border-b border-white/10 shadow-sm flex items-center justify-between px-6 font-inter antialiased">
+<div class="flex items-center space-x-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="bg-bg-deep-navy border-glass rounded-lg pl-10 pr-4 py-2 w-80 text-sm focus:ring-1 focus:ring-primary focus:border-primary border-none outline-none text-white" placeholder="Search members, roles or permissions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-2 mr-4">
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-lg transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-lg transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-lg transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="flex items-center space-x-3 pl-4 border-l border-white/10">
+<img alt="Administrator Avatar" class="w-8 h-8 rounded-full border border-white/10" data-alt="professional portrait of a tech administrator avatar, minimalist clean aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU37zNhhpuSLflLQQ5SaP1K27Wc6-fI6LX0H5MPIKsvLHV4Yj8apVk_23uXpPDjmG1AWD3JKdcozwZ3OSl2lsZlnpbZmwYCdawoB5PZlmUzi2ectwmQHmMnYCqqK_EUMwQdqaXJVHDb1XjP48HQRHGPnPKsRCfizp3qkE0MQMhys2wRNZxj_EpJDGspseKMI5HcBlb0Yt1YwIzzDtf-UTa9KxHbtBqjXOZZvMV3YLc0ZdL4SNJVq4lf0oqqogmlZU6ZIlbdXll0cs"/>
+<div class="hidden lg:block">
+<p class="text-xs font-semibold text-white">Admin Nexus</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider">Enterprise Plan</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[260px] pt-24 px-8 pb-12">
+<!-- Header Actions -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-h1 text-h1 text-white mb-2">Team Management</h2>
+<p class="text-text-muted font-body-md">Manage your workspace members, invite new collaborators, and control access permissions.</p>
+</div>
+<button class="gradient-btn px-6 py-2.5 rounded-xl text-white font-semibold flex items-center space-x-2 shadow-lg shadow-primary-container/20 active:scale-95 transition-all">
+<span class="material-symbols-outlined">person_add</span>
+<span>Invite Member</span>
+</button>
+</div>
+<!-- Team Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-card border-glass p-6 rounded-xl">
+<p class="font-label-caps text-label-caps text-text-muted uppercase mb-2">Total Members</p>
+<div class="flex items-center justify-between">
+<h3 class="text-3xl font-bold text-white">48</h3>
+<span class="text-success-green text-xs bg-success-green/10 px-2 py-1 rounded-full font-medium">+4 this month</span>
+</div>
+</div>
+<div class="bg-surface-card border-glass p-6 rounded-xl">
+<p class="font-label-caps text-label-caps text-text-muted uppercase mb-2">Active Now</p>
+<div class="flex items-center justify-between">
+<h3 class="text-3xl font-bold text-white">12</h3>
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-surface-card" data-alt="avatar of a team member, simple color background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChVhaBvXD3h5gslbwgMi46xX7Z-HjUMdcMK1rJQdYsYi8uMBE17zzPyhJ-7isw9kYucxeLUnda5OAAZLGWgQiw2yshZuUIyunXY20y46odWTTgjhjImi2SMcVZGAp7XFs48ZXsRL-fRXqlJL72JQWbLeC41I4U4dnUTn2vMTdv9dRBtfCsuit-UqiBvk6JEy7sp_jOhfM37gsTdEr7tz60MoWhmWye3ot44A2nPAKK1dN4sBkAD2N2mVkwbnlfKALWP6aJSBLWFgY"/>
+<img class="w-6 h-6 rounded-full border-2 border-surface-card" data-alt="avatar of a team member, simple color background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfTUQeWuekyl2iNYbFpvVo_sIUT8PzYmsbTBFCUd5zsYYUSzQDwdgpFJNHLczLVIsKLV5cji_c8Zvqi48vgafaw_IHo3TCHNaIb28yl9HCxEa56jg63gQ5IT-EEleloZual7ijIz4VpDY8Bq4C6LBe1H7xcR9N5APQo_tqZc9Z3PhR6flHpieF4eI0B2e7WImflPgTl890-T9znmzy5ECzjcIuttFkrsFsro2O77D2aSkcnvEH0ggKwKXZCOhQ-Q2Q6c5k_n9-C3A"/>
+<div class="w-6 h-6 rounded-full bg-white/5 border-2 border-surface-card flex items-center justify-center text-[8px]">+9</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-card border-glass p-6 rounded-xl">
+<p class="font-label-caps text-label-caps text-text-muted uppercase mb-2">Pending Invites</p>
+<div class="flex items-center justify-between">
+<h3 class="text-3xl font-bold text-white">5</h3>
+<span class="text-warning-amber text-xs font-medium">Expires in 48h</span>
+</div>
+</div>
+<div class="bg-surface-card border-glass p-6 rounded-xl">
+<p class="font-label-caps text-label-caps text-text-muted uppercase mb-2">Roles Defined</p>
+<div class="flex items-center justify-between">
+<h3 class="text-3xl font-bold text-white">6</h3>
+<span class="material-symbols-outlined text-slate-500">security</span>
+</div>
+</div>
+</div>
+<!-- Pending Invitations Section -->
+<div class="mb-10">
+<div class="flex items-center space-x-3 mb-4">
+<h3 class="font-h3 text-h3 text-white">Pending Invitations</h3>
+<span class="bg-primary/20 text-primary px-2.5 py-0.5 rounded-full text-xs font-bold">5</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+<!-- Invite Card 1 -->
+<div class="glass-panel p-4 rounded-xl flex items-center justify-between group">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-white">sarah.chen@ai.nexus</p>
+<p class="text-[11px] text-slate-400">Invited by Admin • 2h ago</p>
+</div>
+</div>
+<div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-error-red/10 text-error-red rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="p-1.5 hover:bg-primary/10 text-primary rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">forward_to_inbox</span>
+</button>
+</div>
+</div>
+<!-- Invite Card 2 -->
+<div class="glass-panel p-4 rounded-xl flex items-center justify-between group">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-white">m.ross@data-core.io</p>
+<p class="text-[11px] text-slate-400">Invited by Admin • 5h ago</p>
+</div>
+</div>
+<div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-error-red/10 text-error-red rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="p-1.5 hover:bg-primary/10 text-primary rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">forward_to_inbox</span>
+</button>
+</div>
+</div>
+<!-- Invite Card 3 -->
+<div class="glass-panel p-4 rounded-xl flex items-center justify-between group">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-white">elena.v@vector.lab</p>
+<p class="text-[11px] text-slate-400">Invited by Admin • 1d ago</p>
+</div>
+</div>
+<div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-error-red/10 text-error-red rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="p-1.5 hover:bg-primary/10 text-primary rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">forward_to_inbox</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Members Table Section -->
+<div class="glass-panel rounded-2xl overflow-hidden border-glass">
+<div class="px-6 py-4 flex items-center justify-between border-b border-white/5">
+<h3 class="font-h3 text-h3 text-white">Active Members</h3>
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-1 bg-white/5 p-1 rounded-lg">
+<button class="px-3 py-1.5 text-xs font-semibold bg-white/10 text-white rounded-md">All Members</button>
+<button class="px-3 py-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Admins</button>
+<button class="px-3 py-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors">Editors</button>
+</div>
+<button class="p-2 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="bg-white/[0.02]">
+<th class="px-6 py-4 font-label-caps text-label-caps text-slate-400 uppercase tracking-widest">Member</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-slate-400 uppercase tracking-widest">Role</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-slate-400 uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-slate-400 uppercase tracking-widest">Joined Date</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-slate-400 uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1 -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center space-x-3">
+<img alt="Alex King Avatar" class="w-9 h-9 rounded-full border border-white/10" data-alt="avatar of a male software developer, professional and clean" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJngD30aIZExcdryWMtvRYNzJoIm-NUWIrFBcZlLpp32i9EOgmx43gqo6kKA7DSCWm99rhiNZ2WL9XnVOVQzJNyA7Zmm9oZ2eWDS1iWIstA8_TZZD135xR0kS7NssmXuJ2eRI0jfQT_Rfchr88EJtzey_zrHFm_nCX01BLijJWeJhTjL9hlIvRaS_fV_iJChsLl7GsRrMdBua_btmEUoflvzJGhT_jyVXn2ooiymbnoIcSCQTCijsT7NseFWNWRiiONOdUyX-zlDw"/>
+<div>
+<p class="text-sm font-semibold text-white">Alex King</p>
+<p class="text-xs text-slate-500">alex.k@nexus-enterprise.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="inline-flex items-center space-x-1.5 bg-primary/10 text-primary px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span>Super Admin</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 bg-success-green rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+<span class="text-xs text-slate-300">Online</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs text-slate-400">Oct 12, 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center space-x-3">
+<img alt="Marcus Reed Avatar" class="w-9 h-9 rounded-full border border-white/10" data-alt="avatar of a male data scientist, modern creative look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyN-avcycFOx2DosfHQD_Id6UTzVHn7OY5pGZIMF3pLsl_ChPZxtkhtuV01hEwGx1D6U8j0mce_ggFILJCJWdv4GCL74nDlVrgox9c74Jy04eqZpCXawre4_vTqsdsdShidzgnOti5ImmoUeQuZvsyGvbbs-gAQa91QC-s_ODU0flQ2Nj-vZLdo_xzI-augftKrSzWcfJOxDytTNl-AmQVGF7HPYZK-EFKGf5jQdMYylYpITuSBmWmHvwJinQDkUAGdTs10MkQXKQ"/>
+<div>
+<p class="text-sm font-semibold text-white">Marcus Reed</p>
+<p class="text-xs text-slate-500">m.reed@nexus-enterprise.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="inline-flex items-center space-x-1.5 bg-white/5 text-slate-300 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+<span>Editor</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 bg-success-green rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+<span class="text-xs text-slate-300">Online</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs text-slate-400">Nov 04, 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center space-x-3">
+<img alt="Sarah Lopez Avatar" class="w-9 h-9 rounded-full border border-white/10" data-alt="avatar of a female product manager, smiling and professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMT7zOf8uTv7v7SFk6SFW0JGnOHgQ1wunVFwV87UWEXgKbJeCpfW3yn7ErfLkBKJgym5TpnJTpmSk9W2uaRxA5157s4XQMfOq9CAC_obDgnF8_A9L2Lk2wRdC5yHTA-6g4LMT-c-RUCPW2rLRLiVSFDer5Kk55q53jDPvjsWms5mLbEMU5OboshGlv2ke9jUBp2g5nQX3lv6278VIU1qmyGZQT7oFlzWGinMU3O8vOUpNLVJ__TIf_8Yd7bUm-QSZrgXsTLDzzWeo"/>
+<div>
+<p class="text-sm font-semibold text-white">Sarah Lopez</p>
+<p class="text-xs text-slate-500">s.lopez@nexus-enterprise.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="inline-flex items-center space-x-1.5 bg-white/5 text-slate-300 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+<span>Viewer</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center space-x-2 text-slate-500">
+<span class="w-2 h-2 bg-slate-600 rounded-full"></span>
+<span class="text-xs">Offline</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs text-slate-400">Jan 15, 2024</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center space-x-3">
+<img alt="David Black Avatar" class="w-9 h-9 rounded-full border border-white/10" data-alt="avatar of a senior cloud architect, tech focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCidyJFvykK9YTMyZ1v7mBn33Y7c1F0r30HtKv6of5_RKBUlNfML1D2e6AinkQTdZq-Y2oBop6MG_CvJrgLu7pe5j6ULcEt0zyqOhA1GT95j8ZmPyqzyEZ7bFGB7ha8LRquWGbO5AIsHaFXXSEAI-wGOPRf6AaHdtmsKGoI4_FNmxHlEOqYivfLRw6mTrcnu-5hnHu72acNpc-cs_LHOlo9zJNOQaoVlHEg_P4yR3D_U_l4KeHh9EUlUTN6X3AUmEBWvOfxRwAAJC0"/>
+<div>
+<p class="text-sm font-semibold text-white">David Black</p>
+<p class="text-xs text-slate-500">d.black@nexus-enterprise.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="inline-flex items-center space-x-1.5 bg-white/5 text-slate-300 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+<span>Editor</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 bg-success-green rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+<span class="text-xs text-slate-300">Online</span>
+</div>
+</td>
+<td class="px-6 py-4 text-xs text-slate-400">Feb 20, 2024</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-6 py-4 bg-white/[0.01] flex items-center justify-between border-t border-white/5">
+<p class="text-xs text-slate-500 font-body-sm">Showing 4 of 48 active members</p>
+<div class="flex items-center space-x-2">
+<button class="p-1 text-slate-500 hover:text-white disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-1 text-slate-500 hover:text-white">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 z-[100] bg-bg-deep-navy/80 backdrop-blur-md flex items-center justify-center p-6">
+<!-- Invite Member Modal -->
+<div class="glass-panel w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl border-white/10">
+<div class="px-8 py-6 border-b border-white/5 flex items-center justify-between">
+<div>
+<h3 class="font-h2 text-h2 text-white">Invite Member</h3>
+<p class="text-sm text-slate-400 mt-1">Send an invitation to join your Nexus Workspace.</p>
+</div>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="px-8 py-8 space-y-6">
+<!-- Email Input -->
+<div class="space-y-2">
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">mail</span>
+<input class="w-full bg-white/[0.03] border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<!-- Role Selection -->
+<div class="space-y-2">
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Assign Role</label>
+<div class="grid grid-cols-3 gap-3">
+<div class="cursor-pointer border-2 border-primary bg-primary/10 rounded-xl p-3 text-center transition-all">
+<span class="material-symbols-outlined text-primary mb-1">edit_note</span>
+<p class="text-xs font-bold text-white">Editor</p>
+</div>
+<div class="cursor-pointer border border-white/10 bg-white/5 hover:border-white/30 rounded-xl p-3 text-center transition-all">
+<span class="material-symbols-outlined text-slate-400 mb-1">visibility</span>
+<p class="text-xs font-bold text-slate-400">Viewer</p>
+</div>
+<div class="cursor-pointer border border-white/10 bg-white/5 hover:border-white/30 rounded-xl p-3 text-center transition-all">
+<span class="material-symbols-outlined text-slate-400 mb-1">shield</span>
+<p class="text-xs font-bold text-slate-400">Admin</p>
+</div>
+</div>
+</div>
+<!-- Permissions Summary -->
+<div class="bg-white/5 rounded-xl p-4 border border-white/5">
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-lg">info</span>
+<div>
+<p class="text-[11px] font-bold text-white uppercase mb-1">Editor Permissions</p>
+<p class="text-xs text-slate-400 leading-relaxed">Can create bots, manage datasets, and view conversations. Cannot manage billing or add/remove team members.</p>
+</div>
+</div>
+</div>
+<!-- Message (Optional) -->
+<div class="space-y-2">
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-400">Personal Message <span class="text-slate-600 font-normal italic">(Optional)</span></label>
+<textarea class="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none resize-none transition-all" placeholder="Welcome to the team! Here's access to the new project..." rows="2"></textarea>
+</div>
+</div>
+<div class="px-8 py-6 bg-white/[0.02] border-t border-white/5 flex items-center justify-end space-x-4">
+<button class="px-6 py-2.5 text-sm font-semibold text-slate-400 hover:text-white transition-colors">Cancel</button>
+<button class="gradient-btn px-8 py-2.5 rounded-xl text-white font-bold text-sm shadow-lg shadow-primary/20 active:scale-95 transition-all">Send Invitation</button>
+</div>
+</div>
+</div>
+</body></html>

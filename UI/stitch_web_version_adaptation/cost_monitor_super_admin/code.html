@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nexus AI — Cost Monitor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0A0F1E;
+            color: #e8dfee;
+        }
+        /* Custom scrollbar for data-heavy views */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#d2bbff",
+                      "primary-fixed-dim": "#d2bbff",
+                      "surface-container-lowest": "#100d16",
+                      "success-green": "#10B981",
+                      "on-background": "#e8dfee",
+                      "on-secondary-container": "#e6ecff",
+                      "secondary-container": "#0566d9",
+                      "tertiary-container": "#a15100",
+                      "on-primary-container": "#ede0ff",
+                      "inverse-primary": "#732ee4",
+                      "on-secondary-fixed-variant": "#004395",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-error": "#690005",
+                      "tertiary-fixed-dim": "#ffb784",
+                      "on-tertiary-fixed-variant": "#713700",
+                      "surface": "#15121b",
+                      "bg-deep-navy": "#0A0F1E",
+                      "surface-bright": "#3c3742",
+                      "surface-container-low": "#1d1a24",
+                      "tertiary": "#ffb784",
+                      "on-primary-fixed-variant": "#5a00c6",
+                      "surface-container-high": "#2c2833",
+                      "primary-fixed": "#eaddff",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed": "#001a42",
+                      "on-primary": "#3f008e",
+                      "primary": "#d2bbff",
+                      "on-tertiary": "#4f2500",
+                      "inverse-surface": "#e8dfee",
+                      "on-tertiary-fixed": "#301400",
+                      "error-red": "#EF4444",
+                      "on-secondary": "#002e6a",
+                      "surface-variant": "#37333e",
+                      "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                      "primary-container": "#7c3aed",
+                      "surface-dim": "#15121b",
+                      "secondary": "#adc6ff",
+                      "tertiary-fixed": "#ffdcc6",
+                      "on-primary-fixed": "#25005a",
+                      "inverse-on-surface": "#332f39",
+                      "surface-card": "#111827",
+                      "on-surface": "#e8dfee",
+                      "surface-container-highest": "#37333e",
+                      "secondary-fixed": "#d8e2ff",
+                      "on-surface-variant": "#ccc3d8",
+                      "warning-amber": "#F59E0B",
+                      "on-error-container": "#ffdad6",
+                      "surface-container": "#221e28",
+                      "on-tertiary-container": "#ffe0cd",
+                      "border-glass": "rgba(255, 255, 255, 0.06)",
+                      "outline": "#958da1",
+                      "error-container": "#93000a",
+                      "outline-variant": "#4a4455",
+                      "text-muted": "#94A3B8",
+                      "background": "#15121b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "32px",
+                      "header-height": "64px",
+                      "gutter": "24px",
+                      "base": "8px",
+                      "sidebar-width": "260px"
+              },
+              "fontFamily": {
+                      "h1": ["Inter"], "label-caps": ["Inter"], "body-md": ["Inter"], "body-sm": ["Inter"], "body-lg": ["Inter"], "mono": ["Space Grotesk"], "h3": ["Inter"], "h2": ["Inter"]
+              },
+              "fontSize": {
+                      "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="font-body-md overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 bottom-0 w-[260px] z-50 bg-[#111827] border-r border-white/5 flex flex-col h-full py-6 px-4">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-white leading-tight">Nexus Enterprise</h1>
+<p class="text-xs text-slate-400">RAG Platform</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1 overflow-y-auto">
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+<span>Playground</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+<span>Conversations</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">leaderboard</span>
+<span>Analytics</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">settings_suggest</span>
+<span>Bot Settings</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">palette</span>
+<span>Widget</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">code</span>
+<span>Embed</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>Team</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+<span>API Keys</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Billing</span>
+</div>
+<!-- Active State: Super Admin (Cost Monitor Intent) -->
+<div class="bg-[#7C3AED]/10 text-white border-l-4 border-[#7C3AED] font-medium cursor-pointer flex items-center gap-3 px-3 py-2.5 rounded-r-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span>Super Admin</span>
+</div>
+</nav>
+<div class="pt-6 border-t border-white/5 space-y-1">
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span>Documentation</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 transition-all duration-200 text-slate-400 hover:text-slate-200 flex items-center gap-3 px-3 py-2.5 rounded-lg font-inter text-sm">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+<span>Support</span>
+</div>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 z-40 bg-[#111827]/80 backdrop-blur-xl border-b border-white/10 shadow-sm flex items-center justify-between px-6 font-inter antialiased">
+<div class="flex items-center gap-4">
+<h2 class="font-h2 text-white">Cost Monitor</h2>
+<div class="bg-white/5 rounded-full px-3 py-1 flex items-center gap-2 border border-white/5">
+<span class="w-2 h-2 rounded-full bg-success-green animate-pulse"></span>
+<span class="text-xs font-medium text-slate-300">Live Budget Tracking</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-black/20 border border-white/5 rounded-lg px-3 py-1.5 focus-within:border-primary transition-all">
+<span class="material-symbols-outlined text-slate-400 text-lg mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-white w-48 p-0 placeholder-slate-500" placeholder="Search tenants..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors cursor-pointer active:scale-95 text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors cursor-pointer active:scale-95 text-slate-400">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors cursor-pointer active:scale-95 text-slate-400">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-white/10 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-sm font-semibold text-white">Admin User</p>
+<p class="text-[11px] text-slate-400 uppercase tracking-widest">Global Admin</p>
+</div>
+<img alt="Administrator Avatar" class="w-10 h-10 rounded-lg object-cover ring-2 ring-white/5" data-alt="Professional headshot of a senior system administrator in a dark office environment with blue ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWWuiRWqmvDc_zWfVdcwkBfzhJ70vtJO4v2S3D2D7V0Y_b9ja772gZQQuX9DjMfHhD7N1-cOq4603AAiM7ScMHL4m5jKK9ro5FfZbAkyEhuEerBBlB0sZFGXjJQvSHaUU9WCSn4pwh_nAFS8N2aAmmrV1Ovk31CNpQ9sY03L2VHfZwYhgkiwyqEoaIQLe2ogooafD1AxhO_uXvcb5fVRsCkF197Lna7JjfC7OOTkKTCqmpzjRgMJFqfnKZEZwwd-mhfDPcObulAMo"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-24 p-8 min-h-screen bg-bg-deep-navy">
+<!-- Metric Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-gutter">
+<!-- Total Cost -->
+<div class="bg-surface-card border border-border-glass rounded-xl p-6 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-success-green font-mono text-sm flex items-center">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span> +12.4%
+                    </span>
+</div>
+<p class="font-label-caps text-text-muted mb-1">TOTAL COST (MTD)</p>
+<h3 class="font-h1 text-white">$42,940.12</h3>
+<div class="mt-4 h-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-[#7C3AED] to-[#3B82F6] w-[75%] rounded-full"></div>
+</div>
+<p class="text-[11px] text-slate-500 mt-2">Budget Limit: $60,000.00</p>
+</div>
+<!-- Total Tokens -->
+<div class="bg-surface-card border border-border-glass rounded-xl p-6 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">database</span>
+</div>
+<span class="text-error-red font-mono text-sm flex items-center">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span> +28.1%
+                    </span>
+</div>
+<p class="font-label-caps text-text-muted mb-1">TOTAL TOKENS</p>
+<h3 class="font-h1 text-white">1.84B</h3>
+<div class="mt-4 flex items-center gap-1">
+<div class="flex-1 h-6 flex gap-1">
+<div class="w-1/3 bg-primary-container/40 rounded-sm"></div>
+<div class="w-1/4 bg-primary-container/60 rounded-sm"></div>
+<div class="w-1/2 bg-primary-container rounded-sm"></div>
+</div>
+</div>
+</div>
+<!-- Avg Cost Per Query -->
+<div class="bg-surface-card border border-border-glass rounded-xl p-6 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-tertiary/10 rounded-lg flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">data_exploration</span>
+</div>
+<span class="text-success-green font-mono text-sm flex items-center">
+<span class="material-symbols-outlined text-sm mr-1">trending_down</span> -4.2%
+                    </span>
+</div>
+<p class="font-label-caps text-text-muted mb-1">AVG COST / QUERY</p>
+<h3 class="font-h1 text-white">$0.0042</h3>
+<p class="text-[11px] text-slate-500 mt-2">Target: &lt; $0.0050</p>
+</div>
+<!-- Revenue/Cost Ratio -->
+<div class="bg-surface-card border border-border-glass rounded-xl p-6 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 bg-success-green/10 rounded-lg flex items-center justify-center text-success-green">
+<span class="material-symbols-outlined">balance</span>
+</div>
+<span class="text-success-green font-mono text-sm flex items-center">
+<span class="material-symbols-outlined text-sm mr-1">check_circle</span> Optimized
+                    </span>
+</div>
+<p class="font-label-caps text-text-muted mb-1">REVENUE/COST RATIO</p>
+<h3 class="font-h1 text-white">4.2x</h3>
+<div class="mt-4 flex gap-2">
+<div class="w-2 h-2 rounded-full bg-success-green"></div>
+<div class="w-2 h-2 rounded-full bg-success-green"></div>
+<div class="w-2 h-2 rounded-full bg-success-green"></div>
+<div class="w-2 h-2 rounded-full bg-success-green/20"></div>
+</div>
+</div>
+</div>
+<!-- Charts Layout (Bento Grid Style) -->
+<div class="grid grid-cols-12 gap-gutter mb-gutter">
+<!-- Cost Over Time (Stacked Area) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-card border border-border-glass rounded-xl p-6">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="font-h3 text-white">Cost Distribution over Time</h3>
+<p class="text-sm text-text-muted">Aggregated daily spend across all LLM providers</p>
+</div>
+<div class="flex gap-2">
+<div class="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[11px] text-slate-300">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> OpenAI
+                        </div>
+<div class="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[11px] text-slate-300">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span> Anthropic
+                        </div>
+<div class="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[11px] text-slate-300">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span> Gemini
+                        </div>
+</div>
+</div>
+<div class="h-[300px] w-full relative flex items-end justify-between px-2">
+<!-- Grid Lines Mockup -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+<div class="w-full h-[1px] bg-white/5"></div>
+<div class="w-full h-[1px] bg-white/5"></div>
+<div class="w-full h-[1px] bg-white/5"></div>
+<div class="w-full h-[1px] bg-white/5"></div>
+<div class="w-full h-[1px] bg-white/10"></div>
+</div>
+<!-- Stacked Area Path Simulation -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- OpenAI Layer -->
+<path d="M0,80 L10,75 L20,78 L30,65 L40,68 L50,60 L60,55 L70,58 L80,50 L90,52 L100,45 L100,100 L0,100 Z" fill="rgba(124, 58, 237, 0.3)"></path>
+<!-- Anthropic Layer -->
+<path d="M0,90 L10,85 L20,88 L30,80 L40,85 L50,75 L60,70 L70,75 L80,65 L90,68 L100,60 L100,100 L0,100 Z" fill="rgba(5, 102, 217, 0.4)"></path>
+<!-- Gemini Layer -->
+<path d="M0,95 L10,92 L20,95 L30,90 L40,92 L50,88 L60,85 L70,88 L80,82 L90,85 L100,80 L100,100 L0,100 Z" fill="rgba(161, 81, 0, 0.4)"></path>
+</svg>
+<!-- X-Axis Labels -->
+<div class="absolute -bottom-6 left-0 w-full flex justify-between text-[10px] text-slate-500 font-mono">
+<span>OCT 01</span><span>OCT 07</span><span>OCT 14</span><span>OCT 21</span><span>OCT 28</span>
+</div>
+</div>
+</div>
+<!-- Cost by Tenant (Bar Chart) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-card border border-border-glass rounded-xl p-6 flex flex-col">
+<div class="mb-6">
+<h3 class="font-h3 text-white">Top 5 Tenants</h3>
+<p class="text-sm text-text-muted">Highest consumption this month</p>
+</div>
+<div class="flex-1 flex flex-col justify-around">
+<div class="space-y-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-white">Stark Industries</span>
+<span class="text-slate-400">$12,402</span>
+</div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[92%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-white">Wayne Enterprises</span>
+<span class="text-slate-400">$9,850</span>
+</div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[74%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-white">Cyberdyne Systems</span>
+<span class="text-slate-400">$6,210</span>
+</div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[48%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-white">Umbrella Corp</span>
+<span class="text-slate-400">$4,120</span>
+</div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[32%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-white">Massive Dynamic</span>
+<span class="text-slate-400">$3,905</span>
+</div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[28%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Cost Log Table -->
+<div class="bg-surface-card border border-border-glass rounded-xl overflow-hidden shadow-2xl">
+<div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+<h3 class="font-h3 text-white">Detailed Cost Logs</h3>
+<div class="flex gap-2">
+<button class="bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 text-xs text-white transition-all">Export CSV</button>
+<button class="bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 text-xs text-white transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                    </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-white/[0.02] border-b border-white/5">
+<th class="px-6 py-4 font-label-caps text-text-muted">TENANT</th>
+<th class="px-6 py-4 font-label-caps text-text-muted">PROVIDER</th>
+<th class="px-6 py-4 font-label-caps text-text-muted">MODEL</th>
+<th class="px-6 py-4 font-label-caps text-text-muted">TOKENS</th>
+<th class="px-6 py-4 font-label-caps text-text-muted">COST</th>
+<th class="px-6 py-4 font-label-caps text-text-muted">TIMESTAMP</th>
+<th class="px-6 py-4 font-label-caps text-text-muted">STATUS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1 -->
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center text-[10px] font-bold text-white">SI</div>
+<span class="text-white text-sm font-medium">Stark Industries</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img alt="OpenAI Logo" class="w-5 h-5 rounded-sm object-cover" data-alt="minimalist tech logo with clean geometry and a futuristic purple accent" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA79SDJx3HUrHthEF1n91Lj6yHwSWm4QYuxdHL9TkLpE3llYwRzHcvkXjiJsf7R-lUuWHiIG7pin7c87nFOV7aF-1xDBL43f-durzyNBjQixEA-wNbWa52WT5FRIoFge9ZCXgH3FHGWg3LY-l3ZrslrLK_Bl8e4HrqQX-pRvklcT1iFm28KQv7IDGtHxg_kBFxFRuekT6gdVACuq636Bk89VOgXJPQdQahRkyJHmHe1oCxaSkxjlpybgujOpNK5A-TpBFWHP2OdsaE"/>
+<span class="text-slate-300 text-sm">OpenAI</span>
+</div>
+</td>
+<td class="px-6 py-4"><span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full font-mono uppercase">gpt-4o</span></td>
+<td class="px-6 py-4 font-mono text-sm text-slate-400">142,050</td>
+<td class="px-6 py-4 text-white text-sm font-semibold">$2.13</td>
+<td class="px-6 py-4 text-slate-500 text-xs">2 mins ago</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-success-green"></div>
+<span class="text-[11px] text-success-green font-medium">Settled</span>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-blue-900 flex items-center justify-center text-[10px] font-bold text-white">WE</div>
+<span class="text-white text-sm font-medium">Wayne Ent.</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img alt="Anthropic Logo" class="w-5 h-5 rounded-sm object-cover" data-alt="abstract tech concept icon with deep blue and white metallic elements" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5-Vw7eJQrVI_WiRvZYZcPIxyCiD2B32muTw7gPr7dg9cLPT_sMOVnr_-YqlDPJShug5Vle7WzreZ5MFaBqbb0iBZ7oyvCnLlzM0mBkRx1N-Hs3kdy1ox6leJ8yFBmfbc4ak4shiaSMLi0yUHDhJUrX_J6d9rL1LVwMCB5vZ76mEfjxYhPiZm1VGepcjicgaTN2-6bMO1nNop5islbzlreyVUi4yaWgTNjQPMuuVwW3TAu6UDfaZeUBxyvUZSiK_KD0yfI-udxfws"/>
+<span class="text-slate-300 text-sm">Anthropic</span>
+</div>
+</td>
+<td class="px-6 py-4"><span class="bg-secondary/10 text-secondary text-[10px] px-2 py-0.5 rounded-full font-mono uppercase">claude-3.5</span></td>
+<td class="px-6 py-4 font-mono text-sm text-slate-400">89,200</td>
+<td class="px-6 py-4 text-white text-sm font-semibold">$1.34</td>
+<td class="px-6 py-4 text-slate-500 text-xs">12 mins ago</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-success-green"></div>
+<span class="text-[11px] text-success-green font-medium">Settled</span>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-red-900 flex items-center justify-center text-[10px] font-bold text-white">CS</div>
+<span class="text-white text-sm font-medium">Cyberdyne</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img alt="Gemini Logo" class="w-5 h-5 rounded-sm object-cover" data-alt="google deepmind abstract artwork with fluid orange and yellow colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGV91mKMR93UCSd2lkfN9kyRj_QudJrdyfTvX3HqtVhM0rT7MKpODP5Tc_Dmwsgmxq4K-6LE8Cax1l-9lXaNswzAGRTBYNK2O-8UlVDt-sVQ1Ew-r1TMUKUtBQAg7pzKyBHy2i5OGJ8G_9BufWH6itrNJ_DVAFMOZtb-NidhCuurCsyPJ_iep2nNylVxlwjGb3_Rl5in89FouwKUn516LWHU-3WcYeejp2_eDH0_wIQ9ZARTuod7reeNKHz0d-Y2hydtwuKkKMy-s"/>
+<span class="text-slate-300 text-sm">Gemini</span>
+</div>
+</td>
+<td class="px-6 py-4"><span class="bg-tertiary/10 text-tertiary text-[10px] px-2 py-0.5 rounded-full font-mono uppercase">gemini-1.5-pro</span></td>
+<td class="px-6 py-4 font-mono text-sm text-slate-400">210,000</td>
+<td class="px-6 py-4 text-white text-sm font-semibold">$0.73</td>
+<td class="px-6 py-4 text-slate-500 text-xs">45 mins ago</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-warning-amber"></div>
+<span class="text-[11px] text-warning-amber font-medium">Processing</span>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-purple-900 flex items-center justify-center text-[10px] font-bold text-white">UC</div>
+<span class="text-white text-sm font-medium">Umbrella Corp</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img alt="OpenAI Logo" class="w-5 h-5 rounded-sm object-cover" data-alt="minimalist tech logo with clean geometry and a futuristic purple accent" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9ck0vcYl0YcURTo5V9nOPmF5hVjh_pC4HDlG8FqAFHOJDTi52p_w6VpS0klkdczJCN88Sv8yXveHhkWAEzxExp4edn0zxn_cuxXcDyBRbwaXDHBhcPV4OLXIy31UKBr9Q6BaMNVvIm61FwgnTcZN1Q66KmXYR9lbPu-4rfhZxhK-kDsBdtQ9VaWqomTP0uI9yO-6xAnrJ1E2YE3VSPiLTvi-M1Ct3BvVQn2bJO8dWop6vq4DG7NgjIU3CrXpENfOBxt3dwmAJWx0"/>
+<span class="text-slate-300 text-sm">OpenAI</span>
+</div>
+</td>
+<td class="px-6 py-4"><span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full font-mono uppercase">gpt-3.5-turbo</span></td>
+<td class="px-6 py-4 font-mono text-sm text-slate-400">12,400</td>
+<td class="px-6 py-4 text-white text-sm font-semibold">$0.02</td>
+<td class="px-6 py-4 text-slate-500 text-xs">1 hour ago</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-success-green"></div>
+<span class="text-[11px] text-success-green font-medium">Settled</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-white/5 flex items-center justify-between">
+<span class="text-xs text-slate-500">Showing 4 of 24,102 logs</span>
+<div class="flex gap-1">
+<button class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-slate-400 hover:bg-white/10">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-white text-xs">1</button>
+<button class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-slate-400 hover:bg-white/10 text-xs">2</button>
+<button class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-slate-400 hover:bg-white/10 text-xs">3</button>
+<button class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-slate-400 hover:bg-white/10">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

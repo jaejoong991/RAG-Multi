@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Space+Grotesk:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#332f39",
+                        "surface-container": "#221e28",
+                        "on-tertiary": "#4f2500",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-secondary": "#002e6a",
+                        "primary-fixed": "#eaddff",
+                        "on-tertiary-container": "#ffe0cd",
+                        "bg-deep-navy": "#0A0F1E",
+                        "error-red": "#EF4444",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-card": "#111827",
+                        "on-tertiary-fixed": "#301400",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-dim": "#15121b",
+                        "surface-tint": "#d2bbff",
+                        "on-primary": "#3f008e",
+                        "warning-amber": "#F59E0B",
+                        "surface-variant": "#37333e",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#e6ecff",
+                        "border-glass": "rgba(255, 255, 255, 0.06)",
+                        "on-surface-variant": "#ccc3d8",
+                        "surface-bright": "#3c3742",
+                        "background": "#15121b",
+                        "on-primary-fixed": "#25005a",
+                        "surface-container-highest": "#37333e",
+                        "surface-container-lowest": "#100d16",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)",
+                        "secondary": "#adc6ff",
+                        "secondary-fixed": "#d8e2ff",
+                        "success-green": "#10B981",
+                        "outline": "#958da1",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-primary-container": "#ede0ff",
+                        "tertiary": "#ffb784",
+                        "text-muted": "#94A3B8",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "surface": "#15121b",
+                        "tertiary-fixed-dim": "#ffb784",
+                        "on-background": "#e8dfee",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#004395",
+                        "inverse-primary": "#732ee4",
+                        "primary": "#d2bbff",
+                        "surface-container-high": "#2c2833",
+                        "on-surface": "#e8dfee",
+                        "error-container": "#93000a",
+                        "surface-container-low": "#1d1a24",
+                        "outline-variant": "#4a4455",
+                        "primary-container": "#7c3aed",
+                        "tertiary-container": "#a15100",
+                        "error": "#ffb4ab",
+                        "inverse-surface": "#e8dfee",
+                        "secondary-container": "#0566d9",
+                        "tertiary-fixed": "#ffdcc6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "base": "8px",
+                        "header-height": "64px",
+                        "gutter": "24px",
+                        "container-padding": "32px"
+                    },
+                    "fontFamily": {
+                        "mono": ["Space Grotesk"],
+                        "h1": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-border { border: 1px solid rgba(255, 255, 255, 0.06); }
+        .gradient-text { background: linear-gradient(135deg, #d2bbff 0%, #adc6ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .mesh-glow { filter: blur(80px); }
+    </style>
+</head>
+<body class="bg-bg-deep-navy font-body-md text-on-surface selection:bg-primary-container selection:text-white">
+<main class="flex min-h-screen w-full flex-col md:flex-row">
+<!-- LEFT HALF (60%): Branding & Visuals -->
+<section class="relative hidden w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0A0F1E] to-[#1E1B4B] p-container-padding md:flex md:w-3/5">
+<!-- Decorative Mesh Background -->
+<div class="absolute inset-0 z-0">
+<div class="mesh-glow absolute -top-20 -left-20 h-96 w-96 rounded-full bg-primary-container/20"></div>
+<div class="mesh-glow absolute top-1/2 left-1/4 h-80 w-80 rounded-full bg-secondary-container/10"></div>
+<div class="mesh-glow absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-tertiary-container/5"></div>
+</div>
+<!-- Content Container -->
+<div class="relative z-10 flex flex-col items-center text-center">
+<!-- Logo -->
+<div class="mb-8 flex items-center gap-4">
+<div class="flex h-16 w-16 items-center justify-center rounded-xl bg-primary-container shadow-2xl shadow-primary-container/20">
+<span class="material-symbols-outlined text-4xl text-white" data-icon="hexagon" data-weight="fill">hexagon</span>
+</div>
+<h1 class="font-h1 text-[42px] leading-none tracking-tighter text-white">RAG Platform</h1>
+</div>
+<!-- Tagline -->
+<h2 class="font-h2 mb-8 max-w-lg text-4xl text-on-surface-variant">
+                    AI-Powered Knowledge Base for Your Business
+                </h2>
+<!-- Feature Pills -->
+<div class="flex flex-wrap justify-center gap-3">
+<span class="glass-border rounded-full bg-white/5 px-4 py-1.5 font-label-caps text-primary shadow-sm backdrop-blur-md">
+                        Multi-Tenant
+                    </span>
+<span class="glass-border rounded-full bg-white/5 px-4 py-1.5 font-label-caps text-primary shadow-sm backdrop-blur-md">
+                        Multi-LLM
+                    </span>
+<span class="glass-border rounded-full bg-white/5 px-4 py-1.5 font-label-caps text-primary shadow-sm backdrop-blur-md">
+                        Enterprise Ready
+                    </span>
+</div>
+</div>
+<!-- Decorative Visual (Abstract Data Flow) -->
+<div class="absolute bottom-12 left-12 right-12 opacity-40">
+<div class="h-[1px] w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+</div>
+</section>
+<!-- RIGHT HALF (40%): Registration Form -->
+<section class="flex w-full flex-col items-center justify-center bg-surface-card p-container-padding md:w-2/5">
+<div class="w-full max-w-md">
+<!-- Mobile Logo (Shown only on mobile) -->
+<div class="mb-10 flex items-center gap-2 md:hidden">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container">
+<span class="material-symbols-outlined text-2xl text-white" data-icon="hexagon" data-weight="fill">hexagon</span>
+</div>
+<span class="font-h3 text-white">RAG Platform</span>
+</div>
+<header class="mb-10">
+<h3 class="font-h1 text-3xl text-white">Create your workspace</h3>
+<p class="font-body-md mt-2 text-text-muted">Start your 14-day free trial</p>
+</header>
+<!-- Registration Form -->
+<form class="space-y-5" onsubmit="return false;">
+<!-- Workspace Name -->
+<div class="space-y-1.5">
+<label class="font-label-caps text-on-surface-variant" for="workspace">Workspace Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="domain">domain</span>
+<input class="w-full rounded-lg border-glass bg-background py-3 pl-11 pr-4 font-body-md text-white transition-all focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="workspace" placeholder="Acme Corp" type="text"/>
+</div>
+</div>
+<!-- Full Name -->
+<div class="space-y-1.5">
+<label class="font-label-caps text-on-surface-variant" for="name">Your Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="person">person</span>
+<input class="w-full rounded-lg border-glass bg-background py-3 pl-11 pr-4 font-body-md text-white transition-all focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="name" placeholder="John Doe" type="text"/>
+</div>
+</div>
+<!-- Work Email -->
+<div class="space-y-1.5">
+<label class="font-label-caps text-on-surface-variant" for="email">Work Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="mail">mail</span>
+<input class="w-full rounded-lg border-glass bg-background py-3 pl-11 pr-4 font-body-md text-white transition-all focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="email" placeholder="john@company.com" type="email"/>
+</div>
+</div>
+<!-- Password & Strength -->
+<div class="space-y-1.5">
+<label class="font-label-caps text-on-surface-variant" for="password">Password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="lock">lock</span>
+<input class="w-full rounded-lg border-glass bg-background py-3 pl-11 pr-4 font-body-md text-white transition-all focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="password" placeholder="••••••••" type="password"/>
+</div>
+<!-- Strength Meter -->
+<div class="flex gap-1 pt-1">
+<div class="h-1 flex-1 rounded-full bg-success-green"></div>
+<div class="h-1 flex-1 rounded-full bg-success-green"></div>
+<div class="h-1 flex-1 rounded-full bg-success-green"></div>
+<div class="h-1 flex-1 rounded-full bg-outline-variant"></div>
+</div>
+<p class="font-label-caps text-[10px] text-success-green">Strong password</p>
+</div>
+<!-- Terms Checkbox -->
+<div class="flex items-start gap-3 pt-2">
+<input class="mt-1 h-4 w-4 rounded border-glass bg-background text-primary-container focus:ring-primary-container" id="terms" type="checkbox"/>
+<label class="font-body-sm text-text-muted" for="terms">
+                            I agree to the <a class="text-primary hover:underline transition-colors" href="#">Terms of Service</a> and <a class="text-primary hover:underline transition-colors" href="#">Privacy Policy</a>
+</label>
+</div>
+<!-- Submit Action -->
+<div class="space-y-4 pt-4">
+<button class="w-full rounded-lg bg-gradient-to-r from-primary-container to-secondary-container py-3.5 font-h3 text-white shadow-xl shadow-primary-container/20 transition-all hover:scale-[1.02] active:scale-95" type="submit">
+                            Create Account
+                        </button>
+<p class="text-center font-body-sm text-text-muted">
+                            Already have an account? <a class="font-semibold text-primary hover:text-white transition-colors" href="#">Sign In</a>
+</p>
+</div>
+</form>
+<footer class="mt-10 border-t border-glass pt-8 text-center">
+<p class="font-label-caps text-outline">No credit card required</p>
+<div class="mt-6 flex justify-center gap-6">
+<img alt="Google" class="h-5 w-5 opacity-40 hover:opacity-100 cursor-pointer grayscale invert transition-all" data-alt="google logo icon for social login" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS1ZgDhAJqNcoWImMzkd5pDOstZSPG8gSDCZpKXskbb06-JnhYkAUnYbDpcOQ6bA_AdF6we6DprfXOk2SndkkdHLfkx5P91Vxu5DE3ygqGoAKpE1vJEj7oOeqibt52eFAKpajIdDpmwtcPKc8aofPLEn72JFamjok5uplVxPQhqjATvCRJt5qky5kKV306dPrxfmlDMFLCw5ZdAiS-l9eNngHT71u26k7YfH-EQiFokMjsnzBchjkBZCbZjYrTnP-3ID1dgQtFDD4"/>
+<img alt="GitHub" class="h-5 w-5 opacity-40 hover:opacity-100 cursor-pointer grayscale invert transition-all" data-alt="github logo icon for social login" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-Ok5VJCF3pWoQh5mqr4nOAryigOALpolmSggRKnf4a4YHGpajq6kz_0JKbU3ixJtSeGDgtLZGBDeB7ecmikjs9e30hn5Hgr9wx0PNDqFG1GieKnkp21wz2OAc0mHuChylvYhdwS5UjA_rfmjTKpdJ-Z8npyJFgtjOCiWNRKd4wktWAZ64tdaaWyNjXLDIBUJzqaZEHE2mskSZmt4h7zoNtPa97x_wF2I-smJ_BUA9u0texpT5o5AcqdAdkXZdD1jQCDoZTLzg67c"/>
+<img alt="Microsoft" class="h-5 w-5 opacity-40 hover:opacity-100 cursor-pointer grayscale invert transition-all" data-alt="microsoft azure logo icon for enterprise sso" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaXebn3xq4xnK-QNMGKkkbO-i4B9snur93xCDOgj8gXmOKuDSixgTa_1fLVTC1mr093uKu0DaZrhCMdJy5TftOggmQectDp8QnxLKdEbDco4NmatzKAPYqOTRf_7Wqzay0Y_hwdY3jxJ1Gatkg7PbwFtUOX9g8Oxve2jxvUpbinoR1YG3x8tmS8agH5aQk13nc1_IDvK3H30DVs5RFEIjs37j2c4FlYamxJjYNkNPpecBWGpHCw211xI1O9AvNo8qWkHyb3UmZ_LE"/>
+</div>
+</footer>
+</div>
+</section>
+</main>
+<!-- Shared Footer Component Logic - Suppressed per rules for transactional page -->
+<!-- Navigation Shell - Suppressed per rules for transactional page -->
+</body></html>
