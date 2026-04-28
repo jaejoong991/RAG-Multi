@@ -1,27 +1,43 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import { UnauthorizedError } from '../shared/errors/AppError';
+import { Request, Response, NextFunction } from 'express'
+import { firebaseAdmin } from '../config/firebase'
+import prisma from '../config/database'
+import { UnauthorizedError } from '../shared/errors/AppError'
+import logger from '../shared/utils/logger'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+export const authenticate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  const authHeader = req.headers.authorization
 
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    throw new UnauthorizedError('Authentication token missing');
+  if (!authHeader?.startsWith('Bearer ')) {
+    return next(new UnauthorizedError('Authentication token missing'))
   }
 
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.slice(7)
 
   try {
-    const payload = jwt.verify(token, JWT_SECRET) as any;
+    const decoded = await firebaseAdmin.auth().verifyIdToken(token)
+
+    const user = await prisma.user.findUnique({
+      where: { email: decoded.email ?? '' },
+      select: { id: true, tenantId: true, role: true },
+    })
+
+    if (!user) {
+      return next(new UnauthorizedError('User not found'))
+    }
+
     req.user = {
-      id: payload.sub,
-      tenantId: payload.tenantId,
-      role: payload.role,
-    };
-    next();
-  } catch (error) {
-    throw new UnauthorizedError('Invalid or expired token');
+      id: user.id,
+      tenantId: user.tenantId,
+      role: user.role,
+    }
+
+    return next()
+  } catch (err: unknown) {
+    logger.warn({ err }, 'Firebase token verification failed')
+    return next(new UnauthorizedError('Invalid or expired token'))
   }
-};
+}

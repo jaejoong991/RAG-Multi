@@ -1,18 +1,19 @@
 import Link from "next/link";
-import { 
-  LayoutGrid, 
-  FileText, 
-  MessageSquare, 
-  Terminal, 
-  Sliders, 
-  Palette, 
-  Code, 
-  BarChart3, 
-  Users, 
-  Key, 
-  CreditCard, 
+import {
+  LayoutGrid,
+  FileText,
+  MessageSquare,
+  Terminal,
+  Sliders,
+  Palette,
+  Code,
+  BarChart3,
+  Users,
+  Key,
+  CreditCard,
   Settings,
-  LogOut
+  LogOut,
+  Bot,
 } from "lucide-react";
 
 const navItems = [
@@ -24,6 +25,7 @@ const navItems = [
   ]},
   { group: "CONFIGURE", items: [
     { name: "Bot Settings", href: "/settings/bot", icon: Sliders },
+    { name: "LLM Config", href: "/settings/llm", icon: Bot },
     { name: "Widget", href: "/settings/widget", icon: Palette },
     { name: "Embed Code", href: "/embed-code", icon: Code },
   ]},

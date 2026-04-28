@@ -9,18 +9,97 @@
 | ORM | Prisma | 5.x |
 | Dashboard | Next.js 15 (App Router) | 15.x |
 | UI Components | shadcn/ui + Tailwind CSS v4 | latest |
-| Auth | Auth.js (NextAuth v5) + Google OAuth | 5.x |
+| Auth | Firebase Auth (Google OAuth, email/password) | 10.x |
 | LLM Orchestration | LangChain.js | 1.x |
 | LLM Providers | OpenAI, Gemini, Anthropic, Ollama | latest |
 | Database | PostgreSQL 16 + pgvector | 16.x |
 | Queue | BullMQ | 5.x |
 | Cache | Redis 7 | 7.x |
-| Object Storage | MinIO | latest |
+| Object Storage | Firebase Storage | 10.x |
 | Payments | Stripe | 17.x |
 | Containerization | Docker + Docker Compose | latest |
 | Reverse Proxy | Nginx | latest |
 | Monitoring | Uptime Kuma | latest |
 | CI/CD | Coolify | — |
+
+---
+
+## Stack Change Rationale
+
+### Firebase Auth (replaces Auth.js/NextAuth)
+- Built-in Google OAuth, email/password, magic links
+- Firebase Admin SDK verifies tokens in Express middleware — drop JWT secret management
+- Dashboard: `firebase/auth` client SDK, no custom auth routes needed
+
+### Firebase Storage (replaces MinIO)
+- Zero-ops object storage with CDN
+- Upload directly from browser with tenant-scoped security rules
+- Eliminates MinIO container, S3-compatible API still available via Admin SDK
+
+### What Stays (Firebase cannot replace)
+| Component | Reason |
+|-----------|--------|
+| PostgreSQL + pgvector | Vector similarity search — no Firebase equivalent |
+| Redis + BullMQ | Job queues — no Firebase equivalent |
+| Prisma ORM | SQL schema, migrations, tenant isolation enforcement |
+| Stripe | Billing — unchanged |
+
+---
+
+## Per-Tenant LLM Configuration
+
+Every tenant chooses one of three LLM modes:
+
+| Mode | Who pays LLM cost | How |
+|------|-------------------|-----|
+| **Managed** | Tenant pays us (markup on our API cost) | We use pooled keys, track via `usage_logs`, bill via Stripe |
+| **BYOK** | Tenant pays provider directly | Tenant provides encrypted API key per provider |
+| **BYOE** | Tenant self-hosts | Tenant provides Ollama/vLLM endpoint URL |
+
+### DB Schema Addition: `TenantLLMConfig`
+
+```prisma
+model TenantLLMConfig {
+  id          String   @id @default(uuid())
+  tenantId    String   @unique
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  mode        LLMMode  @default(MANAGED)
+  provider    String   @default("openai") // openai | gemini | anthropic | ollama
+  model       String   @default("gpt-4o-mini")
+  apiKeyEnc   String?  // AES-256 encrypted BYOK key
+  endpointUrl String?  // BYOE: self-hosted endpoint
+  temperature Float    @default(0.7)
+  systemPrompt String? @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("tenant_llm_configs")
+}
+
+enum LLMMode {
+  MANAGED
+  BYOK
+  BYOE
+}
+```
+
+### LLMFactory Resolution Order
+
+```
+1. Load TenantLLMConfig for tenantId
+2. mode === MANAGED  → use our pooled env key, log cost to usage_logs for billing
+3. mode === BYOK     → decrypt apiKeyEnc, use tenant's own key (no markup)
+4. mode === BYOE     → call endpointUrl (Ollama-compatible API)
+```
+
+### Dashboard: New Settings Page
+
+`apps/dashboard/app/(tenant)/settings/llm/page.tsx` — LLM Configuration page:
+- Toggle Managed / BYOK / BYOE
+- Per-provider API key input (BYOK)
+- Endpoint URL input (BYOE)
+- Model selector + temperature slider
+- System prompt textarea
 
 ---
 
@@ -192,6 +271,7 @@ RAG-Multi/
 │       │       ├── analytics/page.tsx
 │       │       ├── settings/
 │       │       │   ├── bot/page.tsx
+│       │       │   ├── llm/page.tsx              # NEW: LLM mode + BYOK/BYOE config
 │       │       │   ├── widget/page.tsx
 │       │       │   ├── team/page.tsx
 │       │       │   ├── api-keys/page.tsx
@@ -493,14 +573,15 @@ const limit = PLAN_LIMITS[tenant.plan].queriesPerMonth;
 
 ### Phase 1: Foundation (Week 1-2)
 - [ ] Initialize Turborepo workspace
-- [ ] Set up Docker Compose (PostgreSQL + pgvector + Redis + MinIO)
+- [ ] Set up Docker Compose (PostgreSQL + pgvector + Redis) — no MinIO, Firebase Storage replaces it
 - [ ] Scaffold `api-gateway` service with Express + TypeScript
-- [ ] Configure Prisma schema (tenants, users, documents, chunks, conversations, messages, usage_logs)
+- [ ] Configure Prisma schema (tenants, users, documents, chunks, conversations, messages, usage_logs, **tenant_llm_configs**)
 - [ ] Run initial migration
 - [ ] Implement core middleware (errorHandler, requestLogger, validateRequest)
-- [ ] Implement auth module (register, login, JWT, refresh tokens, Google OAuth)
+- [ ] Implement Firebase Admin SDK in api-gateway (verify Firebase ID tokens instead of JWT)
 - [ ] Implement tenantScope middleware
 - [ ] Implement tenant module (CRUD)
+- [ ] Implement TenantLLMConfig module (CRUD + encrypt/decrypt API keys)
 - [ ] Seed script for dev data
 - [ ] Health check endpoint
 
@@ -519,12 +600,14 @@ const limit = PLAN_LIMITS[tenant.plan].queriesPerMonth;
 
 ### Phase 3: Dashboard — Tenant Features (Week 5-6)
 - [ ] Initialize Next.js app with shadcn/ui
-- [ ] Auth pages (login, register)
+- [ ] Firebase Auth integration (Google OAuth + email/password login page)
+- [ ] Firebase Storage integration (direct browser upload for documents)
 - [ ] Tenant layout (sidebar, header, breadcrumbs)
-- [ ] Documents page (upload dropzone, table, indexing status)
+- [ ] Documents page (upload dropzone → Firebase Storage, table, indexing status)
 - [ ] Chat playground page
 - [ ] Conversations page (list + detail view)
 - [ ] Bot settings page (system prompt, model, temperature)
+- [ ] **LLM settings page** (Managed / BYOK / BYOE toggle, API key input, endpoint URL)
 - [ ] Widget customization page
 - [ ] Embed code generator page
 - [ ] Analytics page (query volume, top questions, response times)

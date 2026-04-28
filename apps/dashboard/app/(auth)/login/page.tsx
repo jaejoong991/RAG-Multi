@@ -4,7 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Mail, Lock, Eye, Hexagon, Loader2 } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { createSession } from "@/lib/auth-session";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,19 +23,27 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const result = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      });
+      const credential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const idToken = await credential.user.getIdToken();
+      await createSession(idToken);
+      router.push("/dashboard");
+    } catch {
+      setError("Invalid email or password");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      if (result?.error) {
-        setError("Invalid email or password");
-      } else {
-        router.push("/dashboard");
-      }
-    } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const credential = await signInWithPopup(auth, new GoogleAuthProvider());
+      const idToken = await credential.user.getIdToken();
+      await createSession(idToken);
+      router.push("/dashboard");
+    } catch {
+      setError("Google sign-in failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -151,9 +161,10 @@ export default function LoginPage() {
             </span>
           </div>
 
-          <button 
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-            className="w-full border border-white/10 hover:bg-white/5 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-3 transition-all"
+          <button
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+            className="w-full border border-white/10 hover:bg-white/5 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-3 transition-all disabled:opacity-50"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />

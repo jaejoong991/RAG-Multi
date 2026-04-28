@@ -5,6 +5,8 @@ import { errorHandler } from './middleware/errorHandler';
 import { requestLogger } from './middleware/requestLogger';
 import authRoutes from './modules/auth/auth.routes';
 import billingRoutes from './modules/billing/billing.routes';
+import tenantRoutes from './modules/tenant/tenant.routes';
+import llmConfigRoutes from './modules/llm-config/llm-config.routes';
 
 const app = express();
 
@@ -33,6 +35,8 @@ app.get('/health', (req, res) => {
 // Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/billing', billingRoutes);
+app.use('/api/v1/tenants', tenantRoutes);
+app.use('/api/v1/llm-config', llmConfigRoutes);
 
 // Error Handling
 app.use(errorHandler);

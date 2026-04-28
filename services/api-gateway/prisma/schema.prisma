@@ -16,6 +16,12 @@ enum Plan {
   ENTERPRISE
 }
 
+enum LLMMode {
+  MANAGED
+  BYOK
+  BYOE
+}
+
 enum Role {
   ADMIN
   MEMBER
@@ -29,16 +35,17 @@ enum DocStatus {
 }
 
 model Tenant {
-  id            String         @id @default(uuid())
+  id            String           @id @default(uuid())
   name          String
-  plan          Plan           @default(FREE)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  plan          Plan             @default(FREE)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
   users         User[]
   apiKeys       ApiKey[]
   documents     Document[]
   conversations Conversation[]
   usageLogs     UsageLog[]
+  llmConfig     TenantLLMConfig?
 
   @@map("tenants")
 }
@@ -143,4 +150,21 @@ model UsageLog {
 
   @@index([tenantId])
   @@map("usage_logs")
+}
+
+model TenantLLMConfig {
+  id           String   @id @default(uuid())
+  tenantId     String   @unique
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  mode         LLMMode  @default(MANAGED)
+  provider     String   @default("openai")
+  model        String   @default("gpt-4o-mini")
+  apiKeyEnc    String?
+  endpointUrl  String?
+  temperature  Float    @default(0.7)
+  systemPrompt String?  @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("tenant_llm_configs")
 }
