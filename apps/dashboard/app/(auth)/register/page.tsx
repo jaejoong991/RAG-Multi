@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Mail, Lock, User, Building2, Hexagon, Loader2 } from "lucide-react";
 import axios from "axios";
-import { signIn } from "next-auth/react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { createSession } from "@/lib/auth-session";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -27,19 +29,12 @@ export default function RegisterPage() {
       // 1. Register via API Gateway
       await axios.post("http://localhost:4000/api/v1/auth/register", formData);
 
-      // 2. Automatically sign in with NextAuth after successful registration
-      const result = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      });
+      // 2. Sign in with Firebase after successful registration
+      const credential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const idToken = await credential.user.getIdToken();
+      await createSession(idToken);
 
-      if (result?.error) {
-        setError("Account created, but login failed. Please sign in manually.");
-        router.push("/login");
-      } else {
-        router.push("/dashboard");
-      }
+      router.push("/dashboard");
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {

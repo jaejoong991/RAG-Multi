@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { Prisma } from '@prisma/client';
 import prisma from '../../config/database';
+import { firebaseAdmin } from '../../config/firebase';
 import { UnauthorizedError, ValidationError } from '../../shared/errors/AppError';
 import { LoginDto, RegisterDto } from './auth.schema';
 
@@ -18,28 +19,51 @@ export class AuthService {
       throw new ValidationError('User already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 12);
-
-    // Create tenant and admin user in one transaction
-    return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-      const tenant = await tx.tenant.create({
-        data: { name: data.workspaceName },
+    // 1. Create user in Firebase
+    let firebaseUser;
+    try {
+      firebaseUser = await firebaseAdmin.auth().createUser({
+        email: data.email,
+        password: data.password,
+        displayName: data.name,
       });
+    } catch (err: any) {
+      if (err.code === 'auth/email-already-exists') {
+        throw new ValidationError('User already exists in Firebase');
+      }
+      throw err;
+    }
 
-      const user = await tx.user.create({
-        data: {
-          email: data.email,
-          password: hashedPassword,
-          name: data.name,
-          role: 'ADMIN',
-          tenantId: tenant.id,
-        },
+    try {
+      const hashedPassword = await bcrypt.hash(data.password, 12);
+
+      // 2. Create tenant and admin user in one transaction
+      return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+        const tenant = await tx.tenant.create({
+          data: { name: data.workspaceName },
+        });
+
+        const user = await tx.user.create({
+          data: {
+            email: data.email,
+            password: hashedPassword,
+            name: data.name,
+            role: 'ADMIN',
+            tenantId: tenant.id,
+          },
+        });
+
+        const token = this.generateToken(user.id, tenant.id, user.role);
+
+        return { user, token };
       });
-
-      const token = this.generateToken(user.id, tenant.id, user.role);
-
-      return { user, token };
-    });
+    } catch (err) {
+      // Rollback: Delete Firebase user if DB creation fails
+      if (firebaseUser) {
+        await firebaseAdmin.auth().deleteUser(firebaseUser.uid);
+      }
+      throw err;
+    }
   }
 
   async login(data: LoginDto) {

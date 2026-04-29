@@ -11,6 +11,8 @@ const envSchema = z.object({
   STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
   STRIPE_WEBHOOK_SECRET: z.string().startsWith('whsec_'),
   ENCRYPTION_KEY: z.string().length(64), // 32 bytes hex
+  INTERNAL_SECRET: z.string().min(1),
+  RAG_ENGINE_URL: z.string().url().default('http://localhost:4001'),
 })
 
 export const env = envSchema.parse(process.env)
