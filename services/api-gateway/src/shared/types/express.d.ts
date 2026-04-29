@@ -7,6 +7,7 @@ declare global {
         role: string;
       };
       tenantId?: string;
+      rawBody?: Buffer;
     }
   }
 }

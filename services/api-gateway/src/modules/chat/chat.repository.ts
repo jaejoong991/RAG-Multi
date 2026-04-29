@@ -51,6 +51,16 @@ export class ChatRepository {
     })
   }
 
+  async createMessage(
+    conversationId: string,
+    role: 'user' | 'assistant',
+    content: string,
+  ): Promise<Message> {
+    return prisma.message.create({
+      data: { conversationId, role, content },
+    })
+  }
+
   async deleteConversation(tenantId: string, conversationId: string): Promise<void> {
     await prisma.conversation.deleteMany({
       where: { id: conversationId, tenantId },

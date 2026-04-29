@@ -1,11 +1,26 @@
+import 'dotenv/config'
+import express from 'express'
+import cors from 'cors'
+import helmet from 'helmet'
+import pino from 'pino'
+import { env } from './config/env'
+import indexRoute from './routes/index.route'
+import queryRoute from './routes/query.route'
 
+const logger = pino({ name: 'rag-engine' })
+const app = express()
 
-async function bootstrap() {
-  console.log('🚀 RAG Engine starting...');
-  // TODO: Initialize RAG pipelines
-}
+app.use(helmet())
+app.use(cors())
+app.use(express.json({ limit: '50mb' }))
 
-bootstrap().catch((err) => {
-  console.error('Fatal error in RAG Engine:', err);
-  process.exit(1);
-});
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+
+app.use('/index', indexRoute)
+app.use('/query', queryRoute)
+
+app.listen(env.PORT, () => {
+  logger.info({ port: env.PORT }, 'RAG Engine started')
+})

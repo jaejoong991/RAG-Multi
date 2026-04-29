@@ -1,52 +1,53 @@
 #!/bin/bash
-
-# RAG-Multi Local Development Setup Script
 set -e
 
-echo "🚀 Starting local development setup..."
+echo "Starting local development setup..."
 
-# 1. Check for .env file
+# 1. Copy .env if missing
 if [ ! -f .env ]; then
-    echo "📄 .env file not found. Copying from .env.example..."
     cp .env.example .env
-    echo "⚠️  Please update your .env file with your LLM API keys before running the services."
+    echo "Created .env from .env.example"
+    echo "IMPORTANT: Fill in Firebase credentials and API keys in .env before continuing."
+    echo "Press Enter when ready..."
+    read -r
 fi
 
 # 2. Install dependencies
-echo "📦 Installing workspace dependencies..."
+echo "Installing workspace dependencies..."
 if command -v pnpm &> /dev/null; then
     pnpm install
 else
-    echo "pnpm not found, falling back to npm with --legacy-peer-deps..."
     npm install --legacy-peer-deps
 fi
 
-# 3. Start infrastructure
-echo "🐳 Starting Docker infrastructure (Postgres, Redis, MinIO)..."
-docker-compose up -d postgres redis minio
+# 3. Start infrastructure (Postgres + Redis — storage is Firebase, no MinIO)
+echo "Starting Docker infrastructure (Postgres, Redis)..."
+docker compose up -d postgres redis
 
-# 4. Wait for Postgres to be ready
-echo "⏳ Waiting for database to be ready..."
+# 4. Wait for Postgres
+echo "Waiting for database..."
 until docker exec rag-postgres pg_isready -U admin -d rag_db > /dev/null 2>&1; do
   echo -n "."
   sleep 2
 done
-echo "✅ Database is ready!"
+echo " Database ready."
 
-# 5. Initialize Prisma
-echo "🏗️  Initializing Prisma and pushing database schema..."
+# 5. Prisma generate + migrate
+echo "Running Prisma migrations..."
 cd services/api-gateway
 npx prisma generate
-npx prisma db push
+npx prisma migrate dev --name "init"
 cd ../..
 
-echo "---------------------------------------------------"
-echo "🎉 Setup complete!"
-echo "---------------------------------------------------"
-echo "To start the application, run:"
-echo "   npm run dev"
 echo ""
-echo "Dashboard: http://localhost:3000"
-echo "API Gateway: http://localhost:4000"
-echo "MinIO Console: http://localhost:9001"
+echo "---------------------------------------------------"
+echo "Setup complete!"
+echo "---------------------------------------------------"
+echo "Run all services:"
+echo "  npm run dev"
+echo ""
+echo "URLs:"
+echo "  Dashboard:   http://localhost:3000"
+echo "  API Gateway: http://localhost:4000"
+echo "  RAG Engine:  http://localhost:4001"
 echo "---------------------------------------------------"

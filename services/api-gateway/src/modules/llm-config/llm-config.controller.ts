@@ -17,6 +17,21 @@ export class LLMConfigController {
     }
   }
 
+  async getConfigInternal(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const secret = req.headers['x-internal-secret']
+      if (!secret || secret !== process.env.INTERNAL_SECRET) {
+        res.status(401).json({ success: false, error: 'Unauthorized' })
+        return
+      }
+      const { tenantId } = req.params
+      const data = await llmConfigService.resolveForRAG(tenantId)
+      res.json({ success: true, data })
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async updateConfig(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const tenantId = req.user?.tenantId;

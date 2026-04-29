@@ -1,39 +1,39 @@
 # RAG-Multi Local Development Setup Script for Windows
 $ErrorActionPreference = "Stop"
 
-Write-Host ">>> Starting local development setup..." -ForegroundColor Cyan
+Write-Host "Starting local development setup..." -ForegroundColor Cyan
 
-# 1. Check for .env file
+# 1. Copy .env if missing
 if (-not (Test-Path ".env")) {
-    Write-Host "[INFO] .env file not found. Copying from .env.example..." -ForegroundColor Yellow
     Copy-Item ".env.example" ".env"
-    Write-Host "[WARN] Please update your .env file with your LLM API keys before running the services." -ForegroundColor Yellow
+    Write-Host "Created .env from .env.example" -ForegroundColor Yellow
+    Write-Host "IMPORTANT: Fill in Firebase credentials and API keys in .env before continuing." -ForegroundColor Yellow
+    Read-Host "Press Enter when ready"
 }
 
 # 2. Install dependencies
-Write-Host "[STEP] Installing workspace dependencies..." -ForegroundColor Cyan
+Write-Host "Installing workspace dependencies..." -ForegroundColor Cyan
 if (Get-Command pnpm -ErrorAction SilentlyContinue) {
     pnpm install
 } else {
-    Write-Host "pnpm not found, falling back to npm with --legacy-peer-deps..." -ForegroundColor Yellow
+    Write-Host "pnpm not found, falling back to npm..." -ForegroundColor Yellow
     npm install --legacy-peer-deps
 }
 
-# 3. Start infrastructure
-Write-Host "[STEP] Starting Docker infrastructure (Postgres, Redis, MinIO)..." -ForegroundColor Cyan
-docker-compose up -d postgres redis minio
+# 3. Start infrastructure (Postgres + Redis — storage is Firebase, no MinIO)
+Write-Host "Starting Docker infrastructure (Postgres, Redis)..." -ForegroundColor Cyan
+docker compose up -d postgres redis
 
-# 4. Wait for Postgres to be ready
-Write-Host "[WAIT] Waiting for database to be ready..." -ForegroundColor Cyan
+# 4. Wait for Postgres
+Write-Host "Waiting for database..." -ForegroundColor Cyan
 $retries = 0
 $maxRetries = 30
 while ($retries -lt $maxRetries) {
-    # Check if container is running first
     $status = docker inspect -f '{{.State.Status}}' rag-postgres 2>$null
     if ($status -eq "running") {
-        $check = docker exec rag-postgres pg_isready -U admin -d rag_db 2>$null
+        docker exec rag-postgres pg_isready -U admin -d rag_db 2>$null | Out-Null
         if ($LASTEXITCODE -eq 0) {
-            Write-Host "`n[OK] Database is ready!" -ForegroundColor Green
+            Write-Host " Database ready." -ForegroundColor Green
             break
         }
     }
@@ -43,27 +43,26 @@ while ($retries -lt $maxRetries) {
 }
 
 if ($retries -eq $maxRetries) {
-    Write-Host "`n[ERROR] Database failed to start in time. Please check docker logs: docker logs rag-postgres" -ForegroundColor Red
+    Write-Host "Database failed to start. Check: docker logs rag-postgres" -ForegroundColor Red
     exit 1
 }
 
-# 5. Initialize Prisma
-Write-Host "[STEP] Initializing Prisma and pushing database schema..." -ForegroundColor Cyan
-try {
-    npx prisma generate --schema=services/api-gateway/prisma/schema.prisma
-    npx prisma db push --schema=services/api-gateway/prisma/schema.prisma --accept-data-loss
-} catch {
-    Write-Host "[ERROR] Prisma initialization failed." -ForegroundColor Red
-}
+# 5. Prisma generate + migrate
+Write-Host "Running Prisma migrations..." -ForegroundColor Cyan
+Set-Location services/api-gateway
+npx prisma generate
+npx prisma migrate dev --name "init"
+Set-Location ../..
 
-
+Write-Host ""
 Write-Host "---------------------------------------------------" -ForegroundColor Green
 Write-Host "Setup complete!" -ForegroundColor Green
 Write-Host "---------------------------------------------------" -ForegroundColor Green
-Write-Host "To start the application, run:"
-Write-Host "   npm run dev"
+Write-Host "Run all services:"
+Write-Host "  npm run dev"
 Write-Host ""
-Write-Host "Dashboard: http://localhost:3000"
-Write-Host "API Gateway: http://localhost:4000"
-Write-Host "MinIO Console: http://localhost:9001"
-Write-Host "---------------------------------------------------"
+Write-Host "URLs:"
+Write-Host "  Dashboard:   http://localhost:3000"
+Write-Host "  API Gateway: http://localhost:4000"
+Write-Host "  RAG Engine:  http://localhost:4001"
+Write-Host "---------------------------------------------------" -ForegroundColor Green

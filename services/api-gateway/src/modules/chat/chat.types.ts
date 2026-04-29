@@ -20,3 +20,10 @@ export interface MessageDto {
 export interface ConversationWithMessagesDto extends ConversationDto {
   messages: MessageDto[]
 }
+
+export interface QueryResultDto {
+  answer: string
+  sources: unknown[]
+  conversationId: string
+  messageId: string
+}
